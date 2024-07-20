@@ -1,6 +1,9 @@
+import Time from "src/components/time";
+
 export default function Home() {
 	return (
-		<main className="flex items-center justify-center min-h-svh">
+		<main className="flex flex-col gap-6 items-center justify-center min-h-svh">
+			<h1 className="font-number text-6xl md:text-9xl text-neutral-950"><Time /></h1>
 			<div className="relative">
 				<input
 					type="text"

@@ -150,6 +150,9 @@ const config: Config = {
 					950: "#111",
 				},
 			},
+			fontFamily: {
+				"number": "'Mina Sans Digits', 'Roboto Mono', monospace",
+			}
 		},
 	},
 	plugins: [],

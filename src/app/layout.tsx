@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "public/MinaSans/MinaSans.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,7 +15,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className="bg-neutral-50 dark:bg-neutral-950 text-neutral-700 dark:text-neutral">
+			<body className="bg-neutral-50 dark:bg-neutral-950 text-neutral-600 dark:text-neutral">
 				<nav className="fixed top-0 inset-x-0 px-6 py-5">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 434 102" className="h-6">
 						<path
