@@ -38,11 +38,16 @@ function ThemeSwitch() {
 		<div className="flex gap-0.5 relative rounded-full border border-neutral-50 dark:border-neutral-900 p-0.5">
 			<div
 				className={`absolute top-0.5 bottom-0.5 aspect-square peer-hover:opacity-0 bg-neutral-50 dark:bg-neutral-900 rounded-full -z-10 ${
-					theme === "system" ? "translate-x-[29px]" : theme === "dark" ? "translate-x-[58px]" : "translate-x-0"
+					theme === "system"
+						? "translate-x-[29px]"
+						: theme === "dark"
+						? "translate-x-[58px]"
+						: "translate-x-0"
 				} duration-200 ease-out`}
 			/>
 			{Themes.map((item, index) => (
 				<button
+					key={index}
 					className={`peer ${
 						item.text === theme
 							? "text-neutral-950 dark:text-neutral-50"
