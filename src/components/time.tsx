@@ -1,14 +1,16 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { useTransition, a, easings } from "@react-spring/web";
 
 function Time() {
 	const [time, setTime] = useState(getTime);
 
 	function getTime() {
-		const hour = new Date().getHours().toString().padStart(2, "0");
-		const minute = new Date().getMinutes().toString().padStart(2, "0");
-		const second = new Date().getSeconds().toString().padStart(2, "0");
+		const now = new Date();
+		const hour = now.getHours().toString().padStart(2, "0");
+		const minute = now.getMinutes().toString().padStart(2, "0");
+		const second = now.getSeconds().toString().padStart(2, "0");
 		return `${hour}:${minute}:${second}`;
 	}
 
@@ -20,7 +22,39 @@ function Time() {
 		return () => clearInterval(intervalId);
 	}, []);
 
-	return time;
+	const digits = useMemo(() => time.split(""), [time]);
+
+	const transitions = useTransition(digits, {
+		keys: digits.map((digit, index) => `${digit}-${index}`),
+		from: { opacity: 0, transform: "translateY(-20px) rotateX(30deg)" },
+		enter: {
+			opacity: 1,
+			transform: "translateY(0px) rotateX(0deg)",
+			config: { duration: 300, easing: easings.easeOutBack },
+		},
+		leave: {
+			opacity: 0,
+			transform: "translateY(20px) rotateX(-30deg)",
+			config: { duration: 150, easing: easings.easeInCirc },
+		},
+		exitBeforeEnter: true,
+	});
+
+	return (
+		<div className="flex" style={{ perspective: 1000 }}>
+			{transitions((style, item, index) => (
+				<a.span key={`${item}-${index}`} style={style}>
+					{item === ":" ? (
+						<span className="animate-pulse mx-1">
+							:
+						</span>
+					) : (
+						item
+					)}
+				</a.span>
+			))}
+		</div>
+	);
 }
 
 export default dynamic(() => Promise.resolve(Time), {
