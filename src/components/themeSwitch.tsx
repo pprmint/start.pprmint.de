@@ -1,7 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
-import { useMediaQuery } from "react-responsive";
 
 const Themes = [
 	{
@@ -15,9 +14,29 @@ const Themes = [
 	{
 		text: "system",
 		icon: (
-			<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="currentColor">
-				<path d="M4.761 10H2.5A1.5 1.5 0 0 1 1 8.5v-5A1.5 1.5 0 0 1 2.5 2h10A1.5 1.5 0 0 1 14 3.5v5a1.5 1.5 0 0 1-1.5 1.5h-2.261L11 11.904V13H4v-1.096zm4.4 0H5.839l-.8 2h4.922zM13 3.5a.5.5 0 0 0-.5-.5h-10a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5z"></path>
-			</svg>
+			<>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="15"
+					height="15"
+					viewBox="0 0 15 15"
+					fill="currentColor"
+					className="hidden md:block"
+				>
+					<path d="M4.761 10H2.5A1.5 1.5 0 0 1 1 8.5v-5A1.5 1.5 0 0 1 2.5 2h10A1.5 1.5 0 0 1 14 3.5v5a1.5 1.5 0 0 1-1.5 1.5h-2.261L11 11.904V13H4v-1.096zm4.4 0H5.839l-.8 2h4.922zM13 3.5a.5.5 0 0 0-.5-.5h-10a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5z"></path>
+				</svg>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="15"
+					height="15"
+					viewBox="0 0 15 15"
+					fill="currentColor"
+					className="block md:hidden"
+				>
+					<path d="M12 2.5v10a1.5 1.5 0 0 1-1.5 1.5h-6A1.5 1.5 0 0 1 3 12.5v-10A1.5 1.5 0 0 1 4.5 1h6A1.5 1.5 0 0 1 12 2.5m-1 0a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 .5-.5z"></path>
+					<circle cx="7.5" cy="11.5" r=".75"></circle>
+				</svg>
+			</>
 		),
 	},
 	{
@@ -32,8 +51,6 @@ const Themes = [
 
 function ThemeSwitch() {
 	const { theme, setTheme } = useTheme();
-	const prefersDark = useMediaQuery({ query: "(prefers-color-scheme: dark)" });
-
 	return (
 		<div className="flex gap-0.5 relative rounded-full border border-neutral-50 dark:border-neutral-900 p-0.5">
 			<div
