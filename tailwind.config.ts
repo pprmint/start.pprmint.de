@@ -152,8 +152,9 @@ const config: Config = {
 				},
 			},
 			fontFamily: {
-				"number": "'Mina Sans Digits', 'Roboto Mono', monospace",
-			}
+				sans: "Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, 'Segoe UI Variable', 'Segoe UI Variable Text', 'Segoe UI', Cantarell, Ubuntu, system-ui, sans-serif",
+				number: "'Mina Sans Digits', 'Roboto Mono', monospace",
+			},
 		},
 	},
 	plugins: [],
