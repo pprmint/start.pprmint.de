@@ -26,12 +26,12 @@ export default function RootLayout({
 							Made by{" "}
 							<Link
 								className="group text-neutral-950 dark:text-neutral-50"
-								href="https://pprmint.art"
+								href="https://pprmint.de"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
 								pprmint<span className="text-green">.</span>
-								<span className="opacity-0 group-hover:opacity-100 duration-200">art</span>
+								<span className="opacity-0 group-hover:opacity-100 duration-200">de</span>
 							</Link>
 						</p>
 						<ThemeSwitch />
