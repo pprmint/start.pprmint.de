@@ -1,3 +1,4 @@
+import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import "public/MinaSans/MinaSans.css";
 import "./globals.css";
@@ -11,6 +12,11 @@ export const metadata: Metadata = {
 	metadataBase: new URL("https://start.pprmint.art"),
 };
 
+const inter = Inter({
+	subsets: ["latin"],
+	display: "swap",
+});
+
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -18,7 +24,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className="dark:bg-neutral-950 text-neutral-500 dark:text-neutral">
+			<body className={`dark:bg-neutral-950 text-neutral-500 dark:text-neutral ${inter.className}`}>
 				<ThemeProvider defaultTheme="system" themes={["light", "dark", "system"]} attribute="class">
 					{children}
 					<footer className="flex items-end justify-between fixed bottom-0 inset-x-0 p-6 text-sm">

@@ -19,7 +19,7 @@ function DigitalClockNoAnim() {
 		}, 1000);
 
 		return () => clearInterval(intervalId);
-	}, []);
+	}, [getTime]);
 
 	return (
 		<div className="flex" style={{ perspective: 1000 }}>
