@@ -155,6 +155,40 @@ const config: Config = {
 				sans: "Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, 'Segoe UI Variable', 'Segoe UI Variable Text', 'Segoe UI', Cantarell, Ubuntu, system-ui, sans-serif",
 				number: "'Mina Sans Digits', 'Roboto Mono', monospace",
 			},
+			keyframes: {
+				dialogEnter: {
+					from: { opacity: "0%", transform: "translateX(-50%) translateY(calc(-50% + 20px))" },
+					to: { opacity: "100%", transform: "translateX(-50%) translateY(-50%)" },
+				},
+				dialogExit: {
+					from: { opacity: "100%", transform: "translateX(-50%) translateY(-50%)" },
+					to: { opacity: "0%", transform: "translateX(-50%) translateY(calc(-50% + 20px))" },
+				},
+				selectOpen: {
+					from: { opacity: "0%" },
+					to: { opacity: "100%" },
+				},
+				selectClose: {
+					from: { opacity: "100%" },
+					to: { opacity: "0%" },
+				},
+				fadeIn: {
+					from: { opacity: "0%" },
+					to: { opacity: "100%" },
+				},
+				fadeOut: {
+					from: { opacity: "100%" },
+					to: { opacity: "0%" },
+				},
+			},
+			animation: {
+				"dialog-enter": "dialogEnter .25s cubic-bezier(.15,0,.35,1)",
+				"dialog-exit": "dialogExit .25s cubic-bezier(.15,0,.35,1)",
+				"select-open": "selectOpen .2s;",
+				"select-close": "selectClose .2s;",
+				"fade-in": "fadeIn .25s cubic-bezier(0, 0, 0.2, 1)",
+				"fade-out": "fadeOut .25s cubic-bezier(0, 0, 0.2, 1)",
+			},
 		},
 	},
 	plugins: [],

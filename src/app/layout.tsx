@@ -4,6 +4,7 @@ import "./globals.css";
 import Link from "next/link";
 import { ThemeProvider } from "../components/themeProvider";
 import ThemeSwitch from "src/components/themeSwitch";
+import Settings from "src/components/settings";
 
 export const metadata: Metadata = {
 	title: "start.",
@@ -18,7 +19,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className="dark:bg-neutral-950 text-neutral-400 dark:text-neutral">
+			<body className="dark:bg-neutral-950 text-neutral-500 dark:text-neutral">
 				<ThemeProvider defaultTheme="system" themes={["light", "dark", "system"]} attribute="class">
 					{children}
 					<footer className="flex items-end justify-between fixed bottom-0 inset-x-0 p-6 text-sm">
@@ -35,6 +36,7 @@ export default function RootLayout({
 							</Link>
 						</p>
 						<ThemeSwitch />
+						<Settings />
 					</footer>
 				</ThemeProvider>
 			</body>
