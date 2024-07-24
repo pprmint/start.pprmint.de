@@ -1,9 +1,17 @@
 "use client";
-import DigitalClock from "./clocks/digital"
+import dynamic from "next/dynamic";
+import DigitalClock from "./clocks/digital";
+import DigitalClockNoAnim from "./clocks/digitalNoAnim";
 
-export default function Clock() {
-    const lsClock = localStorage.getItem("clock");
-    return (
-        lsClock === "none" ? null : <DigitalClock />
-    )
+function Clock() {
+	const lsClock = localStorage.getItem("clock");
+	return lsClock === "Digital (no animations)" ? (
+		<DigitalClockNoAnim />
+	) : lsClock === "None" ? null : (
+		<DigitalClock />
+	);
 }
+
+export default dynamic(() => Promise.resolve(Clock), {
+	ssr: false,
+});

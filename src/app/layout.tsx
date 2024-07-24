@@ -3,7 +3,6 @@ import "public/MinaSans/MinaSans.css";
 import "./globals.css";
 import Link from "next/link";
 import { ThemeProvider } from "../components/themeProvider";
-import ThemeSwitch from "src/components/themeSwitch";
 import Settings from "src/components/settings";
 
 export const metadata: Metadata = {
@@ -35,7 +34,6 @@ export default function RootLayout({
 								<span className="opacity-0 group-hover:opacity-100 duration-200">de</span>
 							</Link>
 						</p>
-						<ThemeSwitch />
 						<Settings />
 					</footer>
 				</ThemeProvider>

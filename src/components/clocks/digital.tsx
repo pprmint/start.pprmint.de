@@ -4,59 +4,53 @@ import { useEffect, useState, useMemo } from "react";
 import { useTransition, a, easings } from "@react-spring/web";
 
 function DigitalClock() {
-    const [time, setTime] = useState(getTime);
+	const lsHideSec = localStorage.getItem("hideSec");
+	const [time, setTime] = useState(getTime);
+	function getTime() {
+		const now = new Date();
+		const hour = now.getHours().toString().padStart(2, "0");
+		const minute = now.getMinutes().toString().padStart(2, "0");
+		const second = now.getSeconds().toString().padStart(2, "0");
+		return `${hour}:${minute}${lsHideSec !== "true" ? `:${second}` : ""}`;
+	}
 
-    function getTime() {
-        const now = new Date();
-        const hour = now.getHours().toString().padStart(2, "0");
-        const minute = now.getMinutes().toString().padStart(2, "0");
-        const second = now.getSeconds().toString().padStart(2, "0");
-        return `${hour}:${minute}:${second}`;
-    }
+	useEffect(() => {
+		const intervalId = setInterval(() => {
+			setTime(getTime);
+		}, 1000);
 
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            setTime(getTime);
-        }, 1000);
+		return () => clearInterval(intervalId);
+	}, []);
 
-        return () => clearInterval(intervalId);
-    }, []);
+	const digits = useMemo(() => time.split(""), [time]);
 
-    const digits = useMemo(() => time.split(""), [time]);
+	const transitions = useTransition(digits, {
+		keys: digits.map((digit, index) => `${digit}-${index}`),
+		from: { opacity: 0, transform: "translateY(-20px) rotateX(30deg)" },
+		enter: {
+			opacity: 1,
+			transform: "translateY(0px) rotateX(0deg)",
+			config: { duration: 300, easing: easings.easeOutBack },
+		},
+		leave: {
+			opacity: 0,
+			transform: "translateY(20px) rotateX(-30deg)",
+			config: { duration: 150, easing: easings.easeInCirc },
+		},
+		exitBeforeEnter: true,
+	});
 
-    const transitions = useTransition(digits, {
-        keys: digits.map((digit, index) => `${digit}-${index}`),
-        from: { opacity: 0, transform: "translateY(-20px) rotateX(30deg)" },
-        enter: {
-            opacity: 1,
-            transform: "translateY(0px) rotateX(0deg)",
-            config: { duration: 300, easing: easings.easeOutBack },
-        },
-        leave: {
-            opacity: 0,
-            transform: "translateY(20px) rotateX(-30deg)",
-            config: { duration: 150, easing: easings.easeInCirc },
-        },
-        exitBeforeEnter: true,
-    });
-
-    return (
-        <div className="flex" style={{ perspective: 1000 }}>
-            {transitions((style, item, index) => (
-                <a.span key={`${item}-${index}`} style={style}>
-                    {item === ":" ? (
-                        <span className="animate-pulse mx-1">
-                            :
-                        </span>
-                    ) : (
-                        item
-                    )}
-                </a.span>
-            ))}
-        </div>
-    );
+	return (
+		<div className="flex" style={{ perspective: 1000 }}>
+			{transitions((style, item, index) => (
+				<a.span key={`${item}-${index}`} style={style}>
+					{item === ":" ? <span className="animate-pulse mx-1">:</span> : item}
+				</a.span>
+			))}
+		</div>
+	);
 }
 
 export default dynamic(() => Promise.resolve(DigitalClock), {
-    ssr: false,
+	ssr: false,
 });
