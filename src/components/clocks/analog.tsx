@@ -31,7 +31,7 @@ function AnalogClock() {
       <div className="absolute inset-0 drop-shadow">
         <div
           id="hour"
-          className="absolute inset-0"
+          className="absolute inset-0 duration-100"
           style={{
             transform: `rotate(${rotateHour}deg)`,
           }}
