@@ -182,7 +182,7 @@ const config: Config = {
 				},
 			},
 			animation: {
-				"dialog-enter": "dialogEnter .25s cubic-bezier(.15,0,.35,1)",
+				"dialog-enter": "dialogEnter .4s cubic-bezier(.2,0,0,1)",
 				"dialog-exit": "dialogExit .25s cubic-bezier(.15,0,.35,1)",
 				"select-open": "selectOpen .2s;",
 				"select-close": "selectClose .2s;",
