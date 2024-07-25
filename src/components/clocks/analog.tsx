@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 function AnalogClock() {
   const lsHideSec = localStorage.getItem("hideSec");
   const [time, setTime] = useState(getTime);
+
   function getTime() {
     const now = new Date();
     const hour = now.getHours();
@@ -12,20 +13,18 @@ function AnalogClock() {
     const second = now.getSeconds();
     return [hour, minute, second];
   }
-  const [seconds, setSeconds] = useState(time[2]);
 
   const rotateHour = 30 * time[0] + (time[1] / 60) * 30;
   const rotateMinute = 6 * time[1] + 360 * time[0];
-  const rotateSecond = 6 * seconds + 12;
+  const rotateSecond = (360 / 59) * time[2] + 6;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTime(getTime);
-      setSeconds(seconds + 1);
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [getTime]);
+  }, []);
 
   return (
     <div className="relative size-64 border border-neutral-50 dark:border-neutral-800 dark:bg-neutral-900 rounded-full shadow-inner">
@@ -53,9 +52,13 @@ function AnalogClock() {
         {lsHideSec !== "true" && (
           <div
             id="second"
-            className="absolute inset-0 duration-1000 ease-linear"
+            className={`absolute inset-0 ${
+              time[2] <= 58 && "duration-1000"
+            } ease-linear`}
             style={{
-              transform: `rotate(${rotateSecond}deg)`,
+              transform: `rotate(${
+                time[2] == 0 ? 6 : time[2] <= 58 ? rotateSecond : 0
+              }deg)`,
             }}
           >
             <div className="absolute bg-red w-1 h-32 top-9 left-1/2 -translate-x-1/2" />
