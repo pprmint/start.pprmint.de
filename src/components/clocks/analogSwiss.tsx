@@ -63,8 +63,8 @@ function SwissClock() {
 							transform: `rotate(${time[2] == 0 ? 6 : time[2] <= 58 ? rotateSecond : 0}deg)`,
 						}}
 					>
-						<div className="absolute bg-red w-1 h-32 top-9 left-1/2 -translate-x-1/2" />
-						<div className="absolute bg-red size-5 top-7 left-1/2 -translate-x-1/2 rounded-full" />
+						<div className="absolute bg-red w-1 h-28 top-12 left-1/2 -translate-x-1/2" />
+						<div className="absolute bg-red size-5 top-10 left-1/2 -translate-x-1/2 rounded-full" />
 					</div>
 				)}
 			</div>
