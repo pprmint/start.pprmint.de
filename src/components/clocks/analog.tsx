@@ -31,20 +31,19 @@ function AnalogClock() {
       <div className="absolute inset-0 drop-shadow">
         <div
           id="hour"
-          className="absolute inset-0 duration-300"
+          className="absolute inset-0"
           style={{
             transform: `rotate(${rotateHour}deg)`,
-            transitionTimingFunction: "cubic-bezier(0.25, 2, 0.2, 0.75)",
           }}
         >
           <div className="absolute bg-neutral-950 dark:bg-neutral-50 w-2.5 h-24 top-14 left-1/2 -translate-x-1/2" />
         </div>
         <div
           id="minute"
-          className="absolute inset-0 duration-300"
+          className="absolute inset-0 duration-[0.4s]"
           style={{
             transform: `rotate(${rotateMinute}deg)`,
-            transitionTimingFunction: "cubic-bezier(0.25, 2, 0.2, 0.75)",
+            transitionTimingFunction: "cubic-bezier(0.3, 2.5, 0, 0.5)",
           }}
         >
           <div className="absolute bg-neutral-950 dark:bg-neutral-50 w-1.5 h-32 top-6 left-1/2 -translate-x-1/2" />
