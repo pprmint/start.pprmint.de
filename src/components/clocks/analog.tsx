@@ -12,10 +12,16 @@ function AnalogClock() {
     const second = now.getSeconds();
     return [hour, minute, second];
   }
+  const [seconds, setSeconds] = useState(time[2]);
+
+  const rotateHour = 30 * time[0] + (time[1] / 60) * 30;
+  const rotateMinute = 6 * time[1] + 360 * time[0];
+  const rotateSecond = 6 * seconds + 12;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTime(getTime);
+      setSeconds(seconds + 1);
     }, 1000);
 
     return () => clearInterval(intervalId);
@@ -28,7 +34,7 @@ function AnalogClock() {
           id="hour"
           className="absolute inset-0 duration-300"
           style={{
-            transform: `rotate(${30 * time[0] + (time[1] / 60) * 30}deg)`,
+            transform: `rotate(${rotateHour}deg)`,
             transitionTimingFunction: "cubic-bezier(0.25, 2, 0.2, 0.75)",
           }}
         >
@@ -38,7 +44,7 @@ function AnalogClock() {
           id="minute"
           className="absolute inset-0 duration-300"
           style={{
-            transform: `rotate(${6 * time[1]}deg)`,
+            transform: `rotate(${rotateMinute}deg)`,
             transitionTimingFunction: "cubic-bezier(0.25, 2, 0.2, 0.75)",
           }}
         >
@@ -49,7 +55,7 @@ function AnalogClock() {
             id="second"
             className="absolute inset-0 duration-1000 ease-linear"
             style={{
-              transform: `rotate(${6 * time[2] + time[1] * 360 + 6}deg)`,
+              transform: `rotate(${rotateSecond}deg)`,
             }}
           >
             <div className="absolute bg-red w-1 h-32 top-9 left-1/2 -translate-x-1/2" />
