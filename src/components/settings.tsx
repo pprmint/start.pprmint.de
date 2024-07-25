@@ -70,7 +70,7 @@ function Settings() {
 
   // Clock design
   const lsClock = localStorage.getItem("clock");
-  const Clocks = ["Digital", "Digital (no animations)", "Analog", "None"];
+  const Clocks = ["Digital", "Digital (no animations)", "Swiss station clock", "German station clock", "None"];
   const [clock, setClock] = useState(
     Clocks.some((clock) => clock === lsClock) ? lsClock : "Digital"
   );
