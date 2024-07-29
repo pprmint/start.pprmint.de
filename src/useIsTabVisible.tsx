@@ -1,7 +1,7 @@
 "use client";
 import { useState, useCallback, useEffect } from "react";
 
-export default function isTabVisible() {
+export default function useIsTabVisible() {
 	const [isTabVisible, setIsTabVisible] = useState(true);
 
 	const handleVisibilityChange = useCallback(() => {

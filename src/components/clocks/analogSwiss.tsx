@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import isTabVisible from "src/isTabVisible";
+import isTabVisible from "src/useIsTabVisible";
 
 function SwissClock() {
 	const lsHideSec = localStorage.getItem("hideSec");
