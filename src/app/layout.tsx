@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import "public/MinaSans/MinaSans.css";
 import "./globals.css";
 import { ThemeProvider } from "../components/themeProvider";
-import Footer from "src/components/footer";
 
 export const metadata: Metadata = {
 	title: "start.",
