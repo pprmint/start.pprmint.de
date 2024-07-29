@@ -67,7 +67,7 @@ function ThemeSwitch() {
 					key={index}
 					className={`peer ${
 						item.text === theme
-							? "text-neutral-950 dark:text-neutral-50"
+							? "text-foreground-2"
 							: "hover:text-neutral-950 dark:hover:text-neutral-50"
 					} p-1.5 rounded-full duration-200`}
 					onClick={() => setTheme(item.text)}

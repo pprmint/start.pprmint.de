@@ -1,6 +1,7 @@
-import type { Config } from "tailwindcss";
-
-const config: Config = {
+const plugin = require("tailwindcss/plugin");
+const { createThemes } = require("tw-colors");
+/** @type {import('tailwindcss').Config} */
+module.exports = {
 	darkMode: "class",
 	content: [
 		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -191,6 +192,29 @@ const config: Config = {
 			},
 		},
 	},
-	plugins: [],
+	plugins: [
+		createThemes({
+			light: {
+				background: "#fff",
+				"elevate-1": "#eee",
+				"elevate-2": "#ddd",
+				"foreground-1": "#777",
+				"foreground-2": "#111",
+			},
+			dark: {
+				background: "#111",
+				"elevate-1": "#222",
+				"elevate-2": "#333",
+				"foreground-1": "#aaa",
+				"foreground-2": "#eee",
+			},
+			amoled: {
+				background: "#000",
+				"elevate-1": "#111",
+				"elevate-2": "#222",
+				"foreground-1": "#aaa",
+				"foreground-2": "#eee",
+			},
+		}),
+	],
 };
-export default config;

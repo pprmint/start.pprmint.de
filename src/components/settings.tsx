@@ -52,6 +52,14 @@ function Settings() {
 			text: "dark",
 			icon: (
 				<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="currentColor">
+					<path d="M3.162 2.193a.985.985 0 0 1 1.727.37c.456 1.537 1.397 3.28 2.832 4.716 1.438 1.437 3.185 2.379 4.718 2.821.367.093.65.386.73.756a1 1 0 0 1-.365.998l-.008.006c-2.705 1.962-6.514 1.729-8.95-.706s-2.668-6.246-.691-8.953zm9.025 8.875-.011-.003c-1.682-.484-3.592-1.509-5.162-3.079-1.563-1.564-2.587-3.464-3.086-5.148a5.905 5.905 0 0 0 .626 7.608c2.076 2.077 5.32 2.281 7.633.622"></path>
+				</svg>
+			),
+		},
+		{
+			text: "amoled",
+			icon: (
+				<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="currentColor">
 					<path d="M9.031 1.767a.5.5 0 0 1 .938 0l.341.923.923.341a.5.5 0 0 1 0 .938l-.923.341-.341.923a.5.5 0 0 1-.938 0L8.69 4.31l-.923-.341a.5.5 0 0 1 0-.938l.923-.341zM12.031 5.267a.5.5 0 0 1 .938 0l.206.558.558.206a.5.5 0 0 1 0 .938l-.558.206-.206.558a.5.5 0 0 1-.938 0l-.206-.558-.558-.206a.5.5 0 0 1 0-.938l.558-.206zM3.162 2.193a.985.985 0 0 1 1.727.37c.456 1.537 1.397 3.28 2.832 4.716 1.438 1.437 3.185 2.379 4.718 2.821.367.093.65.386.73.756a1 1 0 0 1-.365.998l-.008.006c-2.705 1.962-6.514 1.729-8.95-.706s-2.668-6.246-.691-8.953zm9.025 8.875-.011-.003c-1.682-.484-3.592-1.509-5.162-3.079-1.563-1.564-2.587-3.464-3.086-5.148a5.905 5.905 0 0 0 .626 7.608c2.076 2.077 5.32 2.281 7.633.622"></path>
 				</svg>
 			),
@@ -99,7 +107,7 @@ function Settings() {
 	return (
 		<Dialog.Root onOpenChange={() => refresh && location.reload()}>
 			<Dialog.Trigger asChild>
-				<button className="group p-2 hover:bg-neutral-50 hover:text-neutral-950 dark:hover:bg-neutral-900 dark:hover:text-neutral-50 rounded-full duration-100">
+				<button className="group p-2 text-foreground-1 hover:bg-elevate-1 hover:text-foreground-2 rounded-full duration-200">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="15"
@@ -113,14 +121,12 @@ function Settings() {
 				</button>
 			</Dialog.Trigger>
 			<Dialog.Portal>
-				<Dialog.Overlay className="data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out fixed inset-0 bg-white/75 dark:bg-neutral-950/75 md:backdrop-blur-sm" />
-				<Dialog.Content className="data-[state=open]:animate-dialog-enter data-[state=closed]:animate-dialog-exit fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 md:p-9 md:rounded-xl md:shadow-2xl bg-white dark:bg-neutral-950 md:border border-neutral-100 dark:border-neutral-900 size-full md:max-w-2xl md:h-max md:max-h-screen">
-					<Dialog.Title className="text-2xl md:text-3xl text-neutral-950 dark:text-neutral-50 font-bold">
-						Settings
-					</Dialog.Title>
+				<Dialog.Overlay className="data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out fixed inset-0 bg-background bg-opacity-75 md:backdrop-blur-sm" />
+				<Dialog.Content className="data-[state=open]:animate-dialog-enter data-[state=closed]:animate-dialog-exit fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 md:p-9 md:rounded-xl md:shadow-2xl bg-background md:border border-elevate-2 size-full md:max-w-2xl md:h-max md:max-h-screen">
+					<Dialog.Title className="text-2xl md:text-3xl text-foreground-2 font-bold">Settings</Dialog.Title>
 					<Dialog.Description className="pb-2">Make changes to the start page here.</Dialog.Description>
-					<fieldset className="flex flex-col gap-2 py-6">
-						<label className="text-neutral-950 dark:text-neutral-50 font-medium" htmlFor="theme">
+					<fieldset className="flex flex-col gap-2 py-4">
+						<label className="text-foreground-2 font-medium" htmlFor="theme">
 							Theme
 						</label>
 						<Select.Root
@@ -129,7 +135,7 @@ function Settings() {
 							onValueChange={(value: string) => setTheme(value)}
 						>
 							<Select.Trigger
-								className="group capitalize relative inline-flex items-center justify-between w-full sm:w-56 px-3 h-10 overflow-clip ease-in-out outline-none border border-neutral-100 dark:border-neutral-900 dark:hover:border-neutral-800 rounded-lg duration-100 hover:text-neutral-950 dark:hover:text-neutral-50"
+								className="group capitalize relative inline-flex items-center justify-between w-full sm:w-56 px-3 py-2 overflow-clip ease-in-out outline-none hover:bg-elevate-1 border border-elevate-1 hover:border-elevate-2 rounded-lg duration-100 hover:text-foreground-2"
 								aria-label="Site theme"
 							>
 								<Select.Value />
@@ -146,13 +152,13 @@ function Settings() {
 								</Select.Icon>
 							</Select.Trigger>
 							<Select.Portal>
-								<Select.Content className="capitalize data-[state=open]:animate-select-open data-[state=closed]:animate-select-close overflow-hidden bg-white dark:bg-neutral-900 text-neutral-950 dark:text-neutral-50 rounded-lg shadow-xl dark:shadow-neutral-950 border border-neutral-100 dark:border-neutral-800">
-									<Select.Viewport className="p-1">
+								<Select.Content className="capitalize data-[state=open]:animate-select-open data-[state=closed]:animate-select-close overflow-hidden bg-background text-foreground-2 rounded-lg shadow-xl border border-elevate-2">
+									<Select.Viewport className="p-1 flex flex-col flex flex-col">
 										{Themes.map((theme, index) => (
 											<Select.Item
 												key={index}
 												value={theme.text}
-												className="relative px-2 py-1 rounded-md hover:bg-neutral-50 dark:hover:bg-neutral-800 cursor-pointer select-none outline-none duration-100"
+												className="relative px-2 h-8 inline-flex items-center rounded-md hover:bg-elevate-1 cursor-pointer select-none outline-none duration-100"
 											>
 												<Select.ItemText asChild>
 													<div className="flex gap-3 items-center">
@@ -178,9 +184,8 @@ function Settings() {
 							</Select.Portal>
 						</Select.Root>
 					</fieldset>
-					<hr className="dark:border-neutral-900" />
-					<fieldset className="flex flex-col gap-2 py-6">
-						<label className="text-neutral-950 dark:text-neutral-50 font-medium" htmlFor="engine">
+					<fieldset className="flex flex-col gap-2 py-4">
+						<label className="text-foreground-2 font-medium" htmlFor="engine">
 							Search engine
 						</label>
 						<Select.Root
@@ -189,7 +194,7 @@ function Settings() {
 							onValueChange={(value: string) => handleEngineChange(value)}
 						>
 							<Select.Trigger
-								className="group capitalize relative inline-flex items-center justify-between w-full sm:w-56 px-3 h-10 overflow-clip ease-in-out outline-none border border-neutral-100 dark:border-neutral-900 dark:hover:border-neutral-800 rounded-lg duration-100 hover:text-neutral-950 dark:hover:text-neutral-50"
+								className="group capitalize relative inline-flex items-center justify-between w-full sm:w-56 px-3 py-2 overflow-clip ease-in-out outline-none hover:bg-elevate-1 border border-elevate-1 hover:border-elevate-2 rounded-lg duration-100 hover:text-foreground-2"
 								aria-label="Search engine"
 							>
 								<Select.Value />
@@ -206,13 +211,13 @@ function Settings() {
 								</Select.Icon>
 							</Select.Trigger>
 							<Select.Portal>
-								<Select.Content className="capitalize data-[state=open]:animate-select-open data-[state=closed]:animate-select-close overflow-hidden bg-white dark:bg-neutral-900 text-neutral-950 dark:text-neutral-50 rounded-lg shadow-xl dark:shadow-neutral-950 border border-neutral-100 dark:border-neutral-800">
-									<Select.Viewport className="p-1">
+								<Select.Content className="capitalize data-[state=open]:animate-select-open data-[state=closed]:animate-select-close overflow-hidden bg-background text-foreground-2 rounded-lg shadow-xl border border-elevate-2">
+									<Select.Viewport className="p-1 flex flex-col">
 										{Engines.map((engine, index) => (
 											<Select.Item
 												key={index}
 												value={engine.name}
-												className="relative px-2 py-1 rounded-md hover:bg-neutral-50 dark:hover:bg-neutral-800 cursor-pointer select-none outline-none duration-100"
+												className="relative px-2 h-8 inline-flex items-center rounded-md hover:bg-elevate-1 cursor-pointer select-none outline-none duration-100"
 											>
 												<Select.ItemText asChild>
 													<div className="flex gap-3 items-center">
@@ -248,15 +253,13 @@ function Settings() {
 										href="https://duckduckgo.com/bangs"
 										target="_blank"
 										rel="noopener noreferrer"
-										className="text-neutral-950 dark:text-neutral-50 underline decoration-dotted"
+										className="text-foreground-2 underline decoration-dotted"
 									>
 										Bangs
 									</Link>
 									, by prefixing them with{" "}
-									<span className="bg-neutral-50 text-neutral-950 dark:bg-neutral-800 dark:text-neutral-50 px-0.5 rounded-sm">
-										!
-									</span>
-									. They also offer an email relay and browser extensions.
+									<span className="bg-elevate-2 text-foreground-2 px-0.5 rounded-sm">!</span>. They
+									also offer an email relay and browser extensions.
 								</p>
 							) : searchEngine === "Bing" ? (
 								<p>
@@ -270,21 +273,18 @@ function Settings() {
 										href="https://docs.searxng.org/"
 										target="_blank"
 										rel="noopener noreferrer"
-										className="text-neutral-950 dark:text-neutral-50 underline decoration-dotted"
+										className="text-foreground-2 underline decoration-dotted"
 									>
 										SearXNG
 									</Link>{" "}
 									instance that aggregates results from different engines. You can also search on
 									other sites or engines with DuckDuckGo's Bangs by prefixing them with{" "}
-									<span className="bg-neutral-50 text-neutral-950 dark:bg-neutral-800 dark:text-neutral-50 px-0.5 rounded-sm">
-										!!
-									</span>
-									.{" "}
+									<span className="bg-elevate-2 text-foreground-2 px-0.5 rounded-sm">!!</span>.{" "}
 									<Link
 										href="https://inquest.fyi/info/en/search-syntax"
 										target="_blank"
 										rel="noopener noreferrer"
-										className="text-neutral-950 dark:text-neutral-50 underline decoration-dotted"
+										className="text-foreground-2 underline decoration-dotted"
 									>
 										Search syntax here
 									</Link>
@@ -293,10 +293,9 @@ function Settings() {
 							)}
 						</div>
 					</fieldset>
-					<hr className="dark:border-neutral-900" />
-					<fieldset className="flex flex-col gap-2 py-6">
+					<fieldset className="flex flex-col gap-2 py-4">
 						<div className="">
-							<label className="text-neutral-950 dark:text-neutral-50 font-medium" htmlFor="clock">
+							<label className="text-foreground-2 font-medium" htmlFor="clock">
 								Clock design
 							</label>
 						</div>
@@ -306,7 +305,7 @@ function Settings() {
 							onValueChange={(value: string) => handleClockChange(value)}
 						>
 							<Select.Trigger
-								className="group relative inline-flex items-center justify-between w-full sm:w-56 px-3 h-10 overflow-clip ease-in-out outline-none border border-neutral-100 dark:border-neutral-900 dark:hover:border-neutral-800 rounded-lg duration-100 hover:text-neutral-950 dark:hover:text-neutral-50"
+								className="group relative inline-flex items-center justify-between w-full sm:w-56 px-3 py-2 overflow-clip ease-in-out outline-none hover:bg-elevate-1 border border-elevate-1 hover:border-elevate-2 rounded-lg duration-100 hover:text-foreground-2"
 								aria-label="Clock design"
 							>
 								<Select.Value />
@@ -323,13 +322,13 @@ function Settings() {
 								</Select.Icon>
 							</Select.Trigger>
 							<Select.Portal>
-								<Select.Content className="data-[state=open]:animate-select-open data-[state=closed]:animate-select-close overflow-hidden bg-white dark:bg-neutral-900 text-neutral-950 dark:text-neutral-50 rounded-lg shadow-xl dark:shadow-neutral-950 border border-neutral-100 dark:border-neutral-800">
-									<Select.Viewport className="p-1">
+								<Select.Content className="data-[state=open]:animate-select-open data-[state=closed]:animate-select-close overflow-hidden bg-background text-foreground-2 rounded-lg shadow-xl border border-elevate-2">
+									<Select.Viewport className="p-1 flex flex-col">
 										{Clocks.map((clock, index) => (
 											<Select.Item
 												key={index}
 												value={clock}
-												className="relative px-2 py-1 rounded-md hover:bg-neutral-50 dark:hover:bg-neutral-800 cursor-pointer select-none outline-none duration-100"
+												className="relative px-2 h-8 inline-flex items-center rounded-md hover:bg-elevate-1 cursor-pointer select-none outline-none duration-100"
 											>
 												<Select.ItemText>{clock}</Select.ItemText>
 												<Select.ItemIndicator className="absolute right-2 top-1/2 -translate-y-1/2">
@@ -350,26 +349,25 @@ function Settings() {
 							</Select.Portal>
 						</Select.Root>
 					</fieldset>
-					<hr className="dark:border-neutral-900" />
-					<fieldset className="flex flex-col gap-2 py-6">
+					<fieldset className="flex flex-col gap-2 pt-6">
 						<div className="">
-							<label className="text-neutral-950 dark:text-neutral-50 font-medium" htmlFor="hideSec">
+							<label className="text-foreground-2 font-medium" htmlFor="hideSec">
 								Hide seconds
 							</label>
 						</div>
 						<Switch.Root
-							className="group relative w-14 h-8 bg-transparent data-[state=checked]:bg-neutral-950 dark:data-[state=checked]:bg-neutral-50 outline-none rounded-full border border-neutral-100 data-[state=unchecked]:hover:border-neutral-200 data-[state=unchecked]:hover:dark:border-neutral-800 dark:border-neutral-900 data-[state=checked]:border-neutral-950 dark:data-[state=checked]:border-neutral-50 duration-200"
+							className="group relative w-14 h-8 bg-transparent data-[state=checked]:bg-foreground-2 data-[state=unchecked]:hover:bg-elevate-1 outline-none rounded-full border border-elevate-1 data-[state=unchecked]:hover:border-elevate-2 data-[state=checked]:border-foreground-2 duration-200"
 							id="hideSec"
 							checked={hideSec}
 							onCheckedChange={handleHideSecChange}
 						>
-							<Switch.Thumb className="relative block size-5 data-[state=unchecked]:bg-neutral group-hover:data-[state=unchecked]:bg-neutral-950 dark:group-hover:data-[state=unchecked]:bg-neutral-50 dark:data-[state=unchecked]:bg-neutral data-[state=checked]:bg-white dark:data-[state=checked]:bg-neutral-950 rounded-full duration-200 ease-out translate-x-1 data-[state=checked]:translate-x-7">
-								<div className="absolute top-1.5 group-data-[state=unchecked]:left-1.5 group-data-[state=checked]:left-2.5 size-2 group-data-[state=checked]:w-0 rounded-full group-data-[state=unchecked]:ring-2 group-data-[state=checked]:ring-1 group-data-[state=unchecked]:ring-white dark:group-data-[state=unchecked]:ring-neutral-950 group-data-[state=checked]:ring-neutral-950 dark:group-data-[state=checked]:ring-neutral-50 duration-200 ease-out" />
+							<Switch.Thumb className="relative block size-5 data-[state=unchecked]:bg-foreground-2 data-[state=checked]:bg-background rounded-full duration-200 ease-out translate-x-1 data-[state=checked]:translate-x-7">
+								<div className="absolute top-1.5 group-data-[state=unchecked]:left-1.5 group-data-[state=checked]:left-2.5 size-2 group-data-[state=checked]:w-0 rounded-full group-data-[state=unchecked]:ring-2 group-data-[state=checked]:ring-1 group-data-[state=unchecked]:ring-background group-data-[state=checked]:ring-foreground-2 duration-200 ease-out" />
 							</Switch.Thumb>
 						</Switch.Root>
 					</fieldset>
 					<Dialog.Close asChild>
-						<button className="absolute top-3 right-3 hover:text-neutral-950 hover:bg-neutral-50 hover:dark:bg-neutral-800 hover:dark:text-neutral-50 p-2 duration-100 rounded-full">
+						<button className="absolute top-3 right-3 hover:text-foreground-2 hover:bg-elevate-1 p-2 duration-100 rounded-full">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="15"
