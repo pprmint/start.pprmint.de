@@ -30,7 +30,7 @@ function SearchBar() {
 				autoFocus
 				onChange={(e) => setQuery(e.target.value)}
 				onKeyDown={handleKeyPress}
-				className="placeholder:text-neutral-500 text-neutral-950 dark:text-neutral-50 w-full px-4 py-3 md:text-lg rounded-lg bg-white border border-neutral-50 shadow-xl dark:bg-neutral-900 dark:border-neutral-800 shadow-black/5 dark:shadow-none outline-none"
+				className="placeholder:text-neutral-500 text-foreground-2 w-full px-4 py-3 md:text-lg rounded-lg bg-white border border-neutral-50 shadow-xl dark:bg-neutral-900 dark:border-neutral-800 shadow-black/5 dark:shadow-none outline-none"
 			/>
 			<div className="absolute right-0 top-0 h-full inline-flex items-center justify-center">
 				<button
