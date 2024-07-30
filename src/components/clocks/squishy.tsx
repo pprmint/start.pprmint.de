@@ -44,17 +44,15 @@ function SquishyClock() {
 
 	const transitions = useTransition(digits, {
 		keys: digits.map((digit, index) => `${digit}-${index}`),
-		from: { opacity: 0, transform: `translateY(-20px) rotateZ(0deg)` },
-		enter: (item, index) => ({
-			opacity: 1,
+		from: { transform: `translateY(20px) rotateZ(0deg)` },
+		enter: (_, index) => ({
 			transform: `translateY(0px) rotateZ(${rotations[index]}deg)`,
-			config: { duration: 300, easing: easings.easeOutBack },
+			config: { duration: 400, easing: easings.easeOutBack },
 		}),
-		leave: {
-			opacity: 0,
+		leave: (_, index) => ({
 			transform: `translateY(20px) rotateZ(0deg)`,
-			config: { duration: 150, easing: easings.easeInCirc },
-		},
+			config: { duration: 200, easing: easings.easeInCubic },
+		}),
 		exitBeforeEnter: true,
 	});
 
