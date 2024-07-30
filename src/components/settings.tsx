@@ -100,7 +100,9 @@ function Settings() {
   // Clock design
   const lsClock = localStorage.getItem("clock");
   const [clock, setClock] = useState(
-    Clocks.some((clock) => clock === lsClock) ? lsClock : "Digital"
+    Clocks.some((clock) => clock.clocks.includes(String(lsClock)))
+      ? lsClock
+      : "Digital"
   );
   function handleClockChange(clock: string) {
     setRefresh(true);
@@ -356,7 +358,7 @@ function Settings() {
                 <Select.Content className="data-[state=open]:animate-select-open data-[state=closed]:animate-select-close overflow-hidden bg-background text-foreground-2 rounded-lg shadow-xl border border-elevate-2">
                   <Select.Viewport className="p-1 flex flex-col">
                     {Clocks.map((category, index) => (
-                      <Fragment key={index}>
+                      <Fragment key={category.name + index}>
                         <Select.Group className="flex flex-col">
                           <Select.Label className="text-xs text-foreground-1 pl-2 py-1">
                             {category.name}
