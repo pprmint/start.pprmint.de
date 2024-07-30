@@ -215,6 +215,13 @@ module.exports = {
 				"foreground-1": "#aaa",
 				"foreground-2": "#eee",
 			},
+			pink: {
+				background: "#1f0d16",
+				"elevate-1": "#441e31",
+				"elevate-2": "#64354b",
+				"foreground-1": "#e699b9",
+				"foreground-2": "#f8c8dc",
+			},
 		}),
 	],
 };

@@ -46,7 +46,7 @@ function DigitalClock() {
         {transitions((style, item, index) => (
           <a.span key={`${item}-${index}`} style={style}>
             {item === ":" ? (
-              <span className="animate-pulse mx-1">:</span>
+              <span className="animate-pulse mx-1 text-foreground-1">:</span>
             ) : (
               item
             )}

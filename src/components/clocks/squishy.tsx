@@ -49,10 +49,10 @@ function SquishyClock() {
 			transform: `translateY(0px) rotateZ(${rotations[index]}deg)`,
 			config: { duration: 400, easing: easings.easeOutBack },
 		}),
-		leave: (_, index) => ({
+		leave: {
 			transform: `translateY(20px) rotateZ(0deg)`,
 			config: { duration: 200, easing: easings.easeInCubic },
-		}),
+		},
 		exitBeforeEnter: true,
 	});
 
@@ -61,7 +61,7 @@ function SquishyClock() {
 			<div className="flex" style={{ perspective: 1000 }}>
 				{transitions((style, item, index) => (
 					<a.span key={`${item}-${index}`} style={style}>
-						{item === ":" ? <span className="animate-pulse mx-1">:</span> : item}
+						{item === ":" ? <span className="animate-pulse mx-1 text-foreground-1">:</span> : item}
 					</a.span>
 				))}
 			</div>
