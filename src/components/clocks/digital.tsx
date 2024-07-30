@@ -20,7 +20,7 @@ function DigitalClock() {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [getTime]);
+  }, []);
 
   const digits = useMemo(() => time.split(""), [time]);
 

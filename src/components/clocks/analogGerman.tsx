@@ -1,7 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import isTabVisible from "src/useIsTabVisible";
 
 function BahnClock() {
 	const lsHideSec = localStorage.getItem("hideSec");
@@ -40,7 +39,7 @@ function BahnClock() {
 			<div className="absolute inset-0 drop-shadow-md">
 				<div
 					id="hour"
-					className={`absolute inset-0 ${isTabVisible() && "duration-100"}`}
+					className="absolute inset-0 duration-100"
 					style={{
 						transform: `rotate(${rotateHour}deg)`,
 					}}
@@ -49,7 +48,7 @@ function BahnClock() {
 				</div>
 				<div
 					id="minute"
-					className={`absolute inset-0 ${isTabVisible() && "duration-[0.4s]"}`}
+					className="absolute inset-0 duration-[0.4s]"
 					style={{
 						transform: `rotate(${rotateMinute}deg)`,
 						transitionTimingFunction: "cubic-bezier(0.3, 2.5, 0, 0.5)",
