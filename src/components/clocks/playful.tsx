@@ -1,6 +1,5 @@
 "use client";
-import dynamic from "next/dynamic";
-import { useEffect, useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useTransition, a, easings } from "@react-spring/web";
 import { Nunito } from "next/font/google";
 
@@ -10,7 +9,7 @@ const nunito = Nunito({
 	display: "swap",
 });
 
-function PlayfulClock({ time }: { time: string }) {
+export default function PlayfulClock({ time }: { time: string }) {
 	const digits = useMemo(() => time.split(""), [time]);
 
 	// Function to generate a random number within a range
@@ -50,7 +49,3 @@ function PlayfulClock({ time }: { time: string }) {
 		</h1>
 	);
 }
-
-export default dynamic(() => Promise.resolve(PlayfulClock), {
-	ssr: false,
-});

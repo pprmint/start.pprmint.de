@@ -1,9 +1,8 @@
 "use client";
-import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import { useTransition, a, easings } from "@react-spring/web";
 
-function DigitalClock({ time }: { time: string }) {
+export default function DigitalClock({ time }: { time: string }) {
 	const digits = useMemo(() => time.split(""), [time]);
 
 	const transitions = useTransition(digits, {
@@ -34,7 +33,3 @@ function DigitalClock({ time }: { time: string }) {
 		</h1>
 	);
 }
-
-export default dynamic(() => Promise.resolve(DigitalClock), {
-	ssr: false,
-});
