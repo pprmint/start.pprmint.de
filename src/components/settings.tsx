@@ -90,7 +90,7 @@ function Settings() {
 	const Clocks = [
 		"Digital",
 		"Digital (no animations)",
-		"Squishy",
+		"Playful",
 		"Swiss station clock",
 		"German station clock",
 		"None",
@@ -168,7 +168,7 @@ function Settings() {
 							</Select.Trigger>
 							<Select.Portal>
 								<Select.Content className="capitalize data-[state=open]:animate-select-open data-[state=closed]:animate-select-close overflow-hidden bg-background text-foreground-2 rounded-lg shadow-xl border border-elevate-2">
-									<Select.Viewport className="p-1 flex flex-col flex flex-col">
+									<Select.Viewport className="p-1 flex flex-col">
 										{Themes.map((theme, index) => (
 											<Select.Item
 												key={index}

@@ -1,30 +1,7 @@
-"use client";
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-
-function SwissClock() {
-	const lsHideSec = localStorage.getItem("hideSec");
-	const [time, setTime] = useState(getTime);
-
-	function getTime() {
-		const now = new Date();
-		const hour = now.getHours();
-		const minute = now.getMinutes();
-		const second = now.getSeconds();
-		return [hour, minute, second];
-	}
-
+export default function SwissClock({ time }: { time: number[] }) {
 	const rotateHour = 30 * time[0] + (time[1] / 60) * 30;
 	const rotateMinute = 6 * time[1] + 360 * time[0];
 	const rotateSecond = (360 / 59) * time[2] + 6;
-
-	useEffect(() => {
-		const intervalId = setInterval(() => {
-			setTime(getTime);
-		}, 1000);
-
-		return () => clearInterval(intervalId);
-	}, []);
 
 	return (
 		<div className="relative size-64 border border-elevate-1 rounded-full shadow-inner">
@@ -55,7 +32,7 @@ function SwissClock() {
 				>
 					<div className="absolute bg-foreground-2 w-1.5 h-32 top-6 left-1/2 -translate-x-1/2" />
 				</div>
-				{lsHideSec !== "true" && (
+				{time[2] && (
 					<div
 						id="second"
 						className={`absolute inset-0 ${time[2] <= 58 && "duration-[0.99s]"} ease-linear`}
@@ -72,7 +49,3 @@ function SwissClock() {
 		</div>
 	);
 }
-
-export default dynamic(() => Promise.resolve(SwissClock), {
-	ssr: false,
-});

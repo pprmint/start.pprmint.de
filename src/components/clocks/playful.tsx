@@ -10,25 +10,7 @@ const nunito = Nunito({
 	display: "swap",
 });
 
-function SquishyClock() {
-	const lsHideSec = localStorage.getItem("hideSec");
-	const [time, setTime] = useState(getTime);
-	function getTime() {
-		const now = new Date();
-		const hour = now.getHours().toString().padStart(2, "0");
-		const minute = now.getMinutes().toString().padStart(2, "0");
-		const second = now.getSeconds().toString().padStart(2, "0");
-		return `${hour}:${minute}${lsHideSec !== "true" ? `:${second}` : ""}`;
-	}
-
-	useEffect(() => {
-		const intervalId = setInterval(() => {
-			setTime(getTime);
-		}, 1000);
-
-		return () => clearInterval(intervalId);
-	}, []);
-
+function PlayfulClock({ time }: { time: string }) {
 	const digits = useMemo(() => time.split(""), [time]);
 
 	// Function to generate a random number within a range
@@ -69,6 +51,6 @@ function SquishyClock() {
 	);
 }
 
-export default dynamic(() => Promise.resolve(SquishyClock), {
+export default dynamic(() => Promise.resolve(PlayfulClock), {
 	ssr: false,
 });
