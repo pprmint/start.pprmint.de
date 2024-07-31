@@ -199,7 +199,7 @@ function Page() {
 			),
 		},
 	];
-	const [clock, setClock] = useState(Clocks.some((clock) => clock.name === lsClock) ? lsClock : "Digital");
+	const [clock, setClock] = useState(Clocks.some((clock) => clock.name === lsClock) ? lsClock : "Default");
 	function handleClockChange(clock: string) {
 		setClock(clock);
 		localStorage.setItem("clock", clock);

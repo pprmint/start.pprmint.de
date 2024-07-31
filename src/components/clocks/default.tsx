@@ -2,7 +2,7 @@
 import { useMemo } from "react";
 import { useTransition, a, easings } from "@react-spring/web";
 
-export default function DigitalClock({ time }: { time: string }) {
+export default function DefaultClock({ time }: { time: string }) {
 	const digits = useMemo(() => time.split(""), [time]);
 
 	const transitions = useTransition(digits, {
