@@ -11,6 +11,7 @@ function Clock() {
 	const lsClock = localStorage.getItem("clock");
 	const lsHideSec = localStorage.getItem("hideSec");
 	const timeCheckFreq = localStorage.getItem("incrTimeCheckFreq") === "true" ? 250 : 1000;
+	const use12hr = localStorage.getItem("use12hr") === "true" ? true : false;
 	const [time, setTime] = useState(getTime);
 	function getTime() {
 		const now = new Date();
@@ -29,9 +30,10 @@ function Clock() {
 
 	return lsClock === "None" ? null : lsClock === "Playful" ? (
 		<PlayfulClock
-			time={`${time[0].toString().padStart(2, "0")}:${time[1].toString().padStart(2, "0")}${
-				lsHideSec ? "" : `:${time[2].toString().padStart(2, "0")}`
-			}`}
+			time={`${(use12hr ? ((time[0] + 11) % 12) + 1 : time[0]).toString().padStart(2, "0")}:${time[1]
+				.toString()
+				.padStart(2, "0")}${lsHideSec ? "" : `:${time[2].toString().padStart(2, "0")}`}`}
+			meridiem={use12hr ? (time[0] < 12 ? "am" : "pm") : undefined}
 		/>
 	) : lsClock === "German station clock" ? (
 		<BahnClock time={time} />
@@ -39,15 +41,17 @@ function Clock() {
 		<SwissClock time={time} />
 	) : lsClock === "Default (no animations)" ? (
 		<DefaultClockNoAnim
-			time={`${time[0].toString().padStart(2, "0")}:${time[1].toString().padStart(2, "0")}${
-				lsHideSec ? "" : `:${time[2].toString().padStart(2, "0")}`
-			}`}
+			time={`${(use12hr ? ((time[0] + 11) % 12) + 1 : time[0]).toString().padStart(2, "0")}:${time[1]
+				.toString()
+				.padStart(2, "0")}${lsHideSec ? "" : `:${time[2].toString().padStart(2, "0")}`}`}
+			meridiem={use12hr ? (time[0] < 12 ? "AM" : "PM") : undefined}
 		/>
 	) : (
 		<DefaultClock
-			time={`${time[0].toString().padStart(2, "0")}:${time[1].toString().padStart(2, "0")}${
-				lsHideSec ? "" : `:${time[2].toString().padStart(2, "0")}`
-			}`}
+			time={`${(use12hr ? ((time[0] + 11) % 12) + 1 : time[0]).toString().padStart(2, "0")}:${time[1]
+				.toString()
+				.padStart(2, "0")}${lsHideSec ? "" : `:${time[2].toString().padStart(2, "0")}`}`}
+			meridiem={use12hr ? (time[0] < 12 ? "AM" : "PM") : undefined}
 		/>
 	);
 }

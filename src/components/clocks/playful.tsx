@@ -9,7 +9,7 @@ const nunito = Nunito({
 	display: "swap",
 });
 
-export default function PlayfulClock({ time }: { time: string }) {
+export default function PlayfulClock({ time, meridiem }: { time: string; meridiem?: "am" | "pm" }) {
 	const digits = useMemo(() => time.split(""), [time]);
 
 	// Function to generate a random number within a range
@@ -38,14 +38,17 @@ export default function PlayfulClock({ time }: { time: string }) {
 	});
 
 	return (
-		<h1 className={`text-6xl md:text-9xl text-foreground-2 tracking-wide ${nunito.className}`}>
-			<div className="flex" style={{ perspective: 1000 }}>
-				{transitions((style, item, index) => (
-					<a.span key={`${item}-${index}`} style={style}>
-						{item === ":" ? <span className="animate-pulse mx-1 text-foreground-1">:</span> : item}
-					</a.span>
-				))}
-			</div>
-		</h1>
+		<div className={`flex items-start ${nunito.className}`}>
+			<h1 className="text-6xl md:text-9xl text-foreground-2 tracking-wide">
+				<div className="flex" style={{ perspective: 1000 }}>
+					{transitions((style, item, index) => (
+						<a.span key={`${item}-${index}`} style={style}>
+							{item === ":" ? <span className="animate-pulse mx-1 text-foreground-1">:</span> : item}
+						</a.span>
+					))}
+				</div>
+			</h1>
+			<p className="text-foreground-2 text-2xl font-bold p-2">{meridiem}</p>
+		</div>
 	);
 }

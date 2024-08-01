@@ -85,6 +85,19 @@ function Page() {
 		localStorage.setItem("engine", engine);
 	}
 
+	// 12/24 hr
+	const lsUse12hr = localStorage.getItem("use12hr");
+	const [use12hr, setUse12hr] = useState(lsUse12hr === "true" ? true : false);
+	function handleUse12hrChange() {
+		if (use12hr) {
+			localStorage.removeItem("use12hr");
+			setUse12hr(false);
+		} else {
+			localStorage.setItem("use12hr", "true");
+			setUse12hr(true);
+		}
+	}
+
 	// Clock design
 	const lsClock = localStorage.getItem("clock");
 	const Clocks = [
@@ -421,9 +434,20 @@ function Page() {
 						</div>
 					</fieldset>
 					<fieldset className="relative w-full bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
-						<label className="text-foreground-2 font-medium text-lg" htmlFor="clock">
-							Clock design
-						</label>
+						<div className="flex justify-between">
+							<label className="text-foreground-2 font-medium text-lg" htmlFor="clock">
+								Clock
+							</label>
+							<button aria-label="Time format" className="group relative h-8 w-20 border border-elevate-2 rounded-full hover:bg-elevate-1 duration-100" onClick={handleUse12hrChange}>
+								<div
+									className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-sm w-[37px] group-active:w-[41px] ${
+										use12hr ? "left-9 group-active:left-8" : "left-1"
+									} rounded-full duration-200 ease-out`}
+								>
+									{use12hr ? "12h" : "24h"}
+								</div>
+							</button>
+						</div>
 						<div className="grid grid-cols-2 md:grid-cols-3 gap-5 mt-3">
 							{Clocks.map((item, index) => (
 								<button
@@ -459,7 +483,7 @@ function Page() {
 							<p className="text-sm">Hide the seconds in digital clocks and the second hand in analog clocks.</p>
 						</div>
 						<Switch.Root
-							className="group relative w-14 h-8 bg-transparent data-[state=checked]:bg-foreground-2 data-[state=unchecked]:hover:bg-elevate-1 outline-none rounded-full border data-[state=unchecked]:border-elevate-2 data-[state=checked]:border-foreground-2 duration-200"
+							className="group relative w-14 h-8 bg-transparent data-[state=checked]:bg-foreground-2 data-[state=unchecked]:hover:bg-elevate-1 outline-none rounded-full border data-[state=unchecked]:border-elevate-2 data-[state=checked]:border-foreground-2 duration-100"
 							id="hideSec"
 							checked={hideSec}
 							onCheckedChange={handleHideSecChange}
@@ -489,7 +513,7 @@ function Page() {
 							</p>
 						</div>
 						<Switch.Root
-							className="group relative w-14 h-8 bg-transparent data-[state=checked]:bg-foreground-2 data-[state=unchecked]:hover:bg-elevate-1 outline-none rounded-full border data-[state=unchecked]:border-elevate-2 data-[state=checked]:border-foreground-2 duration-200"
+							className="group relative w-14 h-8 bg-transparent data-[state=checked]:bg-foreground-2 data-[state=unchecked]:hover:bg-elevate-1 outline-none rounded-full border data-[state=unchecked]:border-elevate-2 data-[state=checked]:border-foreground-2 duration-100"
 							id="incrTimeCheckFreq"
 							checked={timeCheckFreq}
 							onCheckedChange={handleChangeTimeCheckFreq}
