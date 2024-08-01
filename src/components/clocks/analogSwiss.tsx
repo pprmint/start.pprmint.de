@@ -32,7 +32,7 @@ export default function SwissClock({ time }: { time: number[] }) {
 				>
 					<div className="absolute bg-foreground-2 w-1.5 h-32 top-6 left-1/2 -translate-x-1/2" />
 				</div>
-				{time[2] && (
+				{time[2] !== undefined && time[2] !== null && (
 					<div
 						id="second"
 						className={`absolute inset-0 ${time[2] <= 58 && "duration-[0.99s]"} ease-linear`}
@@ -40,8 +40,8 @@ export default function SwissClock({ time }: { time: number[] }) {
 							transform: `rotate(${time[2] == 0 ? 6 : time[2] <= 58 ? rotateSecond : 0}deg)`,
 						}}
 					>
-						<div className="absolute bg-red w-1 h-28 top-12 left-1/2 -translate-x-1/2" />
-						<div className="absolute bg-red size-5 top-10 left-1/2 -translate-x-1/2 rounded-full" />
+						<div className="absolute bg-accent w-1 h-28 top-12 left-1/2 -translate-x-1/2" />
+						<div className="absolute bg-accent size-5 top-10 left-1/2 -translate-x-1/2 rounded-full" />
 					</div>
 				)}
 			</div>

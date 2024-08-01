@@ -33,7 +33,7 @@ export default function BahnClock({ time }: { time: number[] }) {
 				>
 					<div className="absolute bg-foreground-2 w-2.5 h-28 top-4 left-1/2 -translate-x-1/2" />
 				</div>
-				{time[2] && (
+				{time[2] !== undefined && time[2] !== null && (
 					<div
 						id="second"
 						className={`absolute inset-0 ${time[2] <= 58 && "duration-[0.99s]"}`}
@@ -42,9 +42,9 @@ export default function BahnClock({ time }: { time: number[] }) {
 							transitionTimingFunction: "cubic-bezier(0.2, 0.2, 0.7, 0.9)",
 						}}
 					>
-						<div className="absolute bg-red w-1 h-10 top-2 left-1/2 -translate-x-1/2" />
-						<div className="absolute bg-red w-1 h-16 top-16 left-1/2 -translate-x-1/2" />
-						<div className="absolute border-4 border-red size-6 top-11 left-1/2 -translate-x-1/2 rounded-full" />
+						<div className="absolute bg-accent w-1 h-10 top-2 left-1/2 -translate-x-1/2" />
+						<div className="absolute bg-accent w-1 h-16 top-16 left-1/2 -translate-x-1/2" />
+						<div className="absolute border-4 border-accent size-6 top-11 left-1/2 -translate-x-1/2 rounded-full" />
 					</div>
 				)}
 			</div>

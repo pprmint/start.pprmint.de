@@ -155,6 +155,7 @@ module.exports = {
 			fontFamily: {
 				sans: "Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, 'Segoe UI Variable', 'Segoe UI Variable Text', 'Segoe UI', Cantarell, Ubuntu, system-ui, sans-serif",
 				number: "'Mina Sans Digits', 'Roboto Mono', monospace",
+				triangles: "'Mint Triangles', 'Roboto Mono', monospace",
 			},
 			keyframes: {
 				dialogEnter: {
@@ -200,6 +201,7 @@ module.exports = {
 				"elevate-2": "#ddd",
 				"foreground-1": "#777",
 				"foreground-2": "#111",
+				accent: "#f44",
 			},
 			dark: {
 				background: "#111",
@@ -207,6 +209,7 @@ module.exports = {
 				"elevate-2": "#333",
 				"foreground-1": "#aaa",
 				"foreground-2": "#eee",
+				accent: "#f44",
 			},
 			amoled: {
 				background: "#000",
@@ -214,6 +217,7 @@ module.exports = {
 				"elevate-2": "#222",
 				"foreground-1": "#aaa",
 				"foreground-2": "#eee",
+				accent: "#f44",
 			},
 			pink: {
 				background: "#1f0d16",
@@ -221,6 +225,23 @@ module.exports = {
 				"elevate-2": "#64354b",
 				"foreground-1": "#e699b9",
 				"foreground-2": "#f8c8dc",
+				accent: "#e698b8",
+			},
+			toothpaste: {
+				background: "#F9FDF9",
+				"elevate-1": "#E4F5E6",
+				"elevate-2": "#C9EACD",
+				"foreground-1": "#558052",
+				"foreground-2": "#162a09",
+				accent: "#27ab36",
+			},
+			forest: {
+				background: "#141a14",
+				"elevate-1": "#1C231B",
+				"elevate-2": "#272f25",
+				"foreground-1": "#a7b3a2",
+				"foreground-2": "#e5e8e3",
+				accent: "#27ab36",
 			},
 		}),
 	],

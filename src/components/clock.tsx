@@ -6,6 +6,7 @@ import PlayfulClock from "./clocks/playful";
 import SwissClock from "./clocks/analogSwiss";
 import BahnClock from "./clocks/analogGerman";
 import { useEffect, useState } from "react";
+import TrianglesClock from "./clocks/triangles";
 
 function Clock() {
 	const lsClock = localStorage.getItem("clock");
@@ -28,7 +29,14 @@ function Clock() {
 		return () => clearInterval(intervalId);
 	}, []);
 
-	return lsClock === "None" ? null : lsClock === "Playful" ? (
+	return lsClock === "None" ? null : lsClock === "Triangles" ? (
+		<TrianglesClock
+			time={`${(use12hr ? ((time[0] + 11) % 12) + 1 : time[0]).toString().padStart(2, "0")}:${time[1]
+				.toString()
+				.padStart(2, "0")}${lsHideSec ? "" : `:${time[2].toString().padStart(2, "0")}`}`}
+			meridiem={use12hr ? (time[0] < 12 ? "AM" : "PM") : undefined}
+		/>
+	) : lsClock === "Playful" ? (
 		<PlayfulClock
 			time={`${(use12hr ? ((time[0] + 11) % 12) + 1 : time[0]).toString().padStart(2, "0")}:${time[1]
 				.toString()

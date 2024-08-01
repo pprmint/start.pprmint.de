@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import "public/MinaSans/MinaSans.css";
+import "public/MintTriangles/minttriangles.css";
 import "./globals.css";
 import { ThemeProvider } from "../components/themeProvider";
 
@@ -24,7 +25,7 @@ export default function RootLayout({
 			<body className={`bg-background text-foreground-1 ${inter.className}`}>
 				<ThemeProvider
 					defaultTheme="system"
-					themes={["light", "dark", "amoled", "pink", "system"]}
+					themes={["light", "dark", "amoled", "pink", "toothpaste", "forest", "system"]}
 					attribute="class"
 				>
 					{children}

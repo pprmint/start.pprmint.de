@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTransition, easings, a } from "@react-spring/web";
 import * as Select from "@radix-ui/react-select";
-import { Engines } from "./engines";
+import { Engines } from "../app/settings/engines";
 
 function SearchBar() {
 	const lsEngine = localStorage.getItem("engine");
