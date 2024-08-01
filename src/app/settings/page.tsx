@@ -247,9 +247,9 @@ function Page() {
 	return (
 		<>
 			<main>
-				<section className="bg-gradient-to-t from-background border-b border-elevate-2">
-					<Link href="/" className="flex gap-3 items-center text-foreground-2 p-3">
-						<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="currentColor">
+				<section className="bg-gradient-to-t from-background via-transparent border-b border-elevate-2">
+					<Link href="/" className="group flex gap-3 items-center text-foreground-2 p-3 hover:font-bold duration-100 w-max">
+						<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="currentColor" className="stroke-0 group-hover:stroke-1 stroke-current duration-100" style={{strokeLinejoin: "miter"}}>
 							<path d="M9.043 3h1.414l-4.5 4.5 4.5 4.5H9.043l-4.5-4.5z"></path>
 						</svg>
 						Back to start page
