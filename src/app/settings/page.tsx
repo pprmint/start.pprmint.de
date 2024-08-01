@@ -438,13 +438,19 @@ function Page() {
 							<label className="text-foreground-2 font-medium text-lg" htmlFor="clock">
 								Clock
 							</label>
-							<button aria-label="Time format" className="group relative h-8 w-20 border border-elevate-2 rounded-full hover:bg-elevate-1 duration-100" onClick={handleUse12hrChange}>
+							<button
+								aria-label="Time format"
+								className="group relative h-8 w-[85px] hover:text-foreground-2 border border-elevate-2 rounded-full hover:bg-elevate-1 duration-100"
+								onClick={handleUse12hrChange}
+							>
 								<div
-									className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-sm w-[37px] group-active:w-[41px] ${
-										use12hr ? "left-9 group-active:left-8" : "left-1"
+									className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-xs font-medium w-[38px] group-active:w-[42px] ${
+										use12hr ? "left-[41px] group-active:left-[37px]" : "left-1"
 									} rounded-full duration-200 ease-out`}
-								>
-									{use12hr ? "12h" : "24h"}
+								/>
+								<div className="absolute inset-0 flex items-center text-xs px-1">
+									<span className={`w-full text-center ${!use12hr && "font-bold text-background"} duration-100`}>24h</span>
+									<span className={`w-full text-center ${use12hr && "font-bold text-background"} duration-100`}>12h</span>
 								</div>
 							</button>
 						</div>
@@ -459,7 +465,7 @@ function Page() {
 										className={`w-full h-auto ${
 											item.name === clock
 												? "ring-2 ring-foreground-2"
-												: "ring-1 ring-elevate-2 group-hover:bg-elevate-1"
+												: "ring-1 ring-elevate-2 group-hover:bg-elevate-1 group-active:ring-inset"
 										} duration-100 rounded-md overflow-clip`}
 									>
 										{item.preview}
