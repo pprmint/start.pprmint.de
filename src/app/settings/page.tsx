@@ -247,7 +247,7 @@ function Page() {
 	return (
 		<>
 			<main>
-				<section className="border-b border-elevate-2">
+				<section className="bg-gradient-to-t from-background border-b border-elevate-2">
 					<Link href="/" className="flex gap-3 items-center text-foreground-2 p-3">
 						<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="currentColor">
 							<path d="M9.043 3h1.414l-4.5 4.5 4.5 4.5H9.043l-4.5-4.5z"></path>
@@ -465,7 +465,7 @@ function Page() {
 										className={`w-full h-auto ${
 											item.name === clock
 												? "ring-2 ring-foreground-2"
-												: "ring-1 ring-elevate-2 group-hover:bg-elevate-1 group-active:ring-inset"
+												: "ring-1 ring-elevate-2 group-hover:bg-elevate-1"
 										} duration-100 rounded-md overflow-clip`}
 									>
 										{item.preview}
