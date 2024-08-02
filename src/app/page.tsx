@@ -1,11 +1,12 @@
 "use client";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Clock from "src/components/clock";
 import Link from "next/link";
 import { Engines } from "../app/settings/engines";
 
-export default function Home() {
+function Home() {
 	const mainRef = useRef<HTMLElement | null>(null);
 
 	const lsEngine = localStorage.getItem("engine");
@@ -120,3 +121,7 @@ export default function Home() {
 		</>
 	);
 }
+
+export default dynamic(() => Promise.resolve(Home), {
+	ssr: false,
+});
