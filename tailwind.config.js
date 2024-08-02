@@ -243,6 +243,22 @@ module.exports = {
 				"foreground-2": "#e5e8e3",
 				accent: "#27ab36",
 			},
+			ice: {
+				background: "#f4f6fb",
+				"elevate-1": "#e8ecf6",
+				"elevate-2": "#ccd7eb",
+				"foreground-1": "#4a72ad",
+				"foreground-2": "#273753",
+				accent: "#3a5d97",
+			},
+			ocean: {
+				background: "#131d2b",
+				"elevate-1": "#1D2B41",
+				"elevate-2": "#263956",
+				"foreground-1": "#B5CCE4",
+				"foreground-2": "#e8edf6",
+				accent: "#477db0",
+			},
 		}),
 	],
 };

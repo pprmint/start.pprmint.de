@@ -25,7 +25,7 @@ export default function RootLayout({
 			<body className={`bg-background text-foreground-1 ${inter.className}`}>
 				<ThemeProvider
 					defaultTheme="system"
-					themes={["light", "dark", "amoled", "pink", "toothpaste", "forest", "system"]}
+					themes={["light", "dark", "amoled", "pink", "toothpaste", "forest", "ice", "ocean", "system"]}
 					attribute="class"
 				>
 					{children}
