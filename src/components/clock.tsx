@@ -1,11 +1,12 @@
 "use client";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 import DefaultClock from "./clocks/default";
 import DefaultClockNoAnim from "./clocks/defaultNoAnim";
 import PlayfulClock from "./clocks/playful";
 import SwissClock from "./clocks/analogSwiss";
 import BahnClock from "./clocks/analogGerman";
-import { useEffect, useState } from "react";
+import DotsClock from "./clocks/dots";
 import TrianglesClock from "./clocks/triangles";
 
 function Clock() {
@@ -47,6 +48,8 @@ function Clock() {
 		<BahnClock time={time} />
 	) : lsClock === "Swiss station clock" ? (
 		<SwissClock time={time} />
+	) : lsClock === "Dots" ? (
+		<DotsClock time={time} />
 	) : lsClock === "Default (no animations)" ? (
 		<DefaultClockNoAnim
 			time={`${(use12hr ? ((time[0] + 11) % 12) + 1 : time[0]).toString().padStart(2, "0")}:${time[1]
