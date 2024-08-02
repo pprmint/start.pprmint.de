@@ -1,4 +1,4 @@
-export default function SwissClock({ time }: { time: number[] }) {
+export default function DotsClock({ time }: { time: number[] }) {
 	const rotateHour = 30 * time[0] + (time[1] / 60) * 30;
 	const rotateMinute = 6 * time[1] + 360 * time[0] + 0.1 * time[2];
 	const rotateSecond = 6 * time[2] + 360 * time[1] + 360 * time[0];
@@ -8,10 +8,27 @@ export default function SwissClock({ time }: { time: number[] }) {
 			<div className="absolute inset-0">
 				{[...Array(60)].map((_, index) => (
 					<div
-						className="absolute inline-flex items-center justify-center top-0 left-1/2 size-2"
-						style={{ transform: `translateX(-50%) rotate(${(index * 360) / 60}deg)`, transformOrigin: "4px 128px" }}
+						className="absolute inline-flex items-center justify-center top-0 left-1/2 size-3"
+						style={{
+							transform: `translateX(-50%) rotate(${(index * 360) / 60}deg)`,
+							transformOrigin: "6px 128px",
+						}}
 					>
-						<div className={`${index % 5 === 0 ? "size-2  bg-foreground-2" : "size-1  bg-elevate-2"} rounded-full`} />
+						<div
+							className={`rounded-full ${
+								index % 5 === 0
+									? index === time[2]
+										? "size-3 bg-foreground-2"
+										: index === (time[2] + 59) % 60 || index === (time[2] + 1) % 60
+										? "size-2.5 bg-foreground-2"
+										: "size-2 bg-foreground-2"
+									: index === time[2]
+									? "size-2 bg-elevate-2"
+									: index === (time[2] + 59) % 60 || index === (time[2] + 1) % 60
+									? "size-1.5 bg-elevate-2"
+									: "size-1 bg-elevate-2"
+							}`}
+						/>
 					</div>
 				))}
 			</div>
