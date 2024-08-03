@@ -87,11 +87,11 @@ function Home() {
 				</div>
 			</main>
 			<footer
-				className={`flex items-end justify-between fixed bottom-0 inset-x-0 p-6 text-sm ${
+				className={`flex items-end justify-between fixed bottom-0 inset-x-0 p-4 text-sm ${
 					!showOther && "opacity-0"
 				} duration-700 ease-in-out`}
 			>
-				<p>
+				<p className="p-2">
 					Made by{" "}
 					<Link
 						className="group text-foreground-2"

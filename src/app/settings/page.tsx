@@ -118,7 +118,7 @@ function Page() {
 							onValueChange={(value: string) => setTheme(value)}
 						>
 							<Select.Trigger
-								className="group capitalize relative inline-flex items-center justify-between w-full sm:w-56 px-3 py-2 overflow-clip ease-in-out outline-none hover:bg-elevate-1 border border-elevate-2 rounded-lg duration-100 hover:text-foreground-2"
+								className="group capitalize relative inline-flex items-center justify-between w-full sm:w-56 px-2 py-2 overflow-clip ease-in-out outline-none hover:bg-elevate-1 border border-elevate-2 rounded-lg duration-100 hover:text-foreground-2"
 								aria-label="Site theme"
 							>
 								<Select.Value />
@@ -136,16 +136,43 @@ function Page() {
 							</Select.Trigger>
 							<Select.Portal>
 								<Select.Content className="capitalize data-[state=open]:animate-select-open data-[state=closed]:animate-select-close overflow-hidden bg-background text-foreground-2 rounded-lg shadow-xl border border-elevate-2">
+									<Select.ScrollUpButton className="absolute top-0 inset-x-0 inline-flex items-center justify-center h-[25px] bg-gradient-to-b from-background text-foreground-2 cursor-default z-10">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="15"
+											height="15"
+											viewBox="0 0 15 15"
+											fill="currentColor"
+										>
+											<path d="M12 9.043v1.414l-4.5-4.5-4.5 4.5V9.043l4.5-4.5z"></path>
+										</svg>
+									</Select.ScrollUpButton>
 									<Select.Viewport className="p-1 flex flex-col">
 										{Themes.map((theme, index) => (
 											<Select.Item
 												key={index}
 												value={theme.text}
-												className="relative px-2 h-8 inline-flex items-center rounded-md hover:bg-elevate-1 cursor-pointer select-none outline-none duration-100"
+												className="relative p-1 inline-flex items-center rounded-md hover:bg-elevate-1 cursor-pointer select-none outline-none duration-100"
 											>
 												<Select.ItemText asChild>
-													<div className="flex gap-3 items-center">
-														{theme.icon}
+													<div className="flex gap-2 items-center">
+														<div
+															className="p-1 rounded-full"
+															style={{
+																backgroundColor: theme.bgColor,
+																color: theme.fgColor,
+																border: `1px solid ${theme.borderColor}`,
+															}}
+														>
+															{theme.icon ? (
+																theme.icon
+															) : (
+																<div
+																	className="size-[15px] rounded-full"
+																	style={{ backgroundColor: theme.accentColor }}
+																/>
+															)}
+														</div>
 														{theme.text}
 													</div>
 												</Select.ItemText>
@@ -163,6 +190,17 @@ function Page() {
 											</Select.Item>
 										))}
 									</Select.Viewport>
+									<Select.ScrollDownButton className="absolute bottom-0 inset-x-0 inline-flex items-center justify-center h-[25px] bg-gradient-to-t from-background text-foreground-2 cursor-default z-10">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="15"
+											height="15"
+											viewBox="0 0 15 15"
+											fill="currentColor"
+										>
+											<path d="M3 5.957V4.543l4.5 4.5 4.5-4.5v1.414l-4.5 4.5z"></path>
+										</svg>
+									</Select.ScrollDownButton>
 								</Select.Content>
 							</Select.Portal>
 						</Select.Root>
