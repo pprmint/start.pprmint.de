@@ -226,54 +226,7 @@ function Page() {
 							</Select.Portal>
 						</Select.Root>
 						<div className="text-sm">
-							{searchEngine === "Google" ? (
-								<p>I think this one needs no introduction.</p>
-							) : searchEngine === "DuckDuckGo" ? (
-								<p>
-									A private search engine that allows you to search on other sites or engines with
-									so-called{" "}
-									<Link
-										href="https://duckduckgo.com/bangs"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="text-foreground-2 underline decoration-dotted"
-									>
-										Bangs
-									</Link>
-									, by prefixing them with{" "}
-									<span className="bg-elevate-2 text-foreground-2 px-0.5 rounded-sm">!</span>. They
-									also offer an email relay and browser extensions.
-								</p>
-							) : searchEngine === "Bing" ? (
-								<p>
-									The search engine Microsoft desperately wants you to use. You can even earn rewards
-									by using it, apparently.
-								</p>
-							) : (
-								<p>
-									My personal{" "}
-									<Link
-										href="https://docs.searxng.org/"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="text-foreground-2 underline decoration-dotted"
-									>
-										SearXNG
-									</Link>{" "}
-									instance that aggregates results from different engines. You can also search on
-									other sites or engines with DuckDuckGo's Bangs by prefixing them with{" "}
-									<span className="bg-elevate-2 text-foreground-2 px-0.5 rounded-sm">!!</span>.{" "}
-									<Link
-										href="https://inquest.fyi/info/en/search-syntax"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="text-foreground-2 underline decoration-dotted"
-									>
-										Search syntax here
-									</Link>
-									.
-								</p>
-							)}
+							{Engines.find((engine) => engine.name === searchEngine)?.description}
 						</div>
 					</fieldset>
 					<fieldset className="relative w-full bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">

@@ -1,7 +1,34 @@
+import Link from "next/link";
+
 export const Engines = [
 	{
 		name: "Inquest",
 		query: "https://inquest.fyi/search?q=%s",
+		description: (
+			<p>
+				My personal{" "}
+				<Link
+					href="https://docs.searxng.org/"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="text-foreground-2 underline decoration-dotted"
+				>
+					SearXNG
+				</Link>{" "}
+				instance that aggregates results from different engines. You can also search on other sites or engines
+				with DuckDuckGo's Bangs by prefixing them with{" "}
+				<span className="bg-elevate-2 text-foreground-2 px-0.5 rounded-sm">!!</span>.{" "}
+				<Link
+					href="https://inquest.fyi/info/en/search-syntax"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="text-foreground-2 underline decoration-dotted"
+				>
+					Search syntax here
+				</Link>
+				.
+			</p>
+		),
 		icon: (
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
 				<path
@@ -14,6 +41,53 @@ export const Engines = [
 	{
 		name: "Google",
 		query: "https://www.google.com/search?q=%s&udm=14",
+		description: (
+			<>
+				<p>
+					The default Google seach with all the info sheets, things people <small className="text-elevate-2">supposedly</small> also ask, and AI
+					overviews.
+				</p>
+				<p>Hope you enjoy that glue on your pizza.</p>
+			</>
+		),
+		icon: (
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+				<path
+					d="M31.36 16.356c0-1.316-.107-2.276-.338-3.272H16v5.938h8.818c-.178 1.476-1.138 3.698-3.271 5.191l-.03.199 4.749 3.68.33.032c3.022-2.791 4.764-6.897 4.764-11.768"
+					style={{ fill: "#4285f4" }}
+				/>
+				<path
+					d="M16 32c4.32 0 7.947-1.422 10.596-3.876l-5.049-3.911c-1.351.942-3.165 1.6-5.547 1.6-4.231 0-7.822-2.791-9.102-6.649l-.188.016-4.939 3.823-.064.179C4.338 28.409 9.742 32 16 32"
+					style={{ fill: "#34a853" }}
+				/>
+				<path
+					d="M6.898 19.164A9.8 9.8 0 0 1 6.364 16c0-1.102.196-2.169.516-3.164l-.009-.212L1.87 8.74l-.163.078A16 16 0 0 0 0 16c0 2.578.622 5.013 1.707 7.182z"
+					style={{ fill: "#fbbc05" }}
+				/>
+				<path
+					d="M16 6.187c3.004 0 5.031 1.297 6.187 2.382l4.515-4.409C23.929 1.582 20.32 0 16 0 9.742 0 4.338 3.591 1.707 8.818l5.173 4.018C8.178 8.978 11.769 6.187 16 6.187"
+					style={{ fill: "#eb4335" }}
+				/>
+			</svg>
+		),
+	},
+	{
+		name: "Google (Web)",
+		query: "https://www.google.com/search?q=%s&udm=14",
+		description: (
+			<p>
+				The "Web" tab of the Google search that only shows text-based results and nothing else. Here's a{" "}
+				<Link
+					href="https://tedium.co/2024/05/17/google-web-search-make-default/"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="text-foreground-2 underline decoration-dotted"
+				>
+					Tedium article
+				</Link>{" "}
+				about this tab and the <b>udm=14</b> URL parameter that this option uses.
+			</p>
+		),
 		icon: (
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
 				<path
@@ -38,6 +112,21 @@ export const Engines = [
 	{
 		name: "DuckDuckGo",
 		query: "https://duckduckgo.com/?q=%s",
+		description: (
+			<p>
+				A private search engine that allows you to search on other sites or engines with so-called{" "}
+				<Link
+					href="https://duckduckgo.com/bangs"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="text-foreground-2 underline decoration-dotted"
+				>
+					Bangs
+				</Link>
+				, by prefixing them with <span className="bg-elevate-2 text-foreground-2 px-0.5 rounded-sm">!</span>.
+				They also offer an email relay and browser extensions.
+			</p>
+		),
 		icon: (
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
 				<path
@@ -78,6 +167,12 @@ export const Engines = [
 	{
 		name: "Bing",
 		query: "https://www.bing.com/search?q=%s",
+		description: (
+			<p>
+				The search engine Microsoft desperately wants you to use. You can even earn rewards by using it,
+				apparently.
+			</p>
+		),
 		icon: (
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
 				<path
