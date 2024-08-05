@@ -1,6 +1,6 @@
 export default function DotsClock({ time }: { time: number[] }) {
 	const rotateHour = 30 * time[0] + (time[1] / 60) * 30;
-	const rotateMinute = 6 * time[1] + 360 * time[0] + 0.1 * time[2];
+	const rotateMinute = time[2] ? 6 * time[1] + 360 * time[0] + 0.1 * time[2] : 6 * time[1] + 360 * time[0];
 	const rotateSecond = 6 * time[2] + 360 * time[1] + 360 * time[0];
 
 	return (
