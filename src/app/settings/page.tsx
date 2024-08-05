@@ -402,14 +402,14 @@ function Page() {
 					<div className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5 mt-12">
 						<div className="flex flex-col md:flex-row gap-3 w-full items-center">
 							<div className="w-full">
-								<p className="text-lg text-foreground-2">
+								<p className="text-foreground-2 text-lg">
 									Made with{" "}
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										width="15"
 										height="15"
 										viewBox="0 0 15 15"
-										className="fill-accent inline"
+										className="fill-accent inline size-5 mb-1"
 									>
 										<path d="M1.881 7.619a3.353 3.353 0 0 1 0-4.738 3.353 3.353 0 0 1 4.738 0l.881.881.881-.881a3.353 3.353 0 0 1 4.738 0 3.353 3.353 0 0 1 0 4.738L7.5 13.238zM7.5 11.823l4.912-4.911a2.35 2.35 0 0 0 0-3.324 2.35 2.35 0 0 0-3.324 0L7.5 5.177 5.912 3.588a2.35 2.35 0 0 0-3.324 0 2.35 2.35 0 0 0 0 3.324z"></path>
 									</svg>{" "}
@@ -419,7 +419,7 @@ function Page() {
 										width="15"
 										height="15"
 										viewBox="0 0 15 15"
-										className="fill-yellow-600 inline"
+										className="fill-yellow-600 inline size-5 mb-1"
 									>
 										<path d="M12 12.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 1 12.5V6h11v1.5a2.5 2.5 0 0 1 0 5m0-4v3a1.5 1.5 0 0 0 0-3M11 7H2v5.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5zM3.8 1S5 2 5 3 3.8 5 3.8 5H5s1-1 1-2-1-2-1-2zM6.8 1S8 2 8 3 6.8 5 6.8 5H8s1-1 1-2-1-2-1-2z"></path>
 									</svg>{" "}
@@ -434,7 +434,7 @@ function Page() {
 										<span className="opacity-0 group-hover:opacity-100 duration-200">de</span>
 									</Link>
 								</p>
-								<p className="text-sm my-1">Found an error? Got ideas?</p>
+								<p className="text-sm my-2">Found an error? Got ideas?</p>
 								<div className="flex gap-2">
 									<Link
 										href="https://github.com/pprmint/start.pprmint.de/issues/new?assignees=&labels=&projects=&template=bug-report-.md&title="
