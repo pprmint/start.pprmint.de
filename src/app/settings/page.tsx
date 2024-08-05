@@ -494,7 +494,7 @@ function Page() {
 										</svg>
 										{process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.substring(0, 7)}
 									</Link>
-									<p>{process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_MESSAGE}</p>
+									<p className="text-sm">{process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_MESSAGE}</p>
 								</div>
 							) : (
 								<Image src={Icon} alt="Logo" className="size-[52px]" />
