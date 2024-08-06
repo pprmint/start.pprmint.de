@@ -33,9 +33,9 @@ function Clock() {
 
 	return lsClock === "None" ? null : lsClock === "Matrix" ? (
 		<MatrixClock
-			time={`${(use12hr ? ((time[0] + 11) % 12) + 1 : time[0]).toString().padStart(2, "0")}:${time[1]
+			time={`${(use12hr ? ((time[0] + 11) % 12) + 1 : time[0]).toString().padStart(2, "0")}${time[1]
 				.toString()
-				.padStart(2, "0")}${lsHideSec ? "" : `:${time[2].toString().padStart(2, "0")}`}`}
+				.padStart(2, "0")}${lsHideSec ? "" : `${time[2].toString().padStart(2, "0")}`}`}
 			meridiem={use12hr ? (time[0] < 12 ? "AM" : "PM") : undefined}
 		/>
 	) : lsClock === "Triangles" ? (
