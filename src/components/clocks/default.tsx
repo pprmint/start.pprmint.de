@@ -1,8 +1,13 @@
 "use client";
 import { useMemo } from "react";
-import { useTransition, a, easings } from "@react-spring/web";
+import { useTransition, a, easings, Globals } from "@react-spring/web";
 
 export default function DefaultClock({ time, meridiem }: { time: string; meridiem?: "AM" | "PM" }) {
+  // Disable transitions when tab is in background.
+	document.addEventListener("visibilitychange", () => {
+		Globals.assign({ skipAnimation: document.visibilityState !== "visible" });
+	});
+
 	const digits = useMemo(() => time.split(""), [time]);
 
 	const transitions = useTransition(digits, {

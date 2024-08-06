@@ -1,6 +1,6 @@
 "use client";
 import { useMemo } from "react";
-import { useTransition, a, easings } from "@react-spring/web";
+import { useTransition, a, easings, Globals } from "@react-spring/web";
 import { Nunito } from "next/font/google";
 
 const nunito = Nunito({
@@ -10,6 +10,11 @@ const nunito = Nunito({
 });
 
 export default function PlayfulClock({ time, meridiem }: { time: string; meridiem?: "am" | "pm" }) {
+	  // Disable transitions when tab is in background.
+	document.addEventListener("visibilitychange", () => {
+		Globals.assign({ skipAnimation: document.visibilityState !== "visible" });
+	});
+
 	const digits = useMemo(() => time.split(""), [time]);
 
 	// Function to generate a random number within a range
