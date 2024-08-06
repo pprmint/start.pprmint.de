@@ -76,7 +76,7 @@ function Page() {
 	return (
 		<>
 			<main>
-				<section className="bg-gradient-to-t from-background via-transparent border-b border-elevate-2">
+				<section id="header" className="bg-gradient-to-t from-background via-transparent border-b border-elevate-2">
 					<Link
 						href="/"
 						className="group flex gap-3 items-center text-foreground-2 p-3 hover:font-bold duration-100 w-max"
@@ -108,8 +108,8 @@ function Page() {
 						</svg>
 					</div>
 				</section>
-				<section className="max-w-3xl px-6 xl:px-0 mx-auto mt-12 mb-24 flex flex-col gap-6">
-					<fieldset className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
+				<section id="main" className="max-w-3xl px-6 xl:px-0 mx-auto mt-12 mb-24 flex flex-col gap-6">
+					<fieldset id="theme" className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
 						<label className="text-foreground-2 font-medium text-lg" htmlFor="theme">
 							Theme
 						</label>
@@ -202,7 +202,7 @@ function Page() {
 							</Select.Portal>
 						</Select.Root>
 					</fieldset>
-					<fieldset className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
+					<fieldset id="engine" className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
 						<label className="text-foreground-2 font-medium text-lg" htmlFor="engine">
 							Search engine
 						</label>
@@ -262,7 +262,7 @@ function Page() {
 						</Select.Root>
 						<div className="text-sm">{Engines.find((engine) => engine.name === searchEngine)?.description}</div>
 					</fieldset>
-					<fieldset className="relative w-full bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
+					<fieldset id="clock" className="relative w-full bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
 						<div className="flex justify-between">
 							<label className="text-foreground-2 font-medium text-lg" htmlFor="clock">
 								Clock
@@ -314,7 +314,7 @@ function Page() {
 							))}
 						</div>
 					</fieldset>
-					<fieldset className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
+					<fieldset id="hidesec" className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
 						<div>
 							<label className="text-foreground-2 font-medium text-lg" htmlFor="hideSec">
 								Hide seconds
@@ -340,7 +340,7 @@ function Page() {
 						</svg>
 						Experimental settings
 					</div>
-					<fieldset className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
+					<fieldset id="timecheckfreq" className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
 						<div>
 							<label className="text-foreground-2 font-medium text-lg" htmlFor="incrTimeCheckFreq">
 								Increase time check frequency
@@ -362,7 +362,7 @@ function Page() {
 							</Switch.Thumb>
 						</Switch.Root>
 					</fieldset>
-					<fieldset className="relative bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 overflow-clip pointer-events-none">
+					<fieldset id="font" className="relative bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 overflow-clip pointer-events-none">
 						<div className="p-5 opacity-25">
 							<div className="mb-2">
 								<label className="text-foreground-2 font-medium text-lg" htmlFor="hideSec">
@@ -399,7 +399,7 @@ function Page() {
 							soon™
 						</p>
 					</fieldset>
-					<div className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5 mt-12">
+					<div id="version" className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5 mt-12">
 						<div className="flex flex-col md:flex-row gap-3 w-full items-center">
 							<div className="w-full">
 								<p className="text-foreground-2 text-lg">
