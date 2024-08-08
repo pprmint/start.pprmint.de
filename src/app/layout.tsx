@@ -8,7 +8,7 @@ import { ThemeProvider } from "../components/themeProvider";
 export const metadata: Metadata = {
 	title: "start.",
 	description: "A simple browser start page.",
-	metadataBase: new URL("https://start.pprmint.art"),
+	metadataBase: new URL("https://start.pprmint.de"),
 };
 
 const inter = Inter({
