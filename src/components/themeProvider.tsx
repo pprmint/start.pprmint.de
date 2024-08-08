@@ -213,7 +213,7 @@ export function ThemeCustomizer() {
 					</div>
 				</div>
 				<button
-					className="px-2 py-1 rounded-md bg-foreground-2 text-background font-medium text-sm"
+					className="hover:bg-elevate-1 active:bg-elevate-2 text-foreground-2 border border-elevate-2 rounded-md text-sm px-3 py-1.5 duration-100"
 					onClick={() => {
 						localStorage.setItem(
 							"customTheme",
