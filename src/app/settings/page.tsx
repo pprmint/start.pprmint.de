@@ -10,6 +10,7 @@ import * as Switch from "@radix-ui/react-switch";
 import Link from "next/link";
 import Image from "next/image";
 import Icon from "src/app/icon.svg";
+import { ThemeCustomizer } from "src/components/themeProvider";
 
 function Page() {
 	// Theme
@@ -76,7 +77,10 @@ function Page() {
 	return (
 		<>
 			<main>
-				<section id="header" className="bg-gradient-to-t from-background via-transparent border-b border-elevate-2">
+				<section
+					id="header"
+					className="bg-gradient-to-t from-background via-transparent border-b border-elevate-2"
+				>
 					<Link
 						href="/"
 						className="group flex gap-3 items-center text-foreground-2 p-3 hover:font-bold duration-100 w-max"
@@ -109,31 +113,22 @@ function Page() {
 					</div>
 				</section>
 				<section id="main" className="max-w-3xl px-6 xl:px-0 mx-auto mt-12 mb-24 flex flex-col gap-6">
-					<fieldset id="theme" className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
-						<label className="text-foreground-2 font-medium text-lg" htmlFor="theme">
-							Theme
-						</label>
-						<Select.Root value={theme} defaultValue="theme" onValueChange={(value: string) => setTheme(value)}>
-							<Select.Trigger
-								className="group capitalize relative inline-flex items-center justify-between w-full sm:w-56 px-2 py-2 overflow-clip ease-in-out outline-none hover:bg-elevate-1 border border-elevate-2 rounded-lg duration-100 hover:text-foreground-2"
-								aria-label="Site theme"
+					<fieldset id="theme" className="bg-background border border-elevate-2 rounded-xl flex flex-col md:flex-row gap-6 p-5">
+						<div className="flex flex-col gap-2">
+							<label className="text-foreground-2 font-medium text-lg" htmlFor="theme">
+								Theme
+							</label>
+							<Select.Root
+								value={theme}
+								defaultValue="theme"
+								onValueChange={(value: string) => setTheme(value)}
 							>
-								<Select.Value />
-								<Select.Icon className="absolute right-3 top-1/2 -translate-y-1/2 duration-200">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="15"
-										height="15"
-										viewBox="0 0 15 15"
-										fill="currentColor"
-									>
-										<path d="M3 5.957V4.543l4.5 4.5 4.5-4.5v1.414l-4.5 4.5z"></path>
-									</svg>
-								</Select.Icon>
-							</Select.Trigger>
-							<Select.Portal>
-								<Select.Content className="capitalize data-[state=open]:animate-select-open data-[state=closed]:animate-select-close overflow-hidden bg-background text-foreground-2 rounded-lg shadow-xl border border-elevate-2">
-									<Select.ScrollUpButton className="absolute top-0 inset-x-0 inline-flex items-center justify-center h-[25px] bg-gradient-to-b from-background text-foreground-2 cursor-default z-10">
+								<Select.Trigger
+									className="group capitalize relative inline-flex items-center justify-between w-full sm:w-56 px-2 py-2 overflow-clip ease-in-out outline-none hover:bg-elevate-1 border border-elevate-2 rounded-lg duration-100 hover:text-foreground-2"
+									aria-label="Site theme"
+								>
+									<Select.Value />
+									<Select.Icon className="absolute right-3 top-1/2 -translate-y-1/2 duration-200">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											width="15"
@@ -141,36 +136,81 @@ function Page() {
 											viewBox="0 0 15 15"
 											fill="currentColor"
 										>
-											<path d="M12 9.043v1.414l-4.5-4.5-4.5 4.5V9.043l4.5-4.5z"></path>
+											<path d="M3 5.957V4.543l4.5 4.5 4.5-4.5v1.414l-4.5 4.5z"></path>
 										</svg>
-									</Select.ScrollUpButton>
-									<Select.Viewport className="p-1 flex flex-col">
-										{Themes.map((theme, index) => (
+									</Select.Icon>
+								</Select.Trigger>
+								<Select.Portal>
+									<Select.Content className="capitalize data-[state=open]:animate-select-open data-[state=closed]:animate-select-close overflow-hidden bg-background text-foreground-2 rounded-lg shadow-xl border border-elevate-2">
+										<Select.ScrollUpButton className="absolute top-0 inset-x-0 inline-flex items-center justify-center h-[25px] bg-gradient-to-b from-background text-foreground-2 cursor-default z-10">
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="15"
+												height="15"
+												viewBox="0 0 15 15"
+												fill="currentColor"
+											>
+												<path d="M12 9.043v1.414l-4.5-4.5-4.5 4.5V9.043l4.5-4.5z"></path>
+											</svg>
+										</Select.ScrollUpButton>
+										<Select.Viewport className="p-1 flex flex-col">
+											{Themes.map((theme, index) => (
+												<Select.Item
+													key={index}
+													value={theme.text}
+													className="relative p-1 inline-flex items-center rounded-md hover:bg-elevate-1 cursor-pointer select-none outline-none duration-100"
+												>
+													<Select.ItemText asChild>
+														<div className="flex gap-2 items-center">
+															<div
+																className="p-1 rounded-full"
+																style={{
+																	backgroundColor: theme.bgColor,
+																	color: theme.fgColor,
+																	border: `1px solid ${theme.borderColor}`,
+																}}
+															>
+																{theme.icon ? (
+																	theme.icon
+																) : (
+																	<div
+																		className="size-[15px] rounded-full"
+																		style={{ backgroundColor: theme.accentColor }}
+																	/>
+																)}
+															</div>
+															{theme.text}
+														</div>
+													</Select.ItemText>
+													<Select.ItemIndicator className="absolute right-2 top-1/2 -translate-y-1/2">
+														<svg
+															xmlns="http://www.w3.org/2000/svg"
+															width="15"
+															height="15"
+															viewBox="0 0 15 15"
+															fill="currentColor"
+														>
+															<path d="m1.646 7.354.708-.708L6 10.293l6.646-6.647.708.708L6 11.707z"></path>
+														</svg>
+													</Select.ItemIndicator>
+												</Select.Item>
+											))}
 											<Select.Item
-												key={index}
-												value={theme.text}
+												value="custom"
 												className="relative p-1 inline-flex items-center rounded-md hover:bg-elevate-1 cursor-pointer select-none outline-none duration-100"
 											>
 												<Select.ItemText asChild>
 													<div className="flex gap-2 items-center">
 														<div
-															className="p-1 rounded-full"
+															className="p-[5px] rounded-full ring-1 ring-inset ring-black/20"
 															style={{
-																backgroundColor: theme.bgColor,
-																color: theme.fgColor,
-																border: `1px solid ${theme.borderColor}`,
+																backgroundImage:
+																	"conic-gradient(#f44, #f71, #fb0, #9c3, #0c6, #2cf, #29f, #a7e, #e6b, #f44)",
 															}}
 														>
-															{theme.icon ? (
-																theme.icon
-															) : (
-																<div
-																	className="size-[15px] rounded-full"
-																	style={{ backgroundColor: theme.accentColor }}
-																/>
-															)}
+															<div className="size-[15px] rounded-full bg-white" />
 														</div>
-														{theme.text}
+														Custom
 													</div>
 												</Select.ItemText>
 												<Select.ItemIndicator className="absolute right-2 top-1/2 -translate-y-1/2">
@@ -185,24 +225,28 @@ function Page() {
 													</svg>
 												</Select.ItemIndicator>
 											</Select.Item>
-										))}
-									</Select.Viewport>
-									<Select.ScrollDownButton className="absolute bottom-0 inset-x-0 inline-flex items-center justify-center h-[25px] bg-gradient-to-t from-background text-foreground-2 cursor-default z-10">
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width="15"
-											height="15"
-											viewBox="0 0 15 15"
-											fill="currentColor"
-										>
-											<path d="M3 5.957V4.543l4.5 4.5 4.5-4.5v1.414l-4.5 4.5z"></path>
-										</svg>
-									</Select.ScrollDownButton>
-								</Select.Content>
-							</Select.Portal>
-						</Select.Root>
+										</Select.Viewport>
+										<Select.ScrollDownButton className="absolute bottom-0 inset-x-0 inline-flex items-center justify-center h-[25px] bg-gradient-to-t from-background text-foreground-2 cursor-default z-10">
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="15"
+												height="15"
+												viewBox="0 0 15 15"
+												fill="currentColor"
+											>
+												<path d="M3 5.957V4.543l4.5 4.5 4.5-4.5v1.414l-4.5 4.5z"></path>
+											</svg>
+										</Select.ScrollDownButton>
+									</Select.Content>
+								</Select.Portal>
+							</Select.Root>
+						</div>
+						{theme === "custom" && <ThemeCustomizer />}
 					</fieldset>
-					<fieldset id="engine" className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
+					<fieldset
+						id="engine"
+						className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5"
+					>
 						<label className="text-foreground-2 font-medium text-lg" htmlFor="engine">
 							Search engine
 						</label>
@@ -260,9 +304,14 @@ function Page() {
 								</Select.Content>
 							</Select.Portal>
 						</Select.Root>
-						<div className="text-sm">{Engines.find((engine) => engine.name === searchEngine)?.description}</div>
+						<div className="text-sm">
+							{Engines.find((engine) => engine.name === searchEngine)?.description}
+						</div>
 					</fieldset>
-					<fieldset id="clock" className="relative w-full bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
+					<fieldset
+						id="clock"
+						className="relative w-full bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5"
+					>
 						<div className="flex justify-between">
 							<label className="text-foreground-2 font-medium text-lg" htmlFor="clock">
 								Clock
@@ -278,10 +327,18 @@ function Page() {
 									} rounded-full duration-200 ease-out`}
 								/>
 								<div className="absolute inset-0 flex items-center text-xs px-1">
-									<span className={`w-full text-center ${!use12hr && "font-bold text-background"} duration-100`}>
+									<span
+										className={`w-full text-center ${
+											!use12hr && "font-bold text-background"
+										} duration-100`}
+									>
 										24h
 									</span>
-									<span className={`w-full text-center ${use12hr && "font-bold text-background"} duration-100`}>
+									<span
+										className={`w-full text-center ${
+											use12hr && "font-bold text-background"
+										} duration-100`}
+									>
 										12h
 									</span>
 								</div>
@@ -305,7 +362,9 @@ function Page() {
 									</div>
 									<p
 										className={`duration-100 ${
-											item.name === clock ? "text-foreground-2 font-medium" : "group-hover:text-foreground-2"
+											item.name === clock
+												? "text-foreground-2 font-medium"
+												: "group-hover:text-foreground-2"
 										}`}
 									>
 										{item.name}
@@ -314,12 +373,17 @@ function Page() {
 							))}
 						</div>
 					</fieldset>
-					<fieldset id="hidesec" className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
+					<fieldset
+						id="hidesec"
+						className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5"
+					>
 						<div>
 							<label className="text-foreground-2 font-medium text-lg" htmlFor="hideSec">
 								Hide seconds
 							</label>
-							<p className="text-sm">Hide the seconds in digital clocks and the second hand in analog clocks.</p>
+							<p className="text-sm">
+								Hide the seconds in digital clocks and the second hand in analog clocks.
+							</p>
 						</div>
 						<Switch.Root
 							className="group relative w-14 h-8 bg-transparent data-[state=checked]:bg-foreground-2 data-[state=unchecked]:hover:bg-elevate-1 outline-none rounded-full border data-[state=unchecked]:border-elevate-2 data-[state=checked]:border-foreground-2 duration-100"
@@ -333,22 +397,31 @@ function Page() {
 						</Switch.Root>
 					</fieldset>
 					<div className="flex gap-3 items-center text-yellow-950 font-medium bg-yellow px-3 py-1 rounded-full w-max mt-9">
-						<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="currentColor">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="15"
+							height="15"
+							viewBox="0 0 15 15"
+							fill="currentColor"
+						>
 							<path d="M6.8 5.5a.7.7 0 0 1 1.4 0s-.108 1.619-.153 2.8c-.025.672-.025 1.2-.025 1.2a.522.522 0 0 1-1.044 0s0-.528-.025-1.2A121 121 0 0 0 6.8 5.5"></path>
 							<circle cx="7.5" cy="11.5" r=".75"></circle>
 							<path d="M1.503 14.008a1.501 1.501 0 0 1-1.291-2.264L6.209 1.608a1.5 1.5 0 0 1 2.582 0l5.997 10.136a1.501 1.501 0 0 1-1.291 2.264zm0-1h11.994a.5.5 0 0 0 .43-.755L7.93 2.117a.5.5 0 0 0-.86 0L1.073 12.253a.502.502 0 0 0 .43.755"></path>
 						</svg>
 						Experimental settings
 					</div>
-					<fieldset id="timecheckfreq" className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
+					<fieldset
+						id="timecheckfreq"
+						className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5"
+					>
 						<div>
 							<label className="text-foreground-2 font-medium text-lg" htmlFor="incrTimeCheckFreq">
 								Increase time check frequency
 							</label>
 							<p className="text-sm">
-								By default, the current system time is checked every 1000 ms. If the seconds seem a little slow and/or
-								the clocks occasionally skip a whole second, enable this option to check every 250 ms instead. This may
-								improve the accuracy of the clocks.
+								By default, the current system time is checked every 1000 ms. If the seconds seem a
+								little slow and/or the clocks occasionally skip a whole second, enable this option to
+								check every 250 ms instead. This may improve the accuracy of the clocks.
 							</p>
 						</div>
 						<Switch.Root
@@ -362,17 +435,22 @@ function Page() {
 							</Switch.Thumb>
 						</Switch.Root>
 					</fieldset>
-					<fieldset id="font" className="relative bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 overflow-clip pointer-events-none">
+					<fieldset
+						id="font"
+						className="relative bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 overflow-clip pointer-events-none"
+					>
 						<div className="p-5 opacity-25">
 							<div className="mb-2">
 								<label className="text-foreground-2 font-medium text-lg" htmlFor="hideSec">
 									Use local font
 								</label>
 								<p className="text-sm">
-									Override the font used for certain clocks with one that's installed locally on your system. Leave this
-									field empty to use the default fonts.
+									Override the font used for certain clocks with one that's installed locally on your
+									system. Leave this field empty to use the default fonts.
 								</p>
-								<p className="text-sm">The font should support tabular numbers or be monospaced for best results.</p>
+								<p className="text-sm">
+									The font should support tabular numbers or be monospaced for best results.
+								</p>
 							</div>
 							<div className="flex flex-col md:flex-row justify-between">
 								<input
@@ -399,7 +477,10 @@ function Page() {
 							soon™
 						</p>
 					</fieldset>
-					<div id="version" className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5 mt-12">
+					<div
+						id="version"
+						className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5 mt-12"
+					>
 						<div className="flex flex-col md:flex-row gap-3 w-full items-center">
 							<div className="w-full">
 								<p className="text-foreground-2 text-lg">
