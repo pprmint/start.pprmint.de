@@ -142,7 +142,7 @@ function Page() {
 								</Select.Trigger>
 								<Select.Portal>
 									<Select.Content className="capitalize data-[state=open]:animate-select-open data-[state=closed]:animate-select-close overflow-hidden bg-background text-foreground-2 rounded-lg shadow-xl border border-elevate-2">
-										<Select.ScrollUpButton className="absolute top-0 inset-x-0 inline-flex items-center justify-center h-[25px] bg-gradient-to-b from-background text-foreground-2 cursor-default z-10">
+										<Select.ScrollUpButton className="absolute top-px inset-x-px rounded-t-lg inline-flex items-center justify-center h-[25px] bg-gradient-to-b from-background text-foreground-2 cursor-default z-10">
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												width="15"
@@ -226,7 +226,7 @@ function Page() {
 												</Select.ItemIndicator>
 											</Select.Item>
 										</Select.Viewport>
-										<Select.ScrollDownButton className="absolute bottom-0 inset-x-0 inline-flex items-center justify-center h-[25px] bg-gradient-to-t from-background text-foreground-2 cursor-default z-10">
+										<Select.ScrollDownButton className="absolute bottom-px inset-x-px rounded-b-lg inline-flex items-center justify-center h-[25px] bg-gradient-to-t from-background text-foreground-2 cursor-default z-10">
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												width="15"
