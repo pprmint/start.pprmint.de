@@ -13,6 +13,8 @@
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-switch": "^1.1.0",
     "@react-spring/web": "^9.7.4",
+    "@types/canvas-confetti": "^1.6.4",
+    "canvas-confetti": "^1.9.3",
     "next": "14.2.5",
     "next-themes": "^0.3.0",
     "react": "^18.3.1",

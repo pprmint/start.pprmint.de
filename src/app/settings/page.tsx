@@ -1,22 +1,31 @@
 "use client";
-import dynamic from "next/dynamic";
-import { useTheme } from "next-themes";
 import { useState } from "react";
+import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 import { Themes } from "./themes";
 import { Engines } from "./engines";
 import { Clocks } from "./clocks";
 import * as Select from "@radix-ui/react-select";
 import * as Switch from "@radix-ui/react-switch";
-import Link from "next/link";
-import Image from "next/image";
+import { PassedThemeDialog, ThemeCustomizer } from "src/components/themeProvider";
+
 import Icon from "src/app/icon.svg";
-import { ThemeCustomizer } from "src/components/themeProvider";
+
+const customThemeRegEx = /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})(?:_(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})){5}$/;
 
 function Page() {
-	// Theme
+	// Theme.
 	const { theme, setTheme } = useTheme();
 
-	// Search engine
+	// Handle ?theme param.
+	const searchParams = useSearchParams();
+	const themeParam = customThemeRegEx.test(String(searchParams.get("theme"))) && searchParams.get("theme");
+	const passedTheme = String(themeParam).split("_") || [];
+
+	// Search engine.
 	const lsEngine = localStorage.getItem("engine");
 	const [searchEngine, setSearchEngine] = useState(
 		Engines.some((engine) => engine.name === lsEngine) ? lsEngine : "Inquest"
@@ -26,7 +35,7 @@ function Page() {
 		localStorage.setItem("engine", engine);
 	}
 
-	// 12/24 hr
+	// 12/24 hour format.
 	const lsUse12hr = localStorage.getItem("use12hr");
 	const [use12hr, setUse12hr] = useState(lsUse12hr === "true" ? true : false);
 	function handleUse12hrChange() {
@@ -39,7 +48,7 @@ function Page() {
 		}
 	}
 
-	// Clock design
+	// Clock design.
 	const lsClock = localStorage.getItem("clock");
 	const [clock, setClock] = useState(Clocks.some((clock) => clock.name === lsClock) ? lsClock : "Default");
 	function handleClockChange(clock: string) {
@@ -47,7 +56,7 @@ function Page() {
 		localStorage.setItem("clock", clock);
 	}
 
-	// Hide seconds
+	// Hide seconds.
 	const lsHideSec = localStorage.getItem("hideSec");
 	const [hideSec, setHideSec] = useState(lsHideSec === "true" ? true : false);
 	function handleHideSecChange() {
@@ -60,7 +69,7 @@ function Page() {
 		}
 	}
 
-	// Increase time check frequency
+	// Increase time check frequency.
 	const [timeCheckFreq, setTimeCheckFreq] = useState(
 		localStorage.getItem("incrTimeCheckFreq") === "true" ? true : false
 	);
@@ -99,7 +108,7 @@ function Page() {
 						Back to start page
 					</Link>
 					<div className="relative w-full max-w-3xl px-6 xl:px-0 mx-auto pb-6 md:pb-9 overflow-clip">
-						<h1 className="text-2xl md:text-4xl text-foreground-2 font-bold">Settings</h1>
+						<h1 className="text-2xl md:text-4xl text-foreground-2 font-bold">Settings<span className="text-accent">.</span></h1>
 						<h2 className="text-xl">Change the look and feel of your start page.</h2>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -113,7 +122,10 @@ function Page() {
 					</div>
 				</section>
 				<section id="main" className="max-w-3xl px-6 xl:px-0 mx-auto mt-12 mb-24 flex flex-col gap-6">
-					<fieldset id="theme" className="bg-background border border-elevate-2 rounded-xl flex flex-col md:flex-row gap-6 p-5">
+					<fieldset
+						id="theme"
+						className="bg-background border border-elevate-2 rounded-xl flex flex-col md:flex-row gap-6 p-5"
+					>
 						<div className="flex flex-col gap-2">
 							<label className="text-foreground-2 font-medium text-lg" htmlFor="theme">
 								Theme
@@ -242,6 +254,7 @@ function Page() {
 							</Select.Root>
 						</div>
 						{theme === "custom" && <ThemeCustomizer />}
+						<PassedThemeDialog colors={passedTheme} />
 					</fieldset>
 					<fieldset
 						id="engine"
