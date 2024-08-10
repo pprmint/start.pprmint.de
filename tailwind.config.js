@@ -154,7 +154,7 @@ module.exports = {
 			},
 			fontFamily: {
 				sans: "Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, 'Segoe UI Variable', 'Segoe UI Variable Text', 'Segoe UI', Cantarell, Ubuntu, system-ui, sans-serif",
-				mono: "Iosevka, 'SF Mono', 'JetBrains Mono', 'Hack', monospace",
+				mono: "'Iosevka Mint Extended', 'Iosevka Extended', Iosevka, 'SF Mono', 'JetBrains Mono', 'Hack', monospace",
 				number: "'Mina Sans Digits', 'Roboto Mono', monospace",
 				triangles: "'Mint Triangles', 'Roboto Mono', monospace",
 			},

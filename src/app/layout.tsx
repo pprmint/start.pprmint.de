@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import "public/MinaSans/MinaSans.css";
 import "public/MintTriangles/minttriangles.css";
+import "public/Iosevka/Iosevka.css";
 import "./globals.css";
 import { ThemeProvider } from "../components/themeProvider";
 

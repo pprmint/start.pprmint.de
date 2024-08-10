@@ -1,0 +1,10 @@
+@font-face {
+	font-family: "Iosevka Mint Extended";
+	src: url("Iosevka-Mint-Extended.eot");
+	src: url("Iosevka-Mint-Extended.eot?#iefix") format("embedded-opentype"),
+		url("Iosevka-Mint-Extended.woff2") format("woff2"), url("Iosevka-Mint-Extended.woff") format("woff"),
+		url("Iosevka-Mint-Extended.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
