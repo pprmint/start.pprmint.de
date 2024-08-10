@@ -11,7 +11,7 @@ export default function TrianglesClock({ time, meridiem }: { time: string; merid
 				<div className="flex">
 					{digits.map((item, index) =>
 						item === ":" ? (
-							<span className="text-foreground-1 animate-pulse">:</span>
+							<span className="text-accent animate-pulse">:</span>
 						) : (
 							<span key={index}>{item}</span>
 						)

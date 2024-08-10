@@ -48,7 +48,7 @@ export default function PlayfulClock({ time, meridiem }: { time: string; meridie
 				<div className="flex" style={{ perspective: 1000 }}>
 					{transitions((style, item, index) => (
 						<a.span key={`${item}-${index}`} style={style}>
-							{item === ":" ? <p className="animate-pulse mx-1 text-foreground-1 -translate-y-3">:</p> : item}
+							{item === ":" ? <p className="animate-pulse mx-1 text-accent -translate-y-3">:</p> : item}
 						</a.span>
 					))}
 				</div>

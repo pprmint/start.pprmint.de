@@ -32,7 +32,7 @@ export default function DefaultClock({ time, meridiem }: { time: string; meridie
 				<div className="flex" style={{ perspective: 1000 }}>
 					{transitions((style, item, index) => (
 						<a.span key={`${item}-${index}`} style={style}>
-							{item === ":" ? <span className="animate-pulse mx-1 text-foreground-1">:</span> : item}
+							{item === ":" ? <span className="animate-pulse mx-1 text-accent">:</span> : item}
 						</a.span>
 					))}
 				</div>

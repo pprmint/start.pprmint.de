@@ -108,7 +108,9 @@ function Page() {
 						Back to start page
 					</Link>
 					<div className="relative w-full max-w-3xl px-6 xl:px-0 mx-auto pb-6 md:pb-9 overflow-clip">
-						<h1 className="text-2xl md:text-4xl text-foreground-2 font-bold">Settings<span className="text-accent">.</span></h1>
+						<h1 className="text-2xl md:text-4xl text-foreground-2 font-bold">
+							Settings<span className="text-accent">.</span>
+						</h1>
 						<h2 className="text-xl">Change the look and feel of your start page.</h2>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +128,7 @@ function Page() {
 						id="theme"
 						className="bg-background border border-elevate-2 rounded-xl flex flex-col md:flex-row gap-6 p-5"
 					>
-						<div className="flex flex-col gap-2">
+						<div className="flex flex-col gap-2 w-min">
 							<label className="text-foreground-2 font-medium text-lg" htmlFor="theme">
 								Theme
 							</label>
@@ -399,13 +401,13 @@ function Page() {
 							</p>
 						</div>
 						<Switch.Root
-							className="group relative w-14 h-8 bg-transparent data-[state=checked]:bg-foreground-2 data-[state=unchecked]:hover:bg-elevate-1 outline-none rounded-full border data-[state=unchecked]:border-elevate-2 data-[state=checked]:border-foreground-2 duration-100"
+							className="group relative w-14 h-8 bg-transparent data-[state=checked]:bg-accent data-[state=unchecked]:hover:bg-elevate-1 outline-none rounded-full border data-[state=unchecked]:border-elevate-2 data-[state=checked]:border-accent duration-100"
 							id="hideSec"
 							checked={hideSec}
 							onCheckedChange={handleHideSecChange}
 						>
 							<Switch.Thumb className="relative block size-5 group-active:w-6 data-[state=unchecked]:bg-foreground-2 data-[state=checked]:bg-background rounded-full duration-200 ease-out translate-x-1 data-[state=checked]:translate-x-7 data-[state=checked]:group-active:translate-x-6">
-								<div className="absolute top-1.5 group-data-[state=unchecked]:left-1.5 group-data-[state=unchecked]:group-active:left-2 group-data-[state=checked]:left-2.5 group-data-[state=checked]:group-active:left-3 size-2 group-data-[state=checked]:w-0 rounded-full group-data-[state=unchecked]:ring-2 group-data-[state=checked]:ring-1 group-data-[state=unchecked]:ring-background group-data-[state=checked]:ring-foreground-2 duration-200 ease-out" />
+								<div className="absolute top-1.5 group-data-[state=unchecked]:left-1.5 group-data-[state=unchecked]:group-active:left-2 group-data-[state=checked]:left-2.5 group-data-[state=checked]:group-active:left-3 size-2 group-data-[state=checked]:w-0 rounded-full group-data-[state=unchecked]:ring-2 group-data-[state=checked]:ring-1 group-data-[state=unchecked]:ring-background group-data-[state=checked]:ring-accent duration-200 ease-out" />
 							</Switch.Thumb>
 						</Switch.Root>
 					</fieldset>
@@ -438,13 +440,13 @@ function Page() {
 							</p>
 						</div>
 						<Switch.Root
-							className="group relative w-14 h-8 bg-transparent data-[state=checked]:bg-foreground-2 data-[state=unchecked]:hover:bg-elevate-1 outline-none rounded-full border data-[state=unchecked]:border-elevate-2 data-[state=checked]:border-foreground-2 duration-100"
+							className="group relative w-14 h-8 bg-transparent data-[state=checked]:bg-accent data-[state=unchecked]:hover:bg-elevate-1 outline-none rounded-full border data-[state=unchecked]:border-elevate-2 data-[state=checked]:border-accent duration-100"
 							id="incrTimeCheckFreq"
 							checked={timeCheckFreq}
 							onCheckedChange={handleChangeTimeCheckFreq}
 						>
 							<Switch.Thumb className="relative block size-5 group-active:w-6 data-[state=unchecked]:bg-foreground-2 data-[state=checked]:bg-background rounded-full duration-200 ease-out translate-x-1 data-[state=checked]:translate-x-7 data-[state=checked]:group-active:translate-x-6">
-								<div className="absolute top-1.5 group-data-[state=unchecked]:left-1.5 group-data-[state=unchecked]:group-active:left-2 group-data-[state=checked]:left-2.5 group-data-[state=checked]:group-active:left-3 size-2 group-data-[state=checked]:w-0 rounded-full group-data-[state=unchecked]:ring-2 group-data-[state=checked]:ring-1 group-data-[state=unchecked]:ring-background group-data-[state=checked]:ring-foreground-2 duration-200 ease-out" />
+								<div className="absolute top-1.5 group-data-[state=unchecked]:left-1.5 group-data-[state=unchecked]:group-active:left-2 group-data-[state=checked]:left-2.5 group-data-[state=checked]:group-active:left-3 size-2 group-data-[state=checked]:w-0 rounded-full group-data-[state=unchecked]:ring-2 group-data-[state=checked]:ring-1 group-data-[state=unchecked]:ring-background group-data-[state=checked]:ring-accent duration-200 ease-out" />
 							</Switch.Thumb>
 						</Switch.Root>
 					</fieldset>
