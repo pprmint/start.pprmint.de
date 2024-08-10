@@ -222,7 +222,7 @@ function Page() {
 																	"conic-gradient(#f44, #f71, #fb0, #9c3, #0c6, #2cf, #29f, #a7e, #e6b, #f44)",
 															}}
 														>
-															<div className="size-[15px] rounded-full bg-white" />
+															<div className="size-[15px] rounded-full bg-white shadow-md shadow-black/25" />
 														</div>
 														Custom
 													</div>
