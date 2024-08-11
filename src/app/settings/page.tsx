@@ -12,8 +12,6 @@ import * as Select from "@radix-ui/react-select";
 import * as Switch from "@radix-ui/react-switch";
 import { PassedThemeDialog, ThemeCustomizer } from "src/components/themeProvider";
 
-import Icon from "src/app/icon.svg";
-
 const customThemeRegEx = /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})(?:_(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})){5}$/;
 
 function Page() {

@@ -6,8 +6,10 @@ import CustomThemeApplier from "./customThemeApplier";
 import * as Dialog from "@radix-ui/react-dialog";
 import confetti from "canvas-confetti";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 
 const customThemeRegEx = /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})(?:,(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})){5}$/;
+const fieldRegEx = /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
 
 type ThemeProviderProps = Parameters<typeof NextThemesProvider>[0];
 
@@ -70,6 +72,80 @@ export function ThemeCustomizer() {
 	const [foreground2, setForeground2] = useState(hexCustomTheme[4]);
 	const [accent, setAccent] = useState(hexCustomTheme[5]);
 
+	const Fields = [
+		{
+			name: "Background",
+			state: background,
+			change: setBackground,
+		},
+		{
+			name: "Elevate 1",
+			state: elevate1,
+			change: setElevate1,
+		},
+		{
+			name: "Elevate 2",
+			state: elevate2,
+			change: setElevate2,
+		},
+		{
+			name: "Foreground 1",
+			state: foreground1,
+			change: setForeground1,
+		},
+		{
+			name: "Foreground 2",
+			state: foreground2,
+			change: setForeground2,
+		},
+		{
+			name: "Accent",
+			state: accent,
+			change: setAccent,
+		},
+	];
+
+	const [invalidFields, setInvalidFields] = useState<number[]>([]);
+
+	const validate = (value: string, index: number) => {
+		if (fieldRegEx.test(value)) {
+			setInvalidFields((prev) => prev.filter((i) => i !== index));
+		} else {
+			setInvalidFields((prev) => {
+				if (!prev.includes(index)) {
+					return [...prev, index];
+				}
+				return prev;
+			});
+		}
+	};
+
+	const validateField = useDebouncedCallback((value: string, index: number) => {
+		validate(value, index);
+	}, 500);
+
+	const validateAllFields = (): boolean => {
+		let allValid = true;
+		Fields.forEach((field, index) => {
+			if (!fieldRegEx.test(field.state)) {
+				validate(field.state, index);
+				allValid = false;
+			}
+		});
+		return allValid;
+	};
+
+	function handleApplyTheme() {
+		const allValid = validateAllFields();
+		if (allValid) {
+			localStorage.setItem(
+				"customTheme",
+				`${background},${elevate1},${elevate2},${foreground1},${foreground2},${accent}`
+			);
+			ApplyCustomTheme();
+		}
+	}
+
 	const [copied, setCopied] = useState(false);
 	const themeLink = `https://start.pprmint.de/settings?theme=${background}_${elevate1}_${elevate2}_${foreground1}_${foreground2}_${accent}`;
 	function handleThemeLinkCopy() {
@@ -87,262 +163,179 @@ export function ThemeCustomizer() {
 			setCopied(false);
 		}, 1500);
 	}
+
 	return (
 		<form
 			onSubmit={(e) => {
 				e.preventDefault();
-				ApplyCustomTheme;
+				if (validateAllFields()) {
+					handleApplyTheme();
+				}
 			}}
 		>
 			<p className="text-foreground-2 font-medium text-lg mb-1">Custom theme colors</p>
 			<div className="w-full flex flex-col gap-6 items-end">
 				<div className="grid grid-cols-2 sm:grid-cols-3 grid-flow-row gap-6 w-full">
-					<div className="flex gap-3 items-center">
-						<div>
-							<div
-								className="size-9 rounded-full ring-1 ring-inset ring-neutral-400/20"
-								style={{ backgroundColor: `#${background}` }}
-							/>
-						</div>
-						<div className="grow">
-							<label className="text-xs leading-none" htmlFor="background">
-								Background
-							</label>
-							<div className="font-mono flex grow">
-								#
-								<input
-									maxLength={6}
-									className="bg-transparent border-b border-elevate-2 text-foreground-2 w-full focus:border-elevate-2 outline-none focus:bg-elevate-1"
-									id="background"
-									type="text"
-									value={background}
-									onChange={(e) => setBackground(e.target.value)}
+					{Fields.map((field, index) => (
+						<div key={index} className="flex gap-3 items-center">
+							<div>
+								<div
+									className={`size-10 rounded-full ring-inset ring-1 ${
+										invalidFields.includes(index) ? "ring-red" : "ring-neutral-500/20"
+									}`}
+									style={{ backgroundColor: `#${field.state}` }}
 								/>
 							</div>
-						</div>
-					</div>
-					<div className="flex gap-3 items-center">
-						<div>
-							<div
-								className="size-9 rounded-full ring-1 ring-inset ring-neutral-400/20"
-								style={{ backgroundColor: `#${elevate1}` }}
-							/>
-						</div>
-						<div className="grow">
-							<label className="text-xs leading-none" htmlFor="elevate1">
-								Elevate 1
-							</label>
-							<div className="font-mono flex grow">
-								#
-								<input
-									maxLength={6}
-									className="bg-transparent border-b border-elevate-2 text-foreground-2 w-full focus:border-elevate-2 outline-none focus:bg-elevate-1"
-									id="elevate1"
-									type="text"
-									value={elevate1}
-									onChange={(e) => setElevate1(e.target.value)}
-								/>
-							</div>
-						</div>
-					</div>
-					<div className="flex gap-3 items-center">
-						<div>
-							<div
-								className="size-9 rounded-full ring-1 ring-inset ring-neutral-400/20"
-								style={{ backgroundColor: `#${elevate2}` }}
-							/>
-						</div>
-						<div className="grow">
-							<label className="text-xs leading-none" htmlFor="elevate2">
-								Elevate 2
-							</label>
-							<div className="font-mono flex grow">
-								#
-								<input
-									maxLength={6}
-									className="bg-transparent border-b border-elevate-2 text-foreground-2 w-full focus:border-elevate-2 outline-none focus:bg-elevate-1"
-									id="elevate2"
-									type="text"
-									value={elevate2}
-									onChange={(e) => setElevate2(e.target.value)}
-								/>
-							</div>
-						</div>
-					</div>
-					<div className="flex gap-3 items-center">
-						<div>
-							<div
-								className="size-9 rounded-full ring-1 ring-inset ring-neutral-400/20"
-								style={{ backgroundColor: `#${foreground1}` }}
-							/>
-						</div>
-						<div className="grow">
-							<label className="text-xs leading-none" htmlFor="foreground1">
-								Foreground 1
-							</label>
-							<div className="font-mono flex grow">
-								#
-								<input
-									maxLength={6}
-									className="bg-transparent border-b border-elevate-2 text-foreground-2 w-full focus:border-elevate-2 outline-none focus:bg-elevate-1"
-									id="foreground1"
-									type="text"
-									value={foreground1}
-									onChange={(e) => setForeground1(e.target.value)}
-								/>
-							</div>
-						</div>
-					</div>
-					<div className="flex gap-3 items-center">
-						<div>
-							<div
-								className="size-9 rounded-full ring-1 ring-inset ring-neutral-400/20"
-								style={{ backgroundColor: `#${foreground2}` }}
-							/>
-						</div>
-						<div className="grow">
-							<label className="text-xs leading-none" htmlFor="foreground2">
-								Foreground 2
-							</label>
-							<div className="font-mono flex grow">
-								#
-								<input
-									maxLength={6}
-									className="bg-transparent border-b border-elevate-2 text-foreground-2 w-full focus:border-elevate-2 outline-none focus:bg-elevate-1"
-									id="foreground2"
-									type="text"
-									value={foreground2}
-									onChange={(e) => setForeground2(e.target.value)}
-								/>
-							</div>
-						</div>
-					</div>
-					<div className="flex gap-3 items-center">
-						<div>
-							<div
-								className="size-9 rounded-full ring-1 ring-inset ring-neutral-400/20"
-								style={{ backgroundColor: `#${accent}` }}
-							/>
-						</div>
-						<div className="grow">
-							<label className="text-xs leading-none" htmlFor="accent">
-								Accent
-							</label>
-							<div className="font-mono flex grow">
-								#
-								<input
-									maxLength={6}
-									className="bg-transparent border-b border-elevate-2 text-foreground-2 w-full focus:border-elevate-2 outline-none focus:bg-elevate-1"
-									id="accent"
-									type="text"
-									value={accent}
-									onChange={(e) => setAccent(e.target.value)}
-								/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div className="flex gap-3">
-					<Dialog.Root>
-						<Dialog.Trigger asChild>
-							<button
-								className="btn"
-								onClick={() => {
-									localStorage.setItem(
-										"customTheme",
-										`${background},${elevate1},${elevate2},${foreground1},${foreground2},${accent}`
-									),
-										ApplyCustomTheme();
-								}}
-							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="15"
-									height="15"
-									viewBox="0 0 15 15"
-									fill="currentColor"
-								>
-									<path d="m7 2.614-2 2V3.2L7.5.7 10 3.2v1.414l-2-2v7.409H7z"></path>
-									<path d="M5 6.045v1H2.5a.5.5 0 0 0-.5.5V12.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V7.545a.5.5 0 0 0-.5-.5H10v-1h2.5a1.5 1.5 0 0 1 1.5 1.5V12.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 1 12.5V7.545a1.5 1.5 0 0 1 1.5-1.5z"></path>
-								</svg>
-								Share
-							</button>
-						</Dialog.Trigger>
-						<Dialog.Portal>
-							<Dialog.Overlay className="fixed inset-0 bg-background/75 data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out" />
-							<Dialog.Content className="flex flex-col justify-center data-[state=open]:animate-dialog-enter data-[state=closed]:animate-dialog-exit fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 md:p-9 md:rounded-xl md:shadow-2xl bg-background md:border border-elevate-2 size-full md:max-w-4xl md:h-max md:max-h-screen">
-								<Dialog.Title className="text-2xl lg:text-4xl font-bold text-foreground-2">
-									Share this theme<span className="text-accent">.</span>
-								</Dialog.Title>
-								<Dialog.Description>
-									Use the link below to share your current custom theme with others, or save it in
-									your bookmarks to re-apply it at a later date.
-								</Dialog.Description>
-								<p className="text-center font-bold text-foreground-2 text-xl my-6">{themeLink}</p>
-								<div className="flex justify-center w-full">
-									<button className="btn" onClick={handleThemeLinkCopy}>
-										{copied ? (
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												width="15"
-												height="15"
-												viewBox="0 0 15 15"
-												fill="currentColor"
-											>
-												<path d="m1.646 7.354.708-.708L6 10.293l6.646-6.647.708.708L6 11.707z"></path>
-											</svg>
-										) : (
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												width="15"
-												height="15"
-												viewBox="0 0 15 15"
-												fill="currentColor"
-											>
-												<path d="M11 4.5v8A1.5 1.5 0 0 1 9.5 14h-6A1.5 1.5 0 0 1 2 12.5v-8A1.5 1.5 0 0 1 3.5 3h6A1.5 1.5 0 0 1 11 4.5m-1 0a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 .5-.5z"></path>
-												<path d="M5 2V1h6.5A1.5 1.5 0 0 1 13 2.5V11h-1V2.5a.5.5 0 0 0-.5-.5z"></path>
-											</svg>
-										)}{" "}
-										Copy to clipboard
-									</button>
-								</div>
-								<Dialog.Close asChild>
-									<button className="absolute top-3 right-3 hover:text-foreground-2 hover:bg-elevate-1 active:bg-elevate-2 p-2 duration-100 rounded-full">
+							<div className="grow">
+								<label className="text-xs leading-none" htmlFor="background">
+									{field.name}
+								</label>
+								<div className="relative font-mono flex grow">
+									#
+									<input
+										maxLength={6}
+										className={`border-b text-foreground-2 w-full ${
+											invalidFields.includes(index)
+												? "bg-red-950 border-red text-white"
+												: "bg-transparent border-elevate-2 focus:border-elevate-2 text-foreground-2"
+										} outline-none`}
+										id={field.name}
+										type="text"
+										value={field.state}
+										onChange={(e) => {
+											field.change(e.target.value);
+											validateField(e.target.value, index);
+										}}
+									/>
+									{invalidFields.includes(index) && (
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											width="15"
 											height="15"
 											viewBox="0 0 15 15"
-											fill="currentColor"
+											className="absolute right-1 top-1 fill-red"
 										>
-											<path d="M6.793 7.5 3.646 4.354l.708-.708L7.5 6.793l3.146-3.147.708.708L8.207 7.5l3.147 3.146-.708.708L7.5 8.207l-3.146 3.147-.708-.708z"></path>
+											<path d="M6.8 5.5a.7.7 0 0 1 1.4 0s-.108 1.619-.153 2.8c-.025.672-.025 1.2-.025 1.2a.522.522 0 0 1-1.044 0s0-.528-.025-1.2A121 121 0 0 0 6.8 5.5"></path>
+											<circle cx="7.5" cy="11.5" r=".75"></circle>
+											<path d="M1.503 14.008a1.501 1.501 0 0 1-1.291-2.264L6.209 1.608a1.5 1.5 0 0 1 2.582 0l5.997 10.136a1.501 1.501 0 0 1-1.291 2.264zm0-1h11.994a.5.5 0 0 0 .43-.755L7.93 2.117a.5.5 0 0 0-.86 0L1.073 12.253a.502.502 0 0 0 .43.755"></path>
 										</svg>
-									</button>
-								</Dialog.Close>
-							</Dialog.Content>
-						</Dialog.Portal>
-					</Dialog.Root>
-					<button
-						className="btn-accent"
-						onClick={() => {
-							localStorage.setItem(
-								"customTheme",
-								`${background},${elevate1},${elevate2},${foreground1},${foreground2},${accent}`
-							),
-								ApplyCustomTheme();
-						}}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="15"
-							height="15"
-							viewBox="0 0 15 15"
-							fill="currentColor"
+									)}
+								</div>
+							</div>
+						</div>
+					))}
+				</div>
+				<div className="flex gap-3 w-full flex-wrap">
+					<div className="text-xs grow">
+						<p className={`${invalidFields.length > 0 && "text-foreground-2 font-bold underline"}`}>
+							Only 3 and 6 digit HEX codes are supported.
+						</p>
+						<p>
+							For example: <b>#0c6</b> is the same as <b>#00cc66</b>.
+						</p>
+					</div>
+					<div className="flex gap-3">
+						<Dialog.Root>
+							<Dialog.Trigger asChild>
+								<button
+									className="btn disabled:pointer-events-none disabled:opacity-50 disabled:border-dashed"
+									disabled={invalidFields.length > 0}
+									onClick={(e) => {
+										if (validateAllFields()) {
+											handleApplyTheme();
+										} else {
+											e.preventDefault();
+										}
+									}}
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="15"
+										height="15"
+										viewBox="0 0 15 15"
+										fill="currentColor"
+									>
+										<path d="m7 2.614-2 2V3.2L7.5.7 10 3.2v1.414l-2-2v7.409H7z"></path>
+										<path d="M5 6.045v1H2.5a.5.5 0 0 0-.5.5V12.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V7.545a.5.5 0 0 0-.5-.5H10v-1h2.5a1.5 1.5 0 0 1 1.5 1.5V12.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 1 12.5V7.545a1.5 1.5 0 0 1 1.5-1.5z"></path>
+									</svg>
+									Share
+								</button>
+							</Dialog.Trigger>
+							<Dialog.Portal>
+								<Dialog.Overlay className="fixed inset-0 bg-background/75 data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out" />
+								<Dialog.Content className="flex flex-col justify-center data-[state=open]:animate-dialog-enter data-[state=closed]:animate-dialog-exit fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 md:p-9 md:rounded-xl md:shadow-2xl bg-background md:border border-elevate-2 size-full md:max-w-4xl md:h-max md:max-h-screen">
+									<Dialog.Title className="text-2xl lg:text-4xl font-bold text-foreground-2">
+										Share this theme<span className="text-accent">.</span>
+									</Dialog.Title>
+									<Dialog.Description>
+										Use the link below to share your current custom theme with others, or save it in
+										your bookmarks to re-apply it at a later date.
+									</Dialog.Description>
+									<p className="text-center font-bold text-foreground-2 text-xl my-6">{themeLink}</p>
+									<div className="flex justify-center w-full">
+										<button className="btn" onClick={handleThemeLinkCopy}>
+											{copied ? (
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="15"
+													height="15"
+													viewBox="0 0 15 15"
+													fill="currentColor"
+												>
+													<path d="m1.646 7.354.708-.708L6 10.293l6.646-6.647.708.708L6 11.707z"></path>
+												</svg>
+											) : (
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="15"
+													height="15"
+													viewBox="0 0 15 15"
+													fill="currentColor"
+												>
+													<path d="M11 4.5v8A1.5 1.5 0 0 1 9.5 14h-6A1.5 1.5 0 0 1 2 12.5v-8A1.5 1.5 0 0 1 3.5 3h6A1.5 1.5 0 0 1 11 4.5m-1 0a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 .5-.5z"></path>
+													<path d="M5 2V1h6.5A1.5 1.5 0 0 1 13 2.5V11h-1V2.5a.5.5 0 0 0-.5-.5z"></path>
+												</svg>
+											)}{" "}
+											Copy to clipboard
+										</button>
+									</div>
+									<Dialog.Close asChild>
+										<button className="absolute top-3 right-3 hover:text-foreground-2 hover:bg-elevate-1 active:bg-elevate-2 p-2 duration-100 rounded-full">
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="15"
+												height="15"
+												viewBox="0 0 15 15"
+												fill="currentColor"
+											>
+												<path d="M6.793 7.5 3.646 4.354l.708-.708L7.5 6.793l3.146-3.147.708.708L8.207 7.5l3.147 3.146-.708.708L7.5 8.207l-3.146 3.147-.708-.708z"></path>
+											</svg>
+										</button>
+									</Dialog.Close>
+								</Dialog.Content>
+							</Dialog.Portal>
+						</Dialog.Root>
+						<button
+							className="btn-accent disabled:pointer-events-none disabled:opacity-50 disabled:border-dashed"
+							disabled={invalidFields.length > 0}
+							onClick={() => {
+								if (validateAllFields()) {
+									handleApplyTheme();
+								}
+							}}
 						>
-							<path d="m1.646 7.354.708-.708L6 10.293l6.646-6.647.708.708L6 11.707z"></path>
-						</svg>
-						Apply
-					</button>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="15"
+								height="15"
+								viewBox="0 0 15 15"
+								fill="currentColor"
+							>
+								<path d="m1.646 7.354.708-.708L6 10.293l6.646-6.647.708.708L6 11.707z"></path>
+							</svg>
+							Apply
+						</button>
+					</div>
 				</div>
 			</div>
 		</form>
