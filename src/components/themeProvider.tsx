@@ -105,6 +105,13 @@ export function ThemeCustomizer() {
 		},
 	];
 
+	const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>, setState: React.Dispatch<React.SetStateAction<string>>) => {
+		event.preventDefault();
+		const text = event.clipboardData.getData("text");
+		const hex = text.replace("#", "").slice(0, 6);
+		setState(hex);
+	};
+
 	const [invalidFields, setInvalidFields] = useState<number[]>([]);
 
 	const validate = (value: string, index: number) => {
@@ -180,9 +187,8 @@ export function ThemeCustomizer() {
 						<div key={index} className="flex gap-3 items-center">
 							<div>
 								<div
-									className={`size-10 rounded-full ring-inset ring-1 ${
-										invalidFields.includes(index) ? "ring-red" : "ring-neutral-500/20"
-									}`}
+									className={`size-10 rounded-full ring-inset ring-1 ${invalidFields.includes(index) ? "ring-red" : "ring-neutral-500/20"
+										}`}
 									style={{ backgroundColor: `#${field.state}` }}
 								/>
 							</div>
@@ -190,15 +196,15 @@ export function ThemeCustomizer() {
 								<label className="text-xs leading-none" htmlFor="background">
 									{field.name}
 								</label>
-								<div className="relative font-mono flex grow">
+								<div className={`relative font-mono flex grow ${invalidFields.includes(index)
+									&& "bg-red border-red text-white"} duration-100`}>
 									#
 									<input
 										maxLength={6}
-										className={`border-b text-foreground-2 w-full ${
-											invalidFields.includes(index)
-												? "bg-red-950 border-red text-white"
-												: "bg-transparent border-elevate-2 focus:border-elevate-2 text-foreground-2"
-										} outline-none`}
+										className={`border-b text-foreground-2 w-full outline-none ${invalidFields.includes(index)
+											? "bg-red border-red text-white"
+											: "bg-transparent border-elevate-2 focus:border-elevate-2 text-foreground-2"
+											} rounded-0 duration-100`}
 										id={field.name}
 										type="text"
 										value={field.state}
@@ -206,6 +212,7 @@ export function ThemeCustomizer() {
 											field.change(e.target.value);
 											validateField(e.target.value, index);
 										}}
+										onPaste={(e) => handlePaste(e, field.change)}
 									/>
 									{invalidFields.includes(index) && (
 										<svg
@@ -213,7 +220,7 @@ export function ThemeCustomizer() {
 											width="15"
 											height="15"
 											viewBox="0 0 15 15"
-											className="absolute right-1 top-1 fill-red"
+											className="absolute right-1 top-1 fill-current"
 										>
 											<path d="M6.8 5.5a.7.7 0 0 1 1.4 0s-.108 1.619-.153 2.8c-.025.672-.025 1.2-.025 1.2a.522.522 0 0 1-1.044 0s0-.528-.025-1.2A121 121 0 0 0 6.8 5.5"></path>
 											<circle cx="7.5" cy="11.5" r=".75"></circle>
