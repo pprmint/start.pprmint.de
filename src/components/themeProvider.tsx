@@ -105,11 +105,12 @@ export function ThemeCustomizer() {
 		},
 	];
 
-	const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>, setState: React.Dispatch<React.SetStateAction<string>>) => {
+	const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>, setState: React.Dispatch<React.SetStateAction<string>>, index: number) => {
 		event.preventDefault();
 		const text = event.clipboardData.getData("text");
 		const hex = text.replace("#", "").slice(0, 6);
 		setState(hex);
+		validate(hex, index);
 	};
 
 	const [invalidFields, setInvalidFields] = useState<number[]>([]);
@@ -212,7 +213,7 @@ export function ThemeCustomizer() {
 											field.change(e.target.value);
 											validateField(e.target.value, index);
 										}}
-										onPaste={(e) => handlePaste(e, field.change)}
+										onPaste={(e) => handlePaste(e, field.change, index)}
 									/>
 									{invalidFields.includes(index) && (
 										<svg
