@@ -56,7 +56,7 @@ function Home() {
 					showOther ? "gap-12" : "gap-0"
 				} items-center justify-center min-h-svh p-6 max-w-7xl mx-auto duration-700 ease-in-out`}
 			>
-				<Clock />
+				<Clock large={!showOther} />
 				<div
 					className={`relative w-full max-w-3xl mx-6 ${
 						showOther ? "h-12 md:h-14" : "h-0 opacity-0 translate-y-6"
