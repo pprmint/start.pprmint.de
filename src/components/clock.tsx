@@ -56,11 +56,13 @@ function Clock({ large }: { large?: boolean }) {
       large={large}
     />
   ) : lsClock === "German station clock" ? (
-    <BahnClock time={time} />
+    <>
+      <BahnClock time={time} large={large} />
+    </>
   ) : lsClock === "Swiss station clock" ? (
-    <SwissClock time={time} />
+    <SwissClock time={time} large={large} />
   ) : lsClock === "Dots" ? (
-    <DotsClock time={time} />
+    <DotsClock time={time} large={large} />
   ) : lsClock === "Default (no animations)" ? (
     <DefaultClockNoAnim
       time={`${(use12hr ? ((time[0] + 11) % 12) + 1 : time[0]).toString().padStart(2, "0")}:${time[1]
