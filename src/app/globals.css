@@ -4,7 +4,7 @@
 
 @layer components {
 	.btn {
-		@apply inline-flex items-center gap-2 hover:bg-elevate-1 active:bg-elevate-2 text-foreground-2 border border-elevate-2 rounded-md text-sm px-3 py-1.5 duration-100;
+		@apply inline-flex items-center gap-2 hover:bg-elevate-1 active:bg-elevate-2 text-foreground-2 border border-elevate-1 hover:border-elevate-2 rounded-md text-sm px-3 py-1.5 duration-100;
 	}
 	.btn-accent {
 		@apply inline-flex items-center gap-2 bg-transparent hover:bg-accent active:bg-accent/75 text-accent hover:text-background border border-accent rounded-md text-sm px-3 py-1.5 duration-100;

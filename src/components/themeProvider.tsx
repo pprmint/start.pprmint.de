@@ -198,13 +198,13 @@ export function ThemeCustomizer() {
 									{field.name}
 								</label>
 								<div className={`relative font-mono flex grow ${invalidFields.includes(index)
-									&& "bg-red border-red text-white"} duration-100`}>
+									&& "bg-red border-red text-black"} duration-100`}>
 									#
 									<input
 										maxLength={6}
 										className={`border-b text-foreground-2 w-full outline-none ${invalidFields.includes(index)
-											? "bg-red border-red text-white"
-											: "bg-transparent border-elevate-2 focus:border-elevate-2 text-foreground-2"
+											? "bg-red border-red text-black"
+											: "bg-transparent border-elevate-1 focus:border-elevate-2 focus:bg-elevate-1 text-foreground-2"
 											} rounded-0 duration-100`}
 										id={field.name}
 										type="text"
