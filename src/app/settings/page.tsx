@@ -3,13 +3,14 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { useTheme } from "next-themes";
 import { Themes } from "./themes";
 import { Engines } from "./engines";
 import { Clocks } from "./clocks";
 import * as Select from "@radix-ui/react-select";
 import * as Switch from "@radix-ui/react-switch";
+import * as Slider from "@radix-ui/react-slider";
+import * as Tooltip from "@radix-ui/react-tooltip";
 import { PassedThemeDialog, ThemeCustomizer } from "src/components/themeProvider";
 
 const customThemeRegEx = /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})(?:_(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})){5}$/;
@@ -70,6 +71,8 @@ function Page() {
   // Custom font.
   const [customFontFamily, setCustomFontFamily] = useState("");
   const [customFontItalic, setCustomFontItalic] = useState(false);
+  const [customFontWeight, setCustomFontWeight] = useState([400]);
+  const [customFontColon, setCustomFontColon] = useState("colon");
 
   // Increase time check frequency.
   const [timeCheckFreq, setTimeCheckFreq] = useState(
@@ -88,10 +91,7 @@ function Page() {
   return (
     <>
       <main>
-        <section
-          id="header"
-          className="bg-gradient-to-t from-background via-transparent border-b border-elevate-2"
-        >
+        <section id="header" className="bg-gradient-to-t from-background via-transparent border-b border-elevate-2">
           <Link
             href="/"
             className="group flex gap-3 items-center text-foreground-2 p-3 hover:font-bold duration-100 w-max"
@@ -135,16 +135,18 @@ function Page() {
                 Use local font
               </label>
               <p className="text-sm">
-                Override the font used by some clocks with one that's installed locally on your
-                system. Leave this field empty to use the default fonts.
+                Override the font used by some clocks with one that's installed locally on your system. Leave this field
+                empty to use the default fonts.
               </p>
               <p className="text-sm">
                 The font should support tabular (same width) numbers or be monospaced for best results.
               </p>
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
               <div className="flex flex-col gap-1">
-                <label htmlFor="customFontFamily" className="text-xs">Font family</label>
+                <label htmlFor="customFontFamily" className="text-xs">
+                  Font family
+                </label>
                 <div className="flex">
                   <input
                     type="text"
@@ -154,19 +156,116 @@ function Page() {
                     value={customFontFamily}
                     onChange={(e) => setCustomFontFamily(e.target.value)}
                   />
-                  <button className="btn h-full" onClick={() => setCustomFontItalic(!customFontItalic)}>Italic</button>
+                  <button className="btn h-full" onClick={() => setCustomFontItalic(!customFontItalic)}>
+                    Italic
+                  </button>
                 </div>
+              </div>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="customFontFamily" className="text-xs">
+                  Weight
+                </label>
+                <Slider.Root
+                  className="relative flex items-center select-none touch-none w-full h-5"
+                  value={customFontWeight}
+                  onValueChange={setCustomFontWeight}
+                  defaultValue={[400]}
+                  min={100}
+                  max={1000}
+                  step={100}
+                  id="fontWeight"
+                >
+                  <Slider.Track className="bg-elevate-2 relative grow rounded-full h-1">
+                    <Slider.Range className="absolute bg-foreground-2 rounded-full h-1" />
+                  </Slider.Track>
+                  <Slider.Thumb
+                    className="group block relative size-3.5 hover:h-5 hover:w-9 bg-foreground-2 rounded-full hover:bg-violet3 focus:outline-none duration-150 ease-out overflow-clip"
+                    aria-label="Font weight"
+                    style={{ fontVariantNumeric: "tabular-nums" }}
+                  >
+                    <span
+                      aria-hidden
+                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-bold text-background opacity-0 group-hover:opacity-100 duration-100 group-hover:delay-75"
+                    >
+                      {customFontWeight}
+                    </span>
+                  </Slider.Thumb>
+                </Slider.Root>
+              </div>
+              <div className="flex flex-col gap-1">
+                <div className="flex gap-1 items-center">
+                  <label htmlFor="colonGlyph" className="text-xs">
+                    Colon glyph
+                  </label>
+                  <Tooltip.Provider delayDuration={100}>
+                    <Tooltip.Root>
+                      <Tooltip.Trigger asChild>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="15"
+                          height="15"
+                          viewBox="0 0 15 15"
+                          className="fill-current hover:fill-foreground-2 duration-100 cursor-help"
+                        >
+                          <circle cx="7.5" cy="4.5" r=".75"></circle>
+                          <path d="M7.5.9c3.643 0 6.6 2.957 6.6 6.6s-2.957 6.6-6.6 6.6A6.603 6.603 0 0 1 .9 7.5C.9 3.857 3.857.9 7.5.9m0 1a5.6 5.6 0 0 0-5.6 5.6c0 3.091 2.509 5.6 5.6 5.6s5.6-2.509 5.6-5.6-2.509-5.6-5.6-5.6"></path>
+                          <path d="M8.5 10h.499L9 11h-.5A1.503 1.503 0 0 1 7 9.5V7H6V6h2v3.5c0 .133.053.26.146.354A.5.5 0 0 0 8.5 10"></path>
+                        </svg>
+                      </Tooltip.Trigger>
+                      <Tooltip.Portal>
+                        <Tooltip.Content
+                          className="data-[state=delayed-open]:animate-tooltip-enter-bottom data-[state=instant-open]:animate-tooltip-enter-bottom
+						                data-[state=closed]:animate-tooltip-exit-bottom
+						                select-none rounded-lg bg-background text-foreground-2 px-3 py-2 text-sm leading-none w-72 text-center"
+                          style={{ filter: "drop-shadow(0 0 1px hsl(var(--twc-foreground-1))" }}
+                          side="top"
+                          sideOffset={6}
+                        >
+                          The ratio glyph may appear as a vertically centered colon in some fonts.
+                          <Tooltip.Arrow className="fill-background" />
+                        </Tooltip.Content>
+                      </Tooltip.Portal>
+                    </Tooltip.Root>
+                  </Tooltip.Provider>
+                </div>
+                <button
+                  id="colonGlyph"
+                  aria-label="Time format"
+                  className="group relative h-8 w-28 hover:text-foreground-2 border border-elevate-2 rounded-full hover:bg-elevate-1 duration-100"
+                  onClick={() => setCustomFontColon(customFontColon === "colon" ? "ratio" : "colon")}
+                >
+                  <div
+                    className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-xs font-medium w-[52px] group-active:w-[56px] ${customFontColon === "ratio" ? "left-[54px] group-active:left-[50px]" : "left-1"
+                      } rounded-full duration-200 ease-out`}
+                  />
+                  <div className="absolute inset-0 flex items-center text-xs px-1">
+                    <span
+                      className={`w-full text-center ${customFontColon === "colon" && "font-bold text-background"
+                        } duration-100`}
+                    >
+                      Colon
+                    </span>
+                    <span
+                      className={`w-full text-center ${customFontColon === "ratio" && "font-bold text-background"
+                        } duration-100`}
+                    >
+                      Ratio
+                    </span>
+                  </div>
+                </button>
               </div>
             </div>
             <p
-              className="text-5xl lg:text-7xl text-foreground-2 text-center my-6"
+              className="text-7xl sm:text-8xl text-foreground-2 text-center mt-12 mb-6"
               style={{
                 fontFamily: `"${customFontFamily ? customFontFamily : "Mina Sans Digits"}"`,
                 fontVariantNumeric: "tabular-nums",
-                fontStyle: customFontItalic ? "italic" : "normal"
+                fontStyle: customFontItalic ? "italic" : "normal",
+                fontWeight: Number(customFontWeight),
               }}
             >
-              12<span className="text-accent">:</span>45<span className="text-accent">:</span>30
+              13<span className="text-accent">{customFontColon === "colon" ? ":" : "∶"}</span>48
+              <span className="text-accent">{customFontColon === "colon" ? ":" : "∶"}</span>27
             </p>
           </section>
           <section
@@ -177,11 +276,7 @@ function Page() {
               <label className="text-foreground-2 font-medium text-lg" htmlFor="theme">
                 Theme
               </label>
-              <Select.Root
-                value={theme}
-                defaultValue="theme"
-                onValueChange={(value: string) => setTheme(value)}
-              >
+              <Select.Root value={theme} defaultValue="theme" onValueChange={(value: string) => setTheme(value)}>
                 <Select.Trigger
                   className="group capitalize relative inline-flex items-center justify-between w-full sm:w-56 px-2 py-2 overflow-clip ease-in-out outline-none hover:bg-elevate-1 border border-elevate-2 rounded-lg duration-100 hover:text-foreground-2"
                   aria-label="Site theme"
@@ -303,10 +398,7 @@ function Page() {
             {theme === "custom" && <ThemeCustomizer />}
             <PassedThemeDialog colors={passedTheme} />
           </section>
-          <section
-            id="engine"
-            className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5"
-          >
+          <section id="engine" className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
             <label className="text-foreground-2 font-medium text-lg" htmlFor="engine">
               Search engine
             </label>
@@ -364,9 +456,7 @@ function Page() {
                 </Select.Content>
               </Select.Portal>
             </Select.Root>
-            <div className="text-sm">
-              {Engines.find((engine) => engine.name === searchEngine)?.description}
-            </div>
+            <div className="text-sm">{Engines.find((engine) => engine.name === searchEngine)?.description}</div>
           </section>
           <section
             id="clock"
@@ -386,16 +476,10 @@ function Page() {
                     } rounded-full duration-200 ease-out`}
                 />
                 <div className="absolute inset-0 flex items-center text-xs px-1">
-                  <span
-                    className={`w-full text-center ${!use12hr && "font-bold text-background"
-                      } duration-100`}
-                  >
+                  <span className={`w-full text-center ${!use12hr && "font-bold text-background"} duration-100`}>
                     24h
                   </span>
-                  <span
-                    className={`w-full text-center ${use12hr && "font-bold text-background"
-                      } duration-100`}
-                  >
+                  <span className={`w-full text-center ${use12hr && "font-bold text-background"} duration-100`}>
                     12h
                   </span>
                 </div>
@@ -417,9 +501,7 @@ function Page() {
                     {item.preview}
                   </div>
                   <p
-                    className={`duration-100 ${item.name === clock
-                      ? "text-foreground-2 font-medium"
-                      : "group-hover:text-foreground-2"
+                    className={`duration-100 ${item.name === clock ? "text-foreground-2 font-medium" : "group-hover:text-foreground-2"
                       }`}
                   >
                     {item.name}
@@ -428,17 +510,12 @@ function Page() {
               ))}
             </div>
           </section>
-          <section
-            id="hidesec"
-            className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5"
-          >
+          <section id="hidesec" className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5">
             <div>
               <label className="text-foreground-2 font-medium text-lg" htmlFor="hideSec">
                 Hide seconds
               </label>
-              <p className="text-sm">
-                Hide the seconds in digital clocks and the second hand in analog clocks.
-              </p>
+              <p className="text-sm">Hide the seconds in digital clocks and the second hand in analog clocks.</p>
             </div>
             <Switch.Root
               className="group relative w-14 h-8 bg-transparent data-[state=checked]:bg-accent data-[state=unchecked]:hover:bg-elevate-1 outline-none rounded-full border data-[state=unchecked]:border-elevate-2 data-[state=checked]:border-accent duration-100"
@@ -460,9 +537,9 @@ function Page() {
                 Increase time check frequency
               </label>
               <p className="text-sm">
-                By default, the current system time is checked every 1000 ms. If the seconds seem a
-                little slow and/or the clocks occasionally skip a whole second, enable this option to
-                check every 250 ms instead. This may improve the accuracy of the clocks.
+                By default, the current system time is checked every 1000 ms. If the seconds seem a little slow and/or
+                the clocks occasionally skip a whole second, enable this option to check every 250 ms instead. This may
+                improve the accuracy of the clocks.
               </p>
             </div>
             <Switch.Root
@@ -476,10 +553,7 @@ function Page() {
               </Switch.Thumb>
             </Switch.Root>
           </section>
-          <div
-            id="version"
-            className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5 mt-12"
-          >
+          <div id="version" className="bg-background border border-elevate-2 rounded-xl flex flex-col gap-2 p-5 mt-12">
             <div className="flex flex-col md:flex-row gap-3 w-full items-center">
               <div className="w-full">
                 <p className="text-foreground-2 text-lg">

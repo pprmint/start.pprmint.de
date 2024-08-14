@@ -183,6 +183,26 @@ module.exports = {
 					from: { opacity: "100%" },
 					to: { opacity: "0%" },
 				},
+        tooltipEnterBottom: {
+					from: {
+						opacity: 0,
+						transform: "translateY(4px)",
+					},
+					to: {
+						opacity: 1,
+						transform: "translateY(0px)",
+					},
+				},
+				tooltipExitBottom: {
+					from: {
+						opacity: 1,
+						transform: "translateY(0px)",
+					},
+					to: {
+						opacity: 0,
+						transform: "translateY(4px)",
+					},
+				},
 			},
 			animation: {
 				"dialog-enter": "dialogEnter .4s cubic-bezier(0.3, 0, 0, 1) .05s backwards",
@@ -191,6 +211,8 @@ module.exports = {
 				"select-close": "selectClose .2s;",
 				"fade-in": "fadeIn .25s cubic-bezier(0, 0, 0.2, 1)",
 				"fade-out": "fadeOut .25s cubic-bezier(0, 0, 0.2, 1)",
+        "tooltip-enter-bottom": "tooltipEnterBottom .2s cubic-bezier(0.33, 1, 0.68, 1) forwards",
+				"tooltip-exit-bottom": "tooltipExitBottom .2s cubic-bezier(0.33, 1, 0.68, 1) forwards",
 			},
 		},
 	},
