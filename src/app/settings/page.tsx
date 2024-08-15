@@ -238,14 +238,15 @@ function Page() {
 											<Tooltip.Portal>
 												<Tooltip.Content
 													className="data-[state=delayed-open]:animate-tooltip-enter-bottom data-[state=instant-open]:animate-tooltip-enter-bottom
-						                data-[state=closed]:animate-tooltip-exit-bottom
-						                select-none rounded-md bg-background border border-elevate-1 text-foreground-2 px-3 py-2 text-xs max-w-80 text-center"
+														data-[state=closed]:animate-tooltip-exit-bottom
+														select-none rounded-md bg-background border border-elevate-2 text-foreground-2 px-3 py-2 text-xs max-w-80 text-center shadow-lg shadow-black/5"
 													side="top"
-													sideOffset={3}
 												>
 													The ratio glyph may be used as a vertically centered colon if your
 													font doesn't center regular colons between numbers automagically.
-													<Tooltip.Arrow className="fill-elevate-2" />
+													<Tooltip.Arrow asChild>
+                            <div className="bg-background size-2 rotate-45 translate-y-[-3px] border-b border-r border-elevate-2" />
+													</Tooltip.Arrow>
 												</Tooltip.Content>
 											</Tooltip.Portal>
 										</Tooltip.Root>
@@ -258,24 +259,21 @@ function Page() {
 									onClick={() => setCustomFontColon(customFontColon === "colon" ? "ratio" : "colon")}
 								>
 									<div
-										className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-xs font-medium w-[52px] group-active:w-[56px] ${
-											customFontColon === "ratio"
+										className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-xs font-medium w-[52px] group-active:w-[56px] ${customFontColon === "ratio"
 												? "left-[54px] group-active:left-[50px]"
 												: "left-1"
-										} rounded-full duration-200 ease-out`}
+											} rounded-full duration-200 ease-out`}
 									/>
 									<div className="absolute inset-0 flex items-center text-xs px-1">
 										<span
-											className={`w-full text-center ${
-												customFontColon === "colon" && "font-bold text-background"
-											} duration-100`}
+											className={`w-full text-center ${customFontColon === "colon" && "font-bold text-background"
+												} duration-100`}
 										>
 											Colon
 										</span>
 										<span
-											className={`w-full text-center ${
-												customFontColon === "ratio" && "font-bold text-background"
-											} duration-100`}
+											className={`w-full text-center ${customFontColon === "ratio" && "font-bold text-background"
+												} duration-100`}
 										>
 											Ratio
 										</span>
@@ -286,7 +284,7 @@ function Page() {
 						<p
 							className="text-7xl sm:text-8xl text-foreground-2 text-center mt-12 mb-6"
 							style={{
-								fontFamily: `"${customFontFamily ? customFontFamily : "Mina Sans Digits"}"`,
+								fontFamily: `"${customFontFamily && customFontFamily}", "Mina Sans Digits", Inter, system-ui, sans-serif`,
 								fontVariantNumeric: "tabular-nums",
 								fontStyle: customFontItalic ? "italic" : "normal",
 								fontWeight: Number(customFontWeight),
@@ -347,7 +345,7 @@ function Page() {
 												<Select.Item
 													key={index}
 													value={theme.text}
-													className="relative p-1 inline-flex items-center rounded-md hover:bg-elevate-1 cursor-pointer select-none outline-none duration-100"
+													className="relative p-1 inline-flex items-center rounded-sm hover:bg-elevate-1 cursor-pointer select-none outline-none duration-100"
 												>
 													<Select.ItemText asChild>
 														<div className="flex gap-2 items-center">
@@ -386,7 +384,7 @@ function Page() {
 											))}
 											<Select.Item
 												value="custom"
-												className="relative p-1 inline-flex items-center rounded-md hover:bg-elevate-1 cursor-pointer select-none outline-none duration-100"
+												className="relative p-1 inline-flex items-center rounded-sm hover:bg-elevate-1 cursor-pointer select-none outline-none duration-100"
 											>
 												<Select.ItemText asChild>
 													<div className="flex gap-2 items-center">
@@ -512,22 +510,19 @@ function Page() {
 								onClick={handleUse12hrChange}
 							>
 								<div
-									className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-xs font-medium w-[38px] group-active:w-[42px] ${
-										use12hr ? "left-[41px] group-active:left-[37px]" : "left-1"
-									} rounded-full duration-200 ease-out`}
+									className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-xs font-medium w-[38px] group-active:w-[42px] ${use12hr ? "left-[41px] group-active:left-[37px]" : "left-1"
+										} rounded-full duration-200 ease-out`}
 								/>
 								<div className="absolute inset-0 flex items-center text-xs px-1">
 									<span
-										className={`w-full text-center ${
-											!use12hr && "font-bold text-background"
-										} duration-100`}
+										className={`w-full text-center ${!use12hr && "font-bold text-background"
+											} duration-100`}
 									>
 										24h
 									</span>
 									<span
-										className={`w-full text-center ${
-											use12hr && "font-bold text-background"
-										} duration-100`}
+										className={`w-full text-center ${use12hr && "font-bold text-background"
+											} duration-100`}
 									>
 										12h
 									</span>
@@ -542,20 +537,18 @@ function Page() {
 									onClick={() => handleClockChange(item.name)}
 								>
 									<div
-										className={`w-full h-auto ${
-											item.name === clock
+										className={`w-full h-auto ${item.name === clock
 												? "border border-foreground-2 ring-1 ring-inset ring-foreground-2"
 												: "border border-elevate-1 group-hover:bg-elevate-1 group-hover:border-elevate-2"
-										} duration-100 rounded-md overflow-clip`}
+											} duration-100 rounded-md overflow-clip`}
 									>
 										{item.preview}
 									</div>
 									<p
-										className={`duration-100 ${
-											item.name === clock
+										className={`duration-100 ${item.name === clock
 												? "text-foreground-2 font-medium"
 												: "group-hover:text-foreground-2"
-										}`}
+											}`}
 									>
 										{item.name}
 									</p>
