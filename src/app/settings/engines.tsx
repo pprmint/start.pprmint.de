@@ -2,43 +2,6 @@ import Link from "next/link";
 
 export const Engines = [
 	{
-		name: "Inquest",
-		query: "https://inquest.fyi/search?q=%s",
-		description: (
-			<p>
-				My personal{" "}
-				<Link
-					href="https://docs.searxng.org/"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="text-foreground-2 underline decoration-dotted"
-				>
-					SearXNG
-				</Link>{" "}
-				instance that aggregates results from different engines. You can also search on other sites or engines
-				with DuckDuckGo's Bangs by prefixing them with{" "}
-				<span className="bg-elevate-2 text-foreground-2 px-0.5 rounded-sm">!!</span>.{" "}
-				<Link
-					href="https://inquest.fyi/info/en/search-syntax"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="text-foreground-2 underline decoration-dotted"
-				>
-					Search syntax here
-				</Link>
-				.
-			</p>
-		),
-		icon: (
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-				<path
-					d="m28.726 32-6.808-6.806c-1.744-1.743-2.79-4.525-1.245-7.029.83-1.347 1.28-2.985 1.28-4.785 0-4.869-3.311-8.548-8.372-8.548-5.06 0-8.372 3.679-8.372 8.548 0 4.196 2.46 7.508 6.378 8.344 1.852.394 3.229.489 4.263 1.124 1.68 1.033 3.247 2.789 3.247 2.789s-.378.194-.58.277c-1.493.62-3.185.846-4.936.846C5.953 26.76 0 21.148 0 13.38S5.953 0 13.581 0s13.582 5.612 13.582 13.38c0 2.507-.621 4.79-1.717 6.732a1.98 1.98 0 0 0 .328 2.376C27.835 24.546 32 28.692 32 28.692z"
-					style={{ fill: "#0ea5e9" }}
-				/>
-			</svg>
-		),
-	},
-	{
 		name: "Google",
 		query: "https://www.google.com/search?q=%s&udm=14",
 		description: (

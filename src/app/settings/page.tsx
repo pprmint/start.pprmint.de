@@ -26,7 +26,7 @@ function Page() {
 	// Search engine.
 	const lsEngine = localStorage.getItem("engine");
 	const [searchEngine, setSearchEngine] = useState(
-		Engines.some((engine) => engine.name === lsEngine) ? lsEngine : "Inquest"
+		Engines.some((engine) => engine.name === lsEngine) ? lsEngine : "DuckDuckGo"
 	);
 	function handleEngineChange(engine: string) {
 		setSearchEngine(engine);
@@ -265,7 +265,7 @@ function Page() {
 						</label>
 						<Select.Root
 							value={searchEngine || undefined}
-							defaultValue="Inquest"
+							defaultValue="DuckDuckGo"
 							onValueChange={(value: string) => handleEngineChange(value)}
 						>
 							<Select.Trigger
