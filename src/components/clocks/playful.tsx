@@ -42,7 +42,7 @@ export default function PlayfulClock({ time, meridiem, large }: { time: string; 
       setRotations(initialRotations);
     }
     setPrevDigits(digits);
-  }, [digits, prevDigits, rotations]);
+  }, [digits]);
 
   return (
     <div className={`flex items-start ${nunito.className}`}>
