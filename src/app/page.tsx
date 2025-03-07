@@ -10,7 +10,7 @@ function Home() {
 	const mainRef = useRef<HTMLElement | null>(null);
 
 	const lsEngine = localStorage.getItem("engine");
-	const searchEngine = Engines.some((engine) => engine.name === lsEngine) ? lsEngine : "Inquest";
+	const searchEngine = Engines.some((engine) => engine.name === lsEngine) ? lsEngine : "DuckDuckGo";
 	const router = useRouter();
 	const [query, setQuery] = useState("");
 	function handleSearch() {

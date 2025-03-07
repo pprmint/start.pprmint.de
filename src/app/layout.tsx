@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
+import { LazyMotion, domAnimation } from "motion/react";
 import "public/MinaSans/MinaSans.css";
 import "public/MintTriangles/minttriangles.css";
 import "public/Iosevka/Iosevka.css";
@@ -22,15 +23,17 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<body className={`bg-background text-foreground-1 ${inter.className}`}>
-				<ThemeProvider
-					defaultTheme="system"
-					themes={["light", "dark", "amoled", "pink", "toothpaste", "forest", "ice", "ocean", "system"]}
-					attribute="class"
-				>
-					{children}
-				</ThemeProvider>
+				<LazyMotion features={domAnimation}>
+					<ThemeProvider
+						defaultTheme="system"
+						themes={["light", "dark", "amoled", "pink", "toothpaste", "forest", "ice", "ocean", "system"]}
+						attribute="class"
+					>
+						{children}
+					</ThemeProvider>
+				</LazyMotion>
 			</body>
 		</html>
 	);
