@@ -52,7 +52,7 @@ function Display({ digit }: { digit?: keyof typeof Patterns }) {
 				? Patterns[digit].map((dot, index) => (
 						<div
 							key={index}
-							className={`size-4 ${
+							className={`size-2 md:size-4 ${
 								dot === 1 ? "bg-foreground-2" : "bg-elevate-1/50 shadow-inner"
 							} rounded-sm duration-200 ease-out`}
 							style={{ transitionDelay: `${index / 150}s` }}
@@ -63,7 +63,7 @@ function Display({ digit }: { digit?: keyof typeof Patterns }) {
 							key={index}
 							className={`${
 								dot === 1 ? "bg-accent" : "bg-elevate-1/50 shadow-inner"
-							} size-4 rounded-sm duration-200 ease-out`}
+							} size-2 md:size-4 rounded-sm duration-200 ease-out`}
 							style={{ transitionDelay: `${index / 150}s` }}
 						/>
 				  ))}
@@ -89,7 +89,7 @@ export default function MatrixClock({
 		>
 			<div className="grid gap-0.5 grid-cols-1">
 				{[...Array(9)].map((_, index) => (
-					<div key={index} className="size-4 bg-elevate-1/50 shadow-inner rounded-sm" />
+					<div key={index} className="size-2 md:size-4 bg-elevate-1/50 shadow-inner rounded-sm" />
 				))}
 			</div>
 			<Display digit={digits[0] as keyof typeof Patterns} />
