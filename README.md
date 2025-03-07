@@ -1,4 +1,4 @@
-# start.pprmint.de <a href="https://start.pprmint.de" target="_blank"><img align="right" height="40" src="/public/icon.svg"></a>
+# start.pprmint.de <a href="https://start.pprmint.de" target="_blank"><img align="right" height="40" src="/src/app/icon.svg"></a>
 
 A clock and a search bar.
 
