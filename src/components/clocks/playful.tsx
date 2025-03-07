@@ -13,35 +13,17 @@ const nunito = Nunito({
 export default function PlayfulClock({ time, meridiem, large }: { time: string; meridiem?: "am" | "pm"; large?: boolean }) {
   const [prevDigits, setPrevDigits] = useState<string[]>([]);
   const [rotations, setRotations] = useState<number[]>([]);
-
   const digits = useMemo(() => time.split(""), [time]);
 
-  // Function to generate a random number within a range.
-  function DBWagenreihung(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  // Generate random rotations for each digit.
-  function generateRandomRotations(digits: string[], min: number, max: number) {
-    return digits.map(() => DBWagenreihung(min, max));
-  }
-
   useEffect(() => {
-    if (prevDigits.length > 0) {
-      // Only apply random rotation to the updated digits.
-      const newRotations = digits.map((digit, index) => {
-        if (digit !== prevDigits[index]) {
-          return DBWagenreihung(-6, 6);
-        }
-        return rotations[index] || 0;
-      });
+    const randomRotation = () => Math.floor(Math.random() * 13) - 6;
+    const newRotations = digits.map((digit, index) =>
+      digit !== prevDigits[index] ? randomRotation() : rotations[index] || 0
+    );
+    if (prevDigits.length === 0 || newRotations.some((r, i) => r !== rotations[i])) {
       setRotations(newRotations);
-    } else {
-      // On the first render, apply random rotations for all digits.
-      const initialRotations = generateRandomRotations(digits, -6, 6);
-      setRotations(initialRotations);
+      setPrevDigits(digits);
     }
-    setPrevDigits(digits);
   }, [digits]);
 
   return (
@@ -54,17 +36,17 @@ export default function PlayfulClock({ time, meridiem, large }: { time: string; 
                 key={`${digit}${index}`}
                 initial={{
                   opacity: 0,
-                  transform: `translateY(0.2em) rotateZ(${rotations[index]}deg)`,
+                  transform: `translateY(0.2em) rotateZ(${rotations[index] | 0}deg)`,
                 }}
                 animate={{
                   opacity: 1,
-                  transform: `translateY(0em) rotateZ(${rotations[index]}deg)`,
-                  transition: { type: "spring", duration: 0.500, delay: 0.150, bounce: 0.4 },
+                  transform: `translateY(0em) rotateZ(${rotations[index] | 0}deg)`,
+                  transition: { type: "spring", duration: 0.500, delay: 0.150 + (0.02 * index), bounce: 0.4 },
                 }}
                 exit={{
                   opacity: 0,
-                  transform: `translateY(0.2em) rotateZ(${rotations[index]}deg)`,
-                  transition: { duration: 0.150, ease: "easeIn" },
+                  transform: `translateY(0.2em) rotateZ(${rotations[index] | 0}deg)`,
+                  transition: { duration: 0.150, delay: 0.02 * index, ease: "easeIn" },
                 }}
               >
                 {digit === ":" ? <div className="mx-1 translate-y-[-0.1em] text-accent">:</div> : digit}
