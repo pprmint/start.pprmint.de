@@ -12,6 +12,7 @@ import * as Switch from "@radix-ui/react-switch";
 import * as Slider from "@radix-ui/react-slider";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { PassedThemeDialog, ThemeCustomizer } from "src/components/themeProvider";
+import { getCustomFont } from "src/components/customFont";
 
 const customThemeRegEx = /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})(?:_(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})){5}$/;
 
@@ -69,10 +70,29 @@ function Page() {
 	}
 
 	// Custom font.
-	const [customFontFamily, setCustomFontFamily] = useState("");
-	const [customFontItalic, setCustomFontItalic] = useState(false);
-	const [customFontWeight, setCustomFontWeight] = useState([400]);
-	const [customFontColon, setCustomFontColon] = useState("colon");
+	const customFont = getCustomFont();
+	const [customFontFamily, setCustomFontFamily] = useState(customFont.fontFamily);
+	const [customFontItalic, setCustomFontItalic] = useState(customFont.italic);
+	const [customFontWeight, setCustomFontWeight] = useState([customFont.weight]);
+	const [customFontColon, setCustomFontColon] = useState([customFont.colon]);
+
+	const edited =
+		customFontFamily !== customFont.fontFamily ||
+		customFontItalic !== customFont.italic ||
+		customFontWeight[0] !== customFont.weight ||
+		customFontColon[0] !== customFont.colon;
+
+	function handleApplyCustomFont() {
+		localStorage.setItem(
+			"customFont",
+			JSON.stringify({
+				fontFamily: customFontFamily,
+				italic: customFontItalic,
+				weight: customFontWeight[0],
+				colon: customFontColon[0],
+			})
+		);
+	}
 
 	// Increase time check frequency.
 	const [timeCheckFreq, setTimeCheckFreq] = useState(
@@ -146,157 +166,6 @@ function Page() {
 					</div>
 				</section>
 				<div id="main" className="max-w-3xl px-6 md:px-0 mx-auto mt-12 mb-24 flex flex-col gap-6">
-					<section
-						id="font"
-						className="relative bg-background border border-elevate-1 rounded-xl flex flex-col gap-2 p-5"
-					>
-						<div className="mb-2">
-							<label className="text-foreground-2 font-medium text-lg" htmlFor="hideSec">
-								Local font
-							</label>
-							<p className="text-sm">
-								Replace the fonts used in some clocks with one that's installed on your device. Leave
-								the following field empty to use the default fonts.
-							</p>
-							<p className="text-sm">
-								The font should support tabular (same width) numbers or be monospaced for best results.
-							</p>
-						</div>
-						<div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-							<div className="flex flex-col gap-1">
-								<label htmlFor="customFontFamily" className="text-xs">
-									Font family
-								</label>
-								<div className="flex">
-									<input
-										type="text"
-										className="group inline-flex items-center w-full px-3 py-2 overflow-clip ease-in-out outline-none bg-transparent hover:bg-elevate-1 focus:bg-transparent border border-elevate-1 hover:border-elevate-2 rounded-md duration-100 text-foreground-2"
-										id="customFontFamily"
-										placeholder="Default"
-										value={customFontFamily}
-										onChange={(e) => setCustomFontFamily(e.target.value)}
-									/>
-									<button
-										className="btn h-full"
-										onClick={() => setCustomFontItalic(!customFontItalic)}
-									>
-										Italic
-									</button>
-								</div>
-							</div>
-							<div className="flex flex-col gap-1">
-								<label htmlFor="customFontFamily" className="text-xs">
-									Weight
-								</label>
-								<Slider.Root
-									className="relative flex items-center select-none touch-none w-full h-5"
-									value={customFontWeight}
-									onValueChange={setCustomFontWeight}
-									defaultValue={[400]}
-									min={100}
-									max={900}
-									step={100}
-									id="fontWeight"
-								>
-									<Slider.Track className="bg-elevate-1 relative grow rounded-full h-1">
-										<Slider.Range className="absolute bg-foreground-2 rounded-full h-1" />
-									</Slider.Track>
-									<Slider.Thumb
-										className="group block relative size-3.5 hover:h-5 hover:w-9 bg-foreground-2 rounded-full hover:bg-violet3 focus:outline-none duration-150 ease-out overflow-clip cursor-pointer"
-										aria-label="Font weight"
-										style={{ fontVariantNumeric: "tabular-nums" }}
-									>
-										<span
-											aria-hidden
-											className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-bold text-background opacity-0 group-hover:opacity-100 duration-100 group-hover:delay-75"
-										>
-											{customFontWeight}
-										</span>
-									</Slider.Thumb>
-								</Slider.Root>
-							</div>
-							<div className="flex flex-col gap-1">
-								<div className="flex gap-1 items-center">
-									<label htmlFor="colonGlyph" className="text-xs">
-										Colon glyph
-									</label>
-									<Tooltip.Provider delayDuration={100}>
-										<Tooltip.Root>
-											<Tooltip.Trigger asChild>
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													width="15"
-													height="15"
-													viewBox="0 0 15 15"
-													className="fill-current hover:fill-foreground-2 duration-100 cursor-help"
-												>
-													<circle cx="7.5" cy="4.5" r=".75"></circle>
-													<path d="M7.5.9c3.643 0 6.6 2.957 6.6 6.6s-2.957 6.6-6.6 6.6A6.603 6.603 0 0 1 .9 7.5C.9 3.857 3.857.9 7.5.9m0 1a5.6 5.6 0 0 0-5.6 5.6c0 3.091 2.509 5.6 5.6 5.6s5.6-2.509 5.6-5.6-2.509-5.6-5.6-5.6"></path>
-													<path d="M8.5 10h.499L9 11h-.5A1.503 1.503 0 0 1 7 9.5V7H6V6h2v3.5c0 .133.053.26.146.354A.5.5 0 0 0 8.5 10"></path>
-												</svg>
-											</Tooltip.Trigger>
-											<Tooltip.Portal>
-												<Tooltip.Content
-													className="data-[state=delayed-open]:animate-tooltip-enter-bottom data-[state=instant-open]:animate-tooltip-enter-bottom
-														data-[state=closed]:animate-tooltip-exit-bottom
-														select-none rounded-md bg-background border border-elevate-2 text-foreground-2 px-3 py-2 text-xs max-w-80 text-center shadow-lg shadow-black/5"
-													side="top"
-												>
-													The ratio glyph may be used as a vertically centered colon if your
-													font doesn't center regular colons between numbers automagically.
-													<Tooltip.Arrow asChild>
-                            <div className="bg-background size-2 rotate-45 translate-y-[-3px] border-b border-r border-elevate-2" />
-													</Tooltip.Arrow>
-												</Tooltip.Content>
-											</Tooltip.Portal>
-										</Tooltip.Root>
-									</Tooltip.Provider>
-								</div>
-								<button
-									id="colonGlyph"
-									aria-label="Time format"
-									className="group relative h-8 w-28 hover:text-foreground-2 border border-elevate-1 hover:border-elevate-2 rounded-full hover:bg-elevate-1 duration-100"
-									onClick={() => setCustomFontColon(customFontColon === "colon" ? "ratio" : "colon")}
-								>
-									<div
-										className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-xs font-medium w-[52px] group-active:w-[56px] ${customFontColon === "ratio"
-												? "left-[54px] group-active:left-[50px]"
-												: "left-1"
-											} rounded-full duration-200 ease-out`}
-									/>
-									<div className="absolute inset-0 flex items-center text-xs px-1">
-										<span
-											className={`w-full text-center ${customFontColon === "colon" && "font-bold text-background"
-												} duration-100`}
-										>
-											Colon
-										</span>
-										<span
-											className={`w-full text-center ${customFontColon === "ratio" && "font-bold text-background"
-												} duration-100`}
-										>
-											Ratio
-										</span>
-									</div>
-								</button>
-							</div>
-						</div>
-						<p
-							className="text-7xl sm:text-8xl text-foreground-2 text-center mt-12 mb-6"
-							style={{
-								fontFamily: `"${customFontFamily && customFontFamily}", "Mina Sans Digits", Inter, system-ui, sans-serif`,
-								fontVariantNumeric: "tabular-nums",
-								fontStyle: customFontItalic ? "italic" : "normal",
-								fontWeight: Number(customFontWeight),
-							}}
-						>
-							{time[0].toString().padStart(2, "0")}
-							<span className="text-accent">{customFontColon === "colon" ? ":" : "∶"}</span>
-							{time[1].toString().padStart(2, "0")}
-							<span className="text-accent">{customFontColon === "colon" ? ":" : "∶"}</span>
-							{time[2].toString().padStart(2, "0")}
-						</p>
-					</section>
 					<section
 						id="theme"
 						className="bg-background border border-elevate-1 rounded-xl flex flex-col md:flex-row gap-6 p-5"
@@ -510,19 +379,22 @@ function Page() {
 								onClick={handleUse12hrChange}
 							>
 								<div
-									className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-xs font-medium w-[38px] group-active:w-[42px] ${use12hr ? "left-[41px] group-active:left-[37px]" : "left-1"
-										} rounded-full duration-200 ease-out`}
+									className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-xs font-medium w-[38px] group-active:w-[42px] ${
+										use12hr ? "left-[41px] group-active:left-[37px]" : "left-1"
+									} rounded-full duration-200 ease-out`}
 								/>
 								<div className="absolute inset-0 flex items-center text-xs px-1">
 									<span
-										className={`w-full text-center ${!use12hr && "font-bold text-background"
-											} duration-100`}
+										className={`w-full text-center ${
+											!use12hr && "font-bold text-background"
+										} duration-100`}
 									>
 										24h
 									</span>
 									<span
-										className={`w-full text-center ${use12hr && "font-bold text-background"
-											} duration-100`}
+										className={`w-full text-center ${
+											use12hr && "font-bold text-background"
+										} duration-100`}
 									>
 										12h
 									</span>
@@ -537,23 +409,195 @@ function Page() {
 									onClick={() => handleClockChange(item.name)}
 								>
 									<div
-										className={`w-full h-auto ${item.name === clock
+										className={`w-full h-auto ${
+											item.name === clock
 												? "border border-foreground-2 ring-1 ring-inset ring-foreground-2"
 												: "border border-elevate-1 group-hover:bg-elevate-1 group-hover:border-elevate-2"
-											} duration-100 rounded-md overflow-clip`}
+										} duration-100 rounded-md overflow-clip`}
 									>
 										{item.preview}
 									</div>
 									<p
-										className={`duration-100 ${item.name === clock
+										className={`duration-100 ${
+											item.name === clock
 												? "text-foreground-2 font-medium"
 												: "group-hover:text-foreground-2"
-											}`}
+										}`}
 									>
 										{item.name}
 									</p>
 								</button>
 							))}
+						</div>
+					</section>
+					<section
+						id="font"
+						className="relative bg-background border border-elevate-1 rounded-xl flex flex-col gap-2 p-5"
+					>
+						<div className="mb-2">
+							<label className="text-foreground-2 font-medium text-lg" htmlFor="hideSec">
+								Custom font
+							</label>
+							<p className="text-sm">
+								Replace the fonts used in certain clocks with one that's installed on your device. Leave
+								the font family feld empty to use the default fonts.
+							</p>
+							<p className="text-sm">
+								The font should support tabular (same width) numbers or be monospaced for best results.
+							</p>
+						</div>
+						<div className="grid grid-cols-2 gap-3">
+							<div className="flex flex-col col-span-2 gap-1">
+								<label htmlFor="customFontFamily" className="text-xs">
+									Font family
+								</label>
+								<div className="flex">
+									<input
+										type="text"
+										className="group inline-flex items-center w-full px-3 py-2 overflow-clip ease-in-out outline-none bg-transparent hover:bg-elevate-1 focus:bg-transparent border border-elevate-1 hover:border-elevate-2 rounded-md duration-100 text-foreground-2 rounded-r-none"
+										id="customFontFamily"
+										placeholder="Default"
+										value={customFontFamily}
+										onChange={(e) => setCustomFontFamily(e.target.value || "")}
+									/>
+									<button
+										className={`btn h-full rounded-l-none border-l-0 ${
+											customFontItalic &&
+											"border-elevate-2 bg-elevate-2 hover:bg-elevate-2 active:bg-transparent"
+										}`}
+										onClick={() => setCustomFontItalic(!customFontItalic)}
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="16"
+											height="16"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											strokeWidth="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										>
+											<line x1="19" x2="10" y1="4" y2="4" />
+											<line x1="14" x2="5" y1="20" y2="20" />
+											<line x1="15" x2="9" y1="4" y2="20" />
+										</svg>
+									</button>
+								</div>
+							</div>
+							<div className="flex flex-col gap-1">
+								<label htmlFor="fontWeight" className="text-xs">
+									Weight
+								</label>
+								<Slider.Root
+									className="relative flex items-center select-none touch-none w-full h-5"
+									value={customFontWeight}
+									onValueChange={setCustomFontWeight}
+									defaultValue={[400]}
+									min={100}
+									max={900}
+									step={10}
+									id="fontWeight"
+								>
+									<Slider.Track className="bg-elevate-1 relative grow rounded-full h-1">
+										<Slider.Range className="absolute bg-foreground-2 rounded-full h-1" />
+									</Slider.Track>
+									<Slider.Thumb
+										className="group block relative size-3.5 hover:h-5 hover:w-9 bg-foreground-2 rounded-full hover:bg-violet3 focus:outline-none duration-150 ease-out overflow-clip cursor-pointer"
+										aria-label="Font weight"
+										style={{ fontVariantNumeric: "tabular-nums" }}
+									>
+										<span
+											aria-hidden
+											className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-bold text-background opacity-0 group-hover:opacity-100 duration-100 group-hover:delay-75"
+										>
+											{customFontWeight}
+										</span>
+									</Slider.Thumb>
+								</Slider.Root>
+							</div>
+							<div className="flex flex-col gap-1">
+								<label htmlFor="fontColon" className="text-xs">
+									Colon vertical position
+								</label>
+								<Slider.Root
+									className="relative flex items-center select-none touch-none w-full h-5"
+									value={customFontColon}
+									onValueChange={setCustomFontColon}
+									defaultValue={[0]}
+									min={0}
+									max={0.5}
+									step={0.005}
+									id="fontColon"
+								>
+									<Slider.Track className="bg-elevate-1 relative grow rounded-full h-1">
+										<Slider.Range className="absolute bg-foreground-2 rounded-full h-1" />
+									</Slider.Track>
+									<Slider.Thumb
+										className="group block relative size-3.5 hover:h-5 hover:w-16 bg-foreground-2 rounded-full hover:bg-violet3 focus:outline-none duration-150 ease-out overflow-clip cursor-pointer"
+										aria-label="Font weight"
+										style={{ fontVariantNumeric: "tabular-nums" }}
+									>
+										<span
+											aria-hidden
+											className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-bold text-background opacity-0 group-hover:opacity-100 duration-100 group-hover:delay-75"
+										>
+											{customFontColon}em
+										</span>
+									</Slider.Thumb>
+								</Slider.Root>
+							</div>
+						</div>
+						<div
+							className="font-number flex justify-center text-6xl sm:text-7xl lg:text-8xl text-foreground-2 text-center mt-12 mb-6"
+							style={{
+								fontFamily: customFontFamily !== "" ? `${customFontFamily}, system-ui, sans-serif` : "",
+								fontVariantNumeric: "tabular-nums",
+								fontStyle: customFontFamily !== "" && customFontItalic ? "italic" : "normal",
+								fontWeight: customFontFamily !== "" ? Number(customFontWeight) : "",
+							}}
+						>
+							<div>{time[0].toString().padStart(2, "0")}</div>
+							<div
+								className="text-accent"
+								style={{ transform: `translateY(-${customFontFamily !== "" ? customFontColon : 0}em)` }}
+							>
+								:
+							</div>
+							<div>{time[1].toString().padStart(2, "0")}</div>
+							{!hideSec && (
+								<>
+									<div
+										className="text-accent"
+										style={{
+											transform: `translateY(-${
+												customFontFamily !== "" ? customFontColon : 0
+											}em)`,
+										}}
+									>
+										:
+									</div>
+									<div>{time[2].toString().padStart(2, "0")}</div>
+								</>
+							)}
+						</div>
+						<div className="flex justify-end">
+							<button
+								className="btn-accent disabled:pointer-events-none disabled:opacity-50 disabled:border-dashed"
+								onClick={handleApplyCustomFont}
+								disabled={!edited}
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="15"
+									height="15"
+									viewBox="0 0 15 15"
+									fill="currentColor"
+								>
+									<path d="m1.646 7.354.708-.708L6 10.293l6.646-6.647.708.708L6 11.707z"></path>
+								</svg>
+								Apply
+							</button>
 						</div>
 					</section>
 					<section
