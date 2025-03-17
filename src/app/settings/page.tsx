@@ -261,7 +261,7 @@ function Page() {
 															className="p-[5px] rounded-full ring-1 ring-inset ring-black/20"
 															style={{
 																backgroundImage:
-																	"conic-gradient(#f44, #f71, #fb0, #9c3, #0c6, #2cf, #29f, #a7e, #e6b, #f44)",
+																	"conic-gradient(#f44, #f71, #fb0, #9c3, #4b5, #2cf, #29f, #a7e, #e6b, #f44)",
 															}}
 														>
 															<div className="size-[15px] rounded-full bg-white shadow-md shadow-black/25" />
@@ -379,22 +379,19 @@ function Page() {
 								onClick={handleUse12hrChange}
 							>
 								<div
-									className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-xs font-medium w-[38px] group-active:w-[42px] ${
-										use12hr ? "left-[41px] group-active:left-[37px]" : "left-1"
-									} rounded-full duration-200 ease-out`}
+									className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-xs font-medium w-[38px] group-active:w-[42px] ${use12hr ? "left-[41px] group-active:left-[37px]" : "left-1"
+										} rounded-full duration-200 ease-out`}
 								/>
 								<div className="absolute inset-0 flex items-center text-xs px-1">
 									<span
-										className={`w-full text-center ${
-											!use12hr && "font-bold text-background"
-										} duration-100`}
+										className={`w-full text-center ${!use12hr && "font-bold text-background"
+											} duration-100`}
 									>
 										24h
 									</span>
 									<span
-										className={`w-full text-center ${
-											use12hr && "font-bold text-background"
-										} duration-100`}
+										className={`w-full text-center ${use12hr && "font-bold text-background"
+											} duration-100`}
 									>
 										12h
 									</span>
@@ -409,20 +406,18 @@ function Page() {
 									onClick={() => handleClockChange(item.name)}
 								>
 									<div
-										className={`w-full h-auto ${
-											item.name === clock
-												? "border border-foreground-2 ring-1 ring-inset ring-foreground-2"
-												: "border border-elevate-1 group-hover:bg-elevate-1 group-hover:border-elevate-2"
-										} duration-100 rounded-md overflow-clip`}
+										className={`w-full h-auto ${item.name === clock
+											? "border border-foreground-2 ring-1 ring-inset ring-foreground-2"
+											: "border border-elevate-1 group-hover:bg-elevate-1 group-hover:border-elevate-2"
+											} duration-100 rounded-md overflow-clip`}
 									>
 										{item.preview}
 									</div>
 									<p
-										className={`duration-100 ${
-											item.name === clock
-												? "text-foreground-2 font-medium"
-												: "group-hover:text-foreground-2"
-										}`}
+										className={`duration-100 ${item.name === clock
+											? "text-foreground-2 font-medium"
+											: "group-hover:text-foreground-2"
+											}`}
 									>
 										{item.name}
 									</p>
@@ -461,10 +456,9 @@ function Page() {
 										onChange={(e) => setCustomFontFamily(e.target.value || "")}
 									/>
 									<button
-										className={`btn h-full rounded-l-none border-l-0 ${
-											customFontItalic &&
+										className={`btn h-full rounded-l-none border-l-0 ${customFontItalic &&
 											"border-elevate-2 bg-elevate-2 hover:bg-elevate-2 active:bg-transparent"
-										}`}
+											}`}
 										onClick={() => setCustomFontItalic(!customFontItalic)}
 									>
 										<svg
@@ -552,7 +546,7 @@ function Page() {
 							className="font-number flex justify-center text-6xl sm:text-7xl lg:text-8xl text-foreground-2 text-center mt-12 mb-6"
 							style={{
 								fontFamily: customFontFamily !== "" ? `${customFontFamily}, system-ui, sans-serif` : "",
-								fontVariantNumeric: "tabular-nums",
+								fontVariantNumeric: "tabular-nums", fontVariationSettings: "tnum",
 								fontStyle: customFontFamily !== "" && customFontItalic ? "italic" : "normal",
 								fontWeight: customFontFamily !== "" ? Number(customFontWeight) : "",
 							}}
@@ -570,9 +564,8 @@ function Page() {
 									<div
 										className="text-accent"
 										style={{
-											transform: `translateY(-${
-												customFontFamily !== "" ? customFontColon : 0
-											}em)`,
+											transform: `translateY(-${customFontFamily !== "" ? customFontColon : 0
+												}em)`,
 										}}
 									>
 										:

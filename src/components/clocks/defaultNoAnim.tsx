@@ -15,7 +15,7 @@ export default function DefaultClockNoAnim({
 				className={`font-number ${
 					large ? "text-7xl md:text-9xl lg:text-[11rem]" : "text-6xl md:text-9xl"
 				} text-foreground-2 duration-700 ease-in-out`}
-				style={customFontStyle}
+				style={{ fontVariantNumeric: "tabular-nums", fontVariationSettings: "tnum", ...customFontStyle }}
 			>
 				<div className="flex">
 					{time.split("").map((character, index) =>

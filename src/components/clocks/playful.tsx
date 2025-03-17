@@ -36,7 +36,7 @@ export default function PlayfulClock({
 	}, [digits]);
 
 	return (
-		<div className={`flex items-start ${nunito.className}`} style={customFontStyle}>
+		<div className={`flex items-start ${nunito.className}`} style={{ fontVariantNumeric: "tabular-nums", fontVariationSettings: "tnum", ...customFontStyle }}>
 			<h1
 				className={`${
 					large ? "text-7xl md:text-9xl lg:text-[11rem]" : "text-6xl md:text-9xl"

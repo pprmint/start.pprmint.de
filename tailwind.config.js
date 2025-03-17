@@ -3,11 +3,7 @@ const { createThemes } = require("tw-colors");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	darkMode: "class",
-	content: [
-		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-		"./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-	],
+	content: ["./src/pages/**/*.{js,ts,jsx,tsx,mdx}", "./src/components/**/*.{js,ts,jsx,tsx,mdx}", "./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
 	theme: {
 		extend: {
 			colors: {
@@ -68,18 +64,18 @@ module.exports = {
 					950: "#1f290b",
 				},
 				green: {
-					DEFAULT: "#0c6",
-					50: "#d1ffed",
-					100: "#b2f6d3",
-					200: "#8bedbb",
-					300: "#63e4a3",
-					400: "#3cda8b",
-					500: "#0c6",
-					600: "#00ab56",
-					700: "#008b45",
-					800: "#006b35",
-					900: "#004a25",
-					950: "#002914",
+					DEFAULT: "#4b5",
+					50: "#e4f7e5",
+					100: "#c4ebc8",
+					200: "#a6dfae",
+					300: "#88d493",
+					400: "#6ac977",
+					500: "#4b5",
+					600: "#3da447",
+					700: "#32863a",
+					800: "#27682d",
+					900: "#1c4a21",
+					950: "#112c14",
 				},
 				cyan: {
 					DEFAULT: "#2cf",
@@ -183,7 +179,7 @@ module.exports = {
 					from: { opacity: "100%" },
 					to: { opacity: "0%" },
 				},
-        tooltipEnterBottom: {
+				tooltipEnterBottom: {
 					from: {
 						opacity: 0,
 						transform: "translateY(4px)",
@@ -211,7 +207,7 @@ module.exports = {
 				"select-close": "selectClose .2s;",
 				"fade-in": "fadeIn .25s cubic-bezier(0, 0, 0.2, 1)",
 				"fade-out": "fadeOut .25s cubic-bezier(0, 0, 0.2, 1)",
-        "tooltip-enter-bottom": "tooltipEnterBottom .2s cubic-bezier(0.33, 1, 0.68, 1) forwards",
+				"tooltip-enter-bottom": "tooltipEnterBottom .2s cubic-bezier(0.33, 1, 0.68, 1) forwards",
 				"tooltip-exit-bottom": "tooltipExitBottom .2s cubic-bezier(0.33, 1, 0.68, 1) forwards",
 			},
 		},

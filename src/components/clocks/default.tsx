@@ -17,10 +17,9 @@ export default function DefaultClock({
 	return (
 		<div className="flex">
 			<h1
-				className={`font-number ${
-					large ? "text-7xl md:text-9xl lg:text-[11rem]" : "text-6xl md:text-9xl"
-				} text-foreground-2 duration-700 ease-in-out`}
-				style={customFontStyle}
+				className={`font-number ${large ? "text-7xl md:text-9xl lg:text-[11rem]" : "text-6xl md:text-9xl"
+					} text-foreground-2 duration-700 ease-in-out`}
+				style={{ fontVariantNumeric: "tabular-nums", fontVariationSettings: "tnum", ...customFontStyle }}
 			>
 				<div className="flex" style={{ perspective: 1000 }}>
 					<AnimatePresence mode="popLayout">

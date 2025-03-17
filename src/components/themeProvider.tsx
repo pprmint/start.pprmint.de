@@ -26,7 +26,7 @@ export function ApplyCustomTheme() {
 	const hexCustomTheme =
 		lsCustomTheme && customThemeRegEx.test(lsCustomTheme)
 			? lsCustomTheme.split(",")
-			: ["111", "222", "333", "aaa", "eee", "0c6"];
+			: ["111", "222", "333", "aaa", "eee", "4b5"];
 
 	const hslBackground = hexToHSL(hexCustomTheme[0]);
 	const hslElevate1 = hexToHSL(hexCustomTheme[1]);
@@ -63,7 +63,7 @@ export function ThemeCustomizer() {
 	const hexCustomTheme =
 		lsCustomTheme && customThemeRegEx.test(lsCustomTheme)
 			? lsCustomTheme.split(",")
-			: ["111", "222", "333", "aaa", "eee", "0c6"];
+			: ["111", "222", "333", "aaa", "eee", "4b5"];
 
 	const [background, setBackground] = useState(hexCustomTheme[0]);
 	const [elevate1, setElevate1] = useState(hexCustomTheme[1]);
@@ -239,7 +239,7 @@ export function ThemeCustomizer() {
 							Only 3 and 6 digit HEX codes are supported.
 						</p>
 						<p>
-							For example: <b>#0c6</b> is the same as <b>#00cc66</b>.
+							For example: <b>#4b5</b> is the same as <b>#44bb55</b>.
 						</p>
 					</div>
 					<div className="flex gap-3">
