@@ -13,6 +13,6 @@ export default function CustomThemeApplier({ children }: { children: ReactNode }
 		} else if (wasCustom) {
 			location.reload();
 		}
-	}, [theme]);
+	}, [theme, wasCustom]);
 	return children;
 }

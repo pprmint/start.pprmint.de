@@ -1,12 +1,250 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer components {
-	.btn {
-		@apply inline-flex items-center gap-2 hover:bg-elevate-1 active:bg-elevate-2 text-foreground-2 border border-elevate-1 hover:border-elevate-2 rounded-md text-sm px-3 py-1.5 duration-100;
+@theme {
+	--color-background: white;
+	--color-elevate-1: #eee;
+	--color-elevate-2: #ddd;
+	--color-foreground-1: #777;
+	--color-foreground-2: #111;
+	--color-accent: #f44;
+
+	--color-neutral-DEFAULT: #aaa;
+	--color-neutral-50: #eee;
+	--color-neutral-100: #ddd;
+	--color-neutral-200: #ccc;
+	--color-neutral-300: #bbb;
+	--color-neutral-400: #999;
+	--color-neutral-500: #777;
+	--color-neutral-600: #555;
+	--color-neutral-700: #444;
+	--color-neutral-800: #333;
+	--color-neutral-900: #222;
+	--color-neutral-950: #111;
+
+	--color-red-DEFAULT: #f57;
+	--color-red-50: #ffeff0;
+	--color-red-100: #ffd2d4;
+	--color-red-200: #ffb4ba;
+	--color-red-300: #ff96a1;
+	--color-red-400: #ff7688;
+	--color-red-500: #f57;
+	--color-red-600: #d8465b;
+	--color-red-700: #9c3744;
+	--color-red-800: #6b2b32;
+	--color-red-900: #3e1d21;
+	--color-red-950: #1b1212;
+
+	--color-yellow-DEFAULT: #fa5;
+	--color-yellow-50: #fff7ef;
+	--color-yellow-100: #ffe5cc;
+	--color-yellow-200: #ffd4ac;
+	--color-yellow-300: #ffc590;
+	--color-yellow-400: #ffb472;
+	--color-yellow-500: #fa5;
+	--color-yellow-600: #c68247;
+	--color-yellow-700: #8f5f37;
+	--color-yellow-800: #5f4228;
+	--color-yellow-900: #3c2b1d;
+	--color-yellow-950: #1a1510;
+
+	--color-green-DEFAULT: #0b7;
+	--color-green-50: #edfaf2;
+	--color-green-100: #c6eed7;
+	--color-green-200: #a0e1bd;
+	--color-green-300: #7ad5a5;
+	--color-green-400: #50c88e;
+	--color-green-500: #0b7;
+	--color-green-600: #17925f;
+	--color-green-700: #1b6b47;
+	--color-green-800: #1a4b34;
+	--color-green-900: #162e22;
+	--color-green-950: #0f1713;
+
+	--color-blue-DEFAULT: #0bd;
+	--color-blue-50: #edf9fc;
+	--color-blue-100: #caecf6;
+	--color-blue-200: #a6e0ef;
+	--color-blue-300: #82d4ea;
+	--color-blue-400: #55c7e3;
+	--color-blue-500: #0bd;
+	--color-blue-600: #1991aa;
+	--color-blue-700: #1d6c7e;
+	--color-blue-800: #1c4b56;
+	--color-blue-900: #182d32;
+	--color-blue-950: #101617;
+
+	--color-violet-DEFAULT: #b8f;
+	--color-violet-50: #f9f3ff;
+	--color-violet-100: #eeddff;
+	--color-violet-200: #e2c7ff;
+	--color-violet-300: #d8b2ff;
+	--color-violet-400: #c99cff;
+	--color-violet-500: #b8f;
+	--color-violet-600: #916bc4;
+	--color-violet-700: #6c5190;
+	--color-violet-800: #4a395f;
+	--color-violet-900: #2e2538;
+	--color-violet-950: #161318;
+
+	--font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Roboto, "Segoe UI Variable",
+		"Segoe UI Variable Text", "Segoe UI", Cantarell, Ubuntu, system-ui, sans-serif;
+	--font-mono: "Iosevka Mint Extended", "Iosevka Extended", Iosevka, "SF Mono", "JetBrains Mono", Hack, monospace;
+	--font-number: "MN Varia WIP 0.015", "Roboto Mono", monospace;
+	--font-triangles: "Mint Triangles", "Roboto Mono", monospace;
+
+	--animate-dialog-enter: dialogEnter 0.4s cubic-bezier(0.3, 0, 0, 1) 0.05s backwards;
+	--animate-dialog-exit: dialogExit 0.2s cubic-bezier(0.4, 0, 0.5, 1);
+	--animate-select-open: selectOpen 0.2s;
+	--animate-select-close: selectClose 0.2s;
+	--animate-fade-in: fadeIn 0.25s cubic-bezier(0, 0, 0.2, 1);
+	--animate-fade-out: fadeOut 0.25s cubic-bezier(0, 0, 0.2, 1);
+	--animate-tooltip-enter-bottom: tooltipEnterBottom 0.2s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+	--animate-tooltip-exit-bottom: tooltipExitBottom 0.2s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+[data-theme="dark"] {
+	--color-background: #111;
+	--color-elevate-1: #222;
+	--color-elevate-2: #333;
+	--color-foreground-1: #aaa;
+	--color-foreground-2: #eee;
+	--color-accent: #f44;
+}
+[data-theme="amoled"] {
+	--color-background: #000;
+	--color-elevate-1: #111;
+	--color-elevate-2: #222;
+	--color-foreground-1: #aaa;
+	--color-foreground-2: #eee;
+	--color-accent: #f44;
+}
+[data-theme="pink"] {
+	--color-background: #1f0d16;
+	--color-elevate-1: #441e31;
+	--color-elevate-2: #64354b;
+	--color-foreground-1: #e699b9;
+	--color-foreground-2: #f8c8dc;
+	--color-accent: #e698b8;
+}
+[data-theme="toothpaste"] {
+	--color-background: #f9fdf9;
+	--color-elevate-1: #e4f5e6;
+	--color-elevate-2: #c9eacd;
+	--color-foreground-1: #558052;
+	--color-foreground-2: #162a09;
+	--color-accent: #27ab36;
+}
+[data-theme="forest"] {
+	--color-background: #141a14;
+	--color-elevate-1: #1c231b;
+	--color-elevate-2: #272f25;
+	--color-foreground-1: #a7b3a2;
+	--color-foreground-2: #e5e8e3;
+	--color-accent: #27ab36;
+}
+[data-theme="ice"] {
+	--color-background: #f4f6fb;
+	--color-elevate-1: #e8ecf6;
+	--color-elevate-2: #ccd7eb;
+	--color-foreground-1: #4a72ad;
+	--color-foreground-2: #273753;
+	--color-accent: #3a5d97;
+}
+[data-theme="ocean"] {
+	--color-background: #131d2b;
+	--color-elevate-1: #1d2b41;
+	--color-elevate-2: #263956;
+	--color-foreground-1: #b5cce4;
+	--color-foreground-2: #e8edf6;
+	--color-accent: #477db0;
+}
+
+/* Keyframes for animations */
+@keyframes dialogEnter {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
 	}
-	.btn-accent {
-		@apply inline-flex items-center gap-2 bg-transparent hover:bg-accent active:bg-accent/75 text-accent hover:text-background border border-accent rounded-md text-sm px-3 py-1.5 duration-100;
+	to {
+		opacity: 1;
+		transform: translateY(0px);
 	}
+}
+
+@keyframes dialogExit {
+	from {
+		opacity: 1;
+		transform: translateY(0px);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+}
+
+@keyframes selectOpen {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes selectClose {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes tooltipEnterBottom {
+	from {
+		opacity: 0;
+		transform: translateY(4px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0px);
+	}
+}
+
+@keyframes tooltipExitBottom {
+	from {
+		opacity: 1;
+		transform: translateY(0px);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(4px);
+	}
+}
+
+/* Button variants */
+.btn {
+	@apply px-3 py-1 text-sm rounded-md border border-elevate-1 hover:border-elevate-2 hover:bg-elevate-1 text-foreground-2 inline-flex items-center gap-2 duration-100;
+}
+
+.btn-accent {
+	@apply px-3 py-1 text-sm rounded-md border-2 border-accent bg-accent text-background hover:bg-transparent hover:text-accent inline-flex items-center gap-2 duration-100;
 }

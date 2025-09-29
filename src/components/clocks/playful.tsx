@@ -33,7 +33,7 @@ export default function PlayfulClock({
 			setRotations(newRotations);
 			setPrevDigits(digits);
 		}
-	}, [digits]);
+	}, [digits, prevDigits, rotations]);
 
 	return (
 		<div className={`flex items-start ${nunito.className}`} style={{ fontVariantNumeric: "tabular-nums", fontVariationSettings: "tnum", ...customFontStyle }}>

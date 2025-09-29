@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DefaultClock from "./clocks/default";
 import DefaultClockNoAnim from "./clocks/defaultNoAnim";
 import PlayfulClock from "./clocks/playful";
@@ -16,21 +16,23 @@ function Clock({ large }: { large?: boolean }) {
 	const lsHideSec = localStorage.getItem("hideSec");
 	const timeCheckFreq = localStorage.getItem("incrTimeCheckFreq") === "true" ? 250 : 1000;
 	const use12hr = localStorage.getItem("use12hr") === "true" ? true : false;
-	const [time, setTime] = useState(getTime);
-	function getTime() {
+
+	const getTime = useCallback(() => {
 		const now = new Date();
 		const hour = now.getHours();
 		const minute = now.getMinutes();
 		const second = now.getSeconds();
 		return lsHideSec ? [hour, minute] : [hour, minute, second];
-	}
+	}, [lsHideSec]);
+	const [time, setTime] = useState(getTime);
+
 	useEffect(() => {
 		const intervalId = setInterval(() => {
 			setTime(getTime);
 		}, timeCheckFreq);
 
 		return () => clearInterval(intervalId);
-	}, []);
+	}, [getTime, timeCheckFreq]);
 
 	return lsClock === "None" ? null : lsClock === "LCD" ? (
 		<LCDClock

@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import { LazyMotion, domAnimation } from "motion/react";
-import "public/MinaSans/MinaSans.css";
+import "public/MNVaria/MNVaria.css";
 import "public/MintTriangles/minttriangles.css";
 import "public/Iosevka/Iosevka.css";
 import "./globals.css";
@@ -29,7 +29,7 @@ export default function RootLayout({
 					<ThemeProvider
 						defaultTheme="system"
 						themes={["light", "dark", "amoled", "pink", "toothpaste", "forest", "ice", "ocean", "system"]}
-						attribute="class"
+						attribute="data-theme"
 					>
 						{children}
 					</ThemeProvider>

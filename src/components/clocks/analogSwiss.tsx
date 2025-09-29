@@ -45,7 +45,7 @@ export default function SwissClock({ time, large }: { time: number[], large?: bo
           </div>
         )}
       </div>
-      <div className="absolute inset-0 rounded-full bg-gradient-to-b from-white/10" />
+      <div className="absolute inset-0 rounded-full bg-linear-to-b from-elevate-1/25" />
     </div>
   );
 }

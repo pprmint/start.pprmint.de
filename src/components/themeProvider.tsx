@@ -26,36 +26,14 @@ export function ApplyCustomTheme() {
 	const hexCustomTheme =
 		lsCustomTheme && customThemeRegEx.test(lsCustomTheme)
 			? lsCustomTheme.split(",")
-			: ["111", "222", "333", "aaa", "eee", "4b5"];
+			: ["111", "222", "333", "aaa", "eee", "0b7"];
 
-	const hslBackground = hexToHSL(hexCustomTheme[0]);
-	const hslElevate1 = hexToHSL(hexCustomTheme[1]);
-	const hslElevate2 = hexToHSL(hexCustomTheme[2]);
-	const hslForeground1 = hexToHSL(hexCustomTheme[3]);
-	const hslForeground2 = hexToHSL(hexCustomTheme[4]);
-	const hslAccent = hexToHSL(hexCustomTheme[5]);
-
-	document.documentElement.style.setProperty(
-		"--twc-background",
-		`${hslBackground[0]} ${hslBackground[1]}% ${hslBackground[2]}%`
-	);
-	document.documentElement.style.setProperty(
-		"--twc-elevate-1",
-		`${hslElevate1[0]} ${hslElevate1[1]}% ${hslElevate1[2]}%`
-	);
-	document.documentElement.style.setProperty(
-		"--twc-elevate-2",
-		`${hslElevate2[0]} ${hslElevate2[1]}% ${hslElevate2[2]}%`
-	);
-	document.documentElement.style.setProperty(
-		"--twc-foreground-1",
-		`${hslForeground1[0]} ${hslForeground1[1]}% ${hslForeground1[2]}%`
-	);
-	document.documentElement.style.setProperty(
-		"--twc-foreground-2",
-		`${hslForeground2[0]} ${hslForeground2[1]}% ${hslForeground2[2]}%`
-	);
-	document.documentElement.style.setProperty("--twc-accent", `${hslAccent[0]} ${hslAccent[1]}% ${hslAccent[2]}%`);
+	document.documentElement.style.setProperty("--color-background", `#${hexCustomTheme[0]}`);
+	document.documentElement.style.setProperty("--color-elevate-1", `#${hexCustomTheme[1]}`);
+	document.documentElement.style.setProperty("--color-elevate-2", `#${hexCustomTheme[2]}`);
+	document.documentElement.style.setProperty("--color-foreground-1", `#${hexCustomTheme[3]}`);
+	document.documentElement.style.setProperty("--color-foreground-2", `#${hexCustomTheme[4]}`);
+	document.documentElement.style.setProperty("--color-accent", `#${hexCustomTheme[5]}`);
 }
 
 export function ThemeCustomizer() {
@@ -63,7 +41,7 @@ export function ThemeCustomizer() {
 	const hexCustomTheme =
 		lsCustomTheme && customThemeRegEx.test(lsCustomTheme)
 			? lsCustomTheme.split(",")
-			: ["111", "222", "333", "aaa", "eee", "4b5"];
+			: ["111", "222", "333", "aaa", "eee", "0b7"];
 
 	const [background, setBackground] = useState(hexCustomTheme[0]);
 	const [elevate1, setElevate1] = useState(hexCustomTheme[1]);
@@ -105,7 +83,11 @@ export function ThemeCustomizer() {
 		},
 	];
 
-	const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>, setState: React.Dispatch<React.SetStateAction<string>>, index: number) => {
+	const handlePaste = (
+		event: React.ClipboardEvent<HTMLInputElement>,
+		setState: React.Dispatch<React.SetStateAction<string>>,
+		index: number
+	) => {
 		event.preventDefault();
 		const text = event.clipboardData.getData("text");
 		const hex = text.replace("#", "").slice(0, 6);
@@ -188,8 +170,9 @@ export function ThemeCustomizer() {
 						<div key={index} className="flex gap-3 items-center">
 							<div>
 								<div
-									className={`size-10 rounded-full ring-inset ring-1 ${invalidFields.includes(index) ? "ring-red" : "ring-neutral-500/20"
-										}`}
+									className={`size-10 rounded-full ring-inset ring-1 ${
+										invalidFields.includes(index) ? "ring-red" : "ring-neutral-500/20"
+									}`}
 									style={{ backgroundColor: `#${field.state}` }}
 								/>
 							</div>
@@ -197,15 +180,19 @@ export function ThemeCustomizer() {
 								<label className="text-xs leading-none" htmlFor="background">
 									{field.name}
 								</label>
-								<div className={`relative font-mono flex grow ${invalidFields.includes(index)
-									&& "bg-red border-red text-black"} duration-100`}>
+								<div
+									className={`relative font-mono flex grow ${
+										invalidFields.includes(index) && "bg-red-500 border-red-500 text-black"
+									} duration-100`}
+								>
 									#
 									<input
 										maxLength={6}
-										className={`border-b text-foreground-2 w-full outline-none ${invalidFields.includes(index)
-											? "bg-red border-red text-black"
-											: "bg-transparent border-elevate-1 focus:border-elevate-2 focus:bg-elevate-1 text-foreground-2"
-											} rounded-0 duration-100`}
+										className={`border-b w-full outline-none ${
+											invalidFields.includes(index)
+												? "bg-red-500 border-red-500 text-black"
+												: "bg-transparent border-elevate-1 focus:border-elevate-2 focus:bg-elevate-1 text-foreground-2"
+										} rounded-0 duration-100`}
 										id={field.name}
 										type="text"
 										value={field.state}
@@ -354,7 +341,6 @@ export function PassedThemeDialog({ colors }: { colors: string[] }) {
 	const router = useRouter();
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
-	const nextSearchParams = new URLSearchParams(searchParams.toString());
 
 	const { setTheme } = useTheme();
 	function applyPassedTheme() {
@@ -369,10 +355,12 @@ export function PassedThemeDialog({ colors }: { colors: string[] }) {
 	const [passedThemeOpen, setPassedThemeOpen] = useState(colors.length < 6 ? false : true);
 
 	useEffect(() => {
-		if (!passedThemeOpen) {
+		if (!passedThemeOpen && searchParams.has("theme")) {
+			const nextSearchParams = new URLSearchParams(searchParams.toString());
 			nextSearchParams.delete("theme");
 			router.replace(`${pathname}?${nextSearchParams}`);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [passedThemeOpen]);
 
 	return (
@@ -380,11 +368,17 @@ export function PassedThemeDialog({ colors }: { colors: string[] }) {
 			<Dialog.Portal>
 				<Dialog.Overlay
 					className="fixed inset-0 data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out"
-					style={{ backgroundColor: `${colors[0].length === 3 ? `#${colors[0]}b` : `#${colors[0]}bb`}` }}
+					style={{
+						backgroundColor: `${colors[0].length === 3 ? `#${colors[0]}b` : `#${colors[0]}bb`}`,
+					}}
 				/>
 				<Dialog.Content
 					className="flex flex-col justify-center data-[state=open]:animate-dialog-enter data-[state=closed]:animate-dialog-exit fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 md:p-9 md:rounded-xl md:shadow-2xl md:border size-full md:max-w-xl md:h-max md:max-h-screen"
-					style={{ backgroundColor: `#${colors[0]}`, borderColor: `#${colors[2]}`, color: `#${colors[3]}` }}
+					style={{
+						backgroundColor: `#${colors[0]}`,
+						borderColor: `#${colors[2]}`,
+						color: `#${colors[3]}`,
+					}}
 				>
 					<Dialog.Title
 						className="text-2xl lg:text-4xl font-bold sm:text-center"
@@ -402,7 +396,10 @@ export function PassedThemeDialog({ colors }: { colors: string[] }) {
 									<div
 										key={index}
 										className="size-16 rounded-full"
-										style={{ backgroundColor: `#${color}`, boxShadow: `0 0 0 4px #${colors[0]}` }}
+										style={{
+											backgroundColor: `#${color}`,
+											boxShadow: `0 0 0 4px #${colors[0]}`,
+										}}
 									/>
 								)
 						)}
@@ -411,7 +408,10 @@ export function PassedThemeDialog({ colors }: { colors: string[] }) {
 						<Dialog.Close asChild>
 							<button
 								className="p-2 rounded-full hover:scale-105 duration-100"
-								style={{ backgroundColor: `#${colors[1]}`, color: `#${colors[4]}` }}
+								style={{
+									backgroundColor: `#${colors[1]}`,
+									color: `#${colors[4]}`,
+								}}
 								onClick={applyPassedTheme}
 							>
 								<svg
@@ -428,7 +428,10 @@ export function PassedThemeDialog({ colors }: { colors: string[] }) {
 						<Dialog.Close asChild>
 							<button
 								className="p-2 rounded-full hover:scale-105 duration-100"
-								style={{ backgroundColor: `#${colors[1]}`, color: `#${colors[4]}` }}
+								style={{
+									backgroundColor: `#${colors[1]}`,
+									color: `#${colors[4]}`,
+								}}
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"

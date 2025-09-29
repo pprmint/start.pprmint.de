@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -10,7 +10,6 @@ import { Clocks } from "./clocks";
 import * as Select from "@radix-ui/react-select";
 import * as Switch from "@radix-ui/react-switch";
 import * as Slider from "@radix-ui/react-slider";
-import * as Tooltip from "@radix-ui/react-tooltip";
 import { PassedThemeDialog, ThemeCustomizer } from "src/components/themeProvider";
 import { getCustomFont } from "src/components/customFont";
 
@@ -109,28 +108,28 @@ function Page() {
 	}
 
 	// Digital clock preview
-	const [time, setTime] = useState(getTime);
-	function getTime() {
+	const getTime = useCallback(() => {
 		const now = new Date();
 		const hour = now.getHours();
 		const minute = now.getMinutes();
 		const second = now.getSeconds();
 		return lsHideSec ? [hour, minute] : [hour, minute, second];
-	}
+	}, [lsHideSec]);
+	const [time, setTime] = useState(getTime);
 	useEffect(() => {
 		const intervalId = setInterval(() => {
 			setTime(getTime);
 		}, 250);
 
 		return () => clearInterval(intervalId);
-	}, []);
+	}, [getTime]);
 
 	return (
 		<>
 			<main>
 				<section
 					id="header"
-					className="bg-gradient-to-t from-background via-transparent border-b border-elevate-1"
+					className="bg-linear-to-t from-background via-transparent border-b border-elevate-1"
 				>
 					<Link
 						href="/"
@@ -198,7 +197,7 @@ function Page() {
 								</Select.Trigger>
 								<Select.Portal>
 									<Select.Content className="capitalize data-[state=open]:animate-select-open data-[state=closed]:animate-select-close overflow-hidden bg-background text-foreground-2 rounded-md shadow-xl border border-elevate-2">
-										<Select.ScrollUpButton className="absolute top-px inset-x-px rounded-t-lg inline-flex items-center justify-center h-[25px] bg-gradient-to-b from-background text-foreground-2 cursor-default z-10">
+										<Select.ScrollUpButton className="absolute top-px inset-x-px rounded-t-lg inline-flex items-center justify-center h-[25px] bg-linear-to-b from-background text-foreground-2 cursor-default z-10">
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												width="15"
@@ -231,7 +230,9 @@ function Page() {
 																) : (
 																	<div
 																		className="size-[15px] rounded-full"
-																		style={{ backgroundColor: theme.accentColor }}
+																		style={{
+																			backgroundColor: theme.accentColor,
+																		}}
 																	/>
 																)}
 															</div>
@@ -258,13 +259,13 @@ function Page() {
 												<Select.ItemText asChild>
 													<div className="flex gap-2 items-center">
 														<div
-															className="p-[5px] rounded-full ring-1 ring-inset ring-black/20"
+															className="p-[5px] rounded-full ring-1 ring-inset ring-foreground-2/20"
 															style={{
 																backgroundImage:
 																	"conic-gradient(#f44, #f71, #fb0, #9c3, #4b5, #2cf, #29f, #a7e, #e6b, #f44)",
 															}}
 														>
-															<div className="size-[15px] rounded-full bg-white shadow-md shadow-black/25" />
+															<div className="size-[15px] rounded-full bg-white shadow-md shadow-foreground-2/25" />
 														</div>
 														Custom
 													</div>
@@ -282,7 +283,7 @@ function Page() {
 												</Select.ItemIndicator>
 											</Select.Item>
 										</Select.Viewport>
-										<Select.ScrollDownButton className="absolute bottom-px inset-x-px rounded-b-lg inline-flex items-center justify-center h-[25px] bg-gradient-to-t from-background text-foreground-2 cursor-default z-10">
+										<Select.ScrollDownButton className="absolute bottom-px inset-x-px rounded-b-lg inline-flex items-center justify-center h-[25px] bg-linear-to-t from-background text-foreground-2 cursor-default z-10">
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												width="15"
@@ -379,19 +380,22 @@ function Page() {
 								onClick={handleUse12hrChange}
 							>
 								<div
-									className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-xs font-medium w-[38px] group-active:w-[42px] ${use12hr ? "left-[41px] group-active:left-[37px]" : "left-1"
-										} rounded-full duration-200 ease-out`}
+									className={`absolute top-1 bottom-1 inline-flex justify-center items-center bg-foreground-2 text-background text-xs font-medium w-[38px] group-active:w-[42px] ${
+										use12hr ? "left-[41px] group-active:left-[37px]" : "left-1"
+									} rounded-full duration-200 ease-out`}
 								/>
 								<div className="absolute inset-0 flex items-center text-xs px-1">
 									<span
-										className={`w-full text-center ${!use12hr && "font-bold text-background"
-											} duration-100`}
+										className={`w-full text-center ${
+											!use12hr && "font-bold text-background"
+										} duration-100`}
 									>
 										24h
 									</span>
 									<span
-										className={`w-full text-center ${use12hr && "font-bold text-background"
-											} duration-100`}
+										className={`w-full text-center ${
+											use12hr && "font-bold text-background"
+										} duration-100`}
 									>
 										12h
 									</span>
@@ -406,18 +410,20 @@ function Page() {
 									onClick={() => handleClockChange(item.name)}
 								>
 									<div
-										className={`w-full h-auto ${item.name === clock
-											? "border border-foreground-2 ring-1 ring-inset ring-foreground-2"
-											: "border border-elevate-1 group-hover:bg-elevate-1 group-hover:border-elevate-2"
-											} duration-100 rounded-md overflow-clip`}
+										className={`w-full h-auto ${
+											item.name === clock
+												? "border border-foreground-2 ring-1 ring-inset ring-foreground-2"
+												: "border border-elevate-1 group-hover:bg-elevate-1 group-hover:border-elevate-2"
+										} duration-100 rounded-md overflow-clip`}
 									>
 										{item.preview}
 									</div>
 									<p
-										className={`duration-100 ${item.name === clock
-											? "text-foreground-2 font-medium"
-											: "group-hover:text-foreground-2"
-											}`}
+										className={`duration-100 ${
+											item.name === clock
+												? "text-foreground-2 font-medium"
+												: "group-hover:text-foreground-2"
+										}`}
 									>
 										{item.name}
 									</p>
@@ -456,9 +462,10 @@ function Page() {
 										onChange={(e) => setCustomFontFamily(e.target.value || "")}
 									/>
 									<button
-										className={`btn h-full rounded-l-none border-l-0 ${customFontItalic &&
+										className={`btn h-full rounded-l-none border-l-0 ${
+											customFontItalic &&
 											"border-elevate-2 bg-elevate-2 hover:bg-elevate-2 active:bg-transparent"
-											}`}
+										}`}
 										onClick={() => setCustomFontItalic(!customFontItalic)}
 									>
 										<svg
@@ -546,7 +553,8 @@ function Page() {
 							className="font-number flex justify-center text-6xl sm:text-7xl lg:text-8xl text-foreground-2 text-center mt-12 mb-6"
 							style={{
 								fontFamily: customFontFamily !== "" ? `${customFontFamily}, system-ui, sans-serif` : "",
-								fontVariantNumeric: "tabular-nums", fontVariationSettings: "tnum",
+								fontVariantNumeric: "tabular-nums",
+								fontVariationSettings: "tnum",
 								fontStyle: customFontFamily !== "" && customFontItalic ? "italic" : "normal",
 								fontWeight: customFontFamily !== "" ? Number(customFontWeight) : "",
 							}}
@@ -554,7 +562,9 @@ function Page() {
 							<div>{time[0].toString().padStart(2, "0")}</div>
 							<div
 								className="text-accent"
-								style={{ transform: `translateY(-${customFontFamily !== "" ? customFontColon : 0}em)` }}
+								style={{
+									transform: `translateY(-${customFontFamily !== "" ? customFontColon : 0}em)`,
+								}}
 							>
 								:
 							</div>
@@ -564,13 +574,14 @@ function Page() {
 									<div
 										className="text-accent"
 										style={{
-											transform: `translateY(-${customFontFamily !== "" ? customFontColon : 0
-												}em)`,
+											transform: `translateY(-${
+												customFontFamily !== "" ? customFontColon : 0
+											}em)`,
 										}}
 									>
 										:
 									</div>
-									<div>{time[2].toString().padStart(2, "0")}</div>
+									<div>{time[2]?.toString().padStart(2, "0") || "00"}</div>
 								</>
 							)}
 						</div>
@@ -726,7 +737,7 @@ function Page() {
 										href={`https://github.com/${process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER}/${process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG}/commit/${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}`}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="text-2xl text-foreground-2 inline-flex items-center gap-3 font-medium underline decoration-dotted decoration-elevate-2 hover:decoration-foreground-1"
+										className="text-2xl text-foreground-2 inline-flex items-center gap-3 font-medium underline decoration-dotted decoration-elevate-2 hover:decoration-neutral-700"
 									>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
@@ -742,22 +753,18 @@ function Page() {
 									<p className="text-sm">{process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_MESSAGE}</p>
 								</div>
 							) : (
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 434 102" className="h-16 px-6">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 253 62" className="h-16 px-6">
 									<g className="fill-foreground-2">
-										<path d="M 231.29688,22.128906 V 99.431641 H 244.2793 V 55.763672 c 0,-14.014584 9.29421,-21.832031 22.27734,-21.832031 h 11.35547 V 22.128906 h -11.21289 c -16.81564,0 -22.41992,13.13086 -22.41992,13.13086 v -13.13086 z" />
-										<path d="m 32.453125,20.064453 c -26.7013193,0 -30.2402343,18.440205 -30.2402343,24.193359 0,17.850193 20.6527063,20.801057 29.2089843,22.128907 17.850193,2.655183 20.652344,7.522826 20.652344,11.505859 0,10.769189 -14.456401,11.800781 -20.652344,11.800781 C 21.095475,89.398511 11.654263,84.531565 6.9335939,81.433594 L 0,91.611328 c 11.211461,7.523793 24.340502,9.884762 32.011719,9.884762 30.242079,0 32.896484,-17.260587 32.896484,-23.30859 0,-17.997617 -19.768196,-21.538398 -31.865234,-23.013672 C 21.388719,53.845979 17.11083,49.12594 16.962891,48.978516 15.782981,47.650666 15.19336,45.732 15.19336,43.814453 c 0,-5.606246 5.01639,-11.949219 17.703124,-11.949219 11.801674,0.295364 21.538123,7.819373 21.685547,7.966797 l 7.671875,-9.736328 C 49.419232,20.359 34.666036,20.064453 32.453125,20.064453 Z" />
-										<path d="m 169.63282,19.916016 c -20.80074,0 -38.94532,15.78466 -38.94532,40.863281 0,25.079137 18.14458,40.716793 38.94532,40.716793 20.80022,0 28.17578,-15.341793 28.17578,-15.341793 v 13.277344 h 12.83398 V 21.982422 H 197.8086 v 13.277344 c 0,0 -7.37556,-15.34375 -28.17578,-15.34375 z m -0.29493,11.949218 c 22.27602,0 28.47071,14.900418 28.47071,28.767578 0,13.867161 -6.19469,28.914063 -28.47071,28.914063 -14.60428,0 -25.8164,-12.392659 -25.8164,-28.767578 0,-16.374919 11.21212,-28.914063 25.8164,-28.914063 z" />
-										<path d="m 295.61719,0 v 74.205078 c 0.29382,15.341918 9.43952,25.079138 23.89844,25.226563 h 14.89648 V 87.628906 h -12.83008 c -3.98457,0 -12.69055,-7.65e-4 -12.98437,-12.6875 V 33.931641 h 25.81445 V 22.128906 H 308.59766 V 0 Z" />
-										<path d="m 81.136719,0 v 74.205078 c 0.294848,15.341918 9.441065,25.079138 23.898441,25.226563 H 119.9336 V 87.628906 h -12.83399 c -3.98303,0 -12.685621,-7.65e-4 -12.980469,-12.6875 V 33.931641 H 119.9336 V 22.128906 H 94.119141 V 0 Z" />
+										<path d="M20.71,61.301c12.702,0 19.789,-4.786 19.789,-13.806c0,-19.145 -31.663,-8.837 -31.663,-20.894c0,-4.326 4.234,-6.996 11.138,-6.996c7.271,0 11.781,3.222 12.149,8.468l7.824,0c-0.92,-9.572 -8.192,-15.371 -19.513,-15.371c-12.15,0 -19.422,5.431 -19.422,14.451c0,17.949 31.664,8.928 31.664,20.158c-0,4.602 -4.142,6.995 -11.69,6.995c-7.732,-0 -12.426,-3.037 -13.162,-8.744l-7.824,-0c0.92,10.217 8.192,15.739 20.71,15.739Z" />
+										<path d="M64.615,59.829l9.757,-0l-0,-6.996l-9.665,0c-4.97,0 -7.732,-2.669 -7.732,-8.284l0,-23.747l16.936,-0l0,-6.995l-16.936,-0l0,-13.807l-7.916,0l0,44.181c0,10.585 4.971,15.648 15.556,15.648Z" />
+										<path d="M118.369,13.807l-0,7.087c-3.314,-5.431 -8.837,-8.192 -16.108,-8.192c-13.715,0 -23.011,9.757 -23.011,24.116c-0,14.358 9.296,24.115 23.011,24.115c7.271,0 12.794,-2.761 16.108,-8.192l-0,7.088l7.915,-0l0,-46.022l-7.915,-0Zm-15.464,40.131c-9.388,-0 -15.739,-6.904 -15.739,-17.12c-0,-10.217 6.351,-17.121 15.739,-17.121c9.389,0 15.74,6.904 15.74,17.121c-0,10.216 -6.351,17.12 -15.74,17.12Z" />
+										<path d="M136.961,59.829l7.824,-0l0,-22.919c0,-10.401 4.602,-16.2 13.439,-16.2l4.878,-0l-0,-6.903l-4.878,-0c-5.615,-0 -10.401,2.393 -13.439,6.719l0,-6.719l-7.824,-0l0,46.022Z" />
+										<path d="M187.402,59.829l9.756,-0l0,-6.996l-9.664,0c-4.971,0 -7.732,-2.669 -7.732,-8.284l-0,-23.747l16.936,-0l0,-6.995l-16.936,-0l-0,-13.807l-7.916,0l0,44.181c0,10.585 4.971,15.648 15.556,15.648Z" />
 									</g>
 									<g className="fill-accent">
+										<path d="M206.057,59.829l0,-31.955l31.955,0l-0,31.955l-31.955,-0Zm24.932,-24.932l-17.909,0l0,17.909l17.909,-0l-0,-17.909Z" />
 										<path
-											d="M1176.45 476V371.827h104.17V476zm81.28-81.278h-58.39v58.383h58.39z"
-											transform="matrix(.51547 0 0 .51547 -250.304 -145.933)"
-										/>
-										<path
-											d="M1303.52 348.932h-81.28v-22.895h104.17V430.21h-22.89z"
-											transform="matrix(.51547 0 0 .51547 -250.304 -145.933)"
+											d="M245.035,20.852l-24.932,-0l0,-7.023l31.954,-0l0,31.954l-7.022,-0l-0,-24.931Z"
 											className="brightness-75"
 										/>
 									</g>

@@ -49,7 +49,7 @@ export default function BahnClock({ time, large }: { time: number[], large?: boo
         )}
       </div>
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-6 ${large && "lg:size-9"} rounded-full bg-foreground-2 duration-700 ease-in-out`} />
-      <div className="absolute inset-0 rounded-full bg-gradient-to-b from-white/10" />
+      <div className="absolute inset-0 rounded-full bg-linear-to-b from-elevate-1/25" />
     </div>
   );
 }
